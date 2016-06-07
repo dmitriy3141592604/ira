@@ -1,14 +1,15 @@
 package utils;
 
-import org.i2g.ira.complaint.save.ComplaintSaveAction;
+import org.i2g.ira.ProcessRunner;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Executor {
 
 	public static void main(String... args) {
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ira.xml");
-		ComplaintSaveAction bean = context.getBean(ComplaintSaveAction.class);
-		Complaint complaint = null;
-		bean.execute(complaint);
+		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ira.xml")) {
+			ProcessRunner bean = context.getBean(ProcessRunner.class);
+			Complaint complaint = null;
+			bean.execute(complaint, "complaint.save");
+		}
 	}
 }
