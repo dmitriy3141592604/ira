@@ -1,13 +1,12 @@
 package org.i2g.ira;
 
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 
-public class ContextClass<T> {
-	
+public class ContextClass {
+
 	protected ApplicationContext applicationContext;
 
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		this.applicationContext = applicationContext;
 	};
 

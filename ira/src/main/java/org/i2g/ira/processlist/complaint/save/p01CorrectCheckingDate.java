@@ -9,6 +9,7 @@ import utils.ComplaintSaveProcessBase;
 public class p01CorrectCheckingDate extends ComplaintSaveProcessBase {
 
 	public void execute(Complaint t) {
+		System.out.println(this.toString());
 	}
 
 }
