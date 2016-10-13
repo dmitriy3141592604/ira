@@ -19,6 +19,7 @@ public class Executor {
 			IraProcessorsContextHolder.setValue(complaint);
 
 			bean.execute("complaint.save");
-		}
+
+        }
 	}
 }

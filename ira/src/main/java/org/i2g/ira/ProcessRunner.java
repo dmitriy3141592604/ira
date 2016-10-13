@@ -14,7 +14,7 @@ import utils.IraProcessorsContextHolder;
 @Component
 public class ProcessRunner extends ContextClass implements ApplicationContextAware {
 
-	// Добавить тип в IraProcessorsContextHolder
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ IraProcessorsContextHolder
 	public void execute(String processName) {
 		try {
 			for (Object pt : getProcessors(processName)) {

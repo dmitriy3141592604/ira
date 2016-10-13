@@ -1,0 +1,16 @@
+*** C:\Java\kt\kt02\ira\src\main\java\org\i2g\ira\ProcessRunner.java
+
+:22, :34 execcute -> execute
+:51 - "execute" вынести в константы
+:69 - Object -> AbstractProcess => меньше итераций при поиске
+:58 - Выход из цикта приводит к тому, что ситуация с несколькими методами execute никогда не будет отловлена
+:78 ";" - ?
+
+*** C:\Java\kt\kt02\ira\src\test\java\utils\ContractTest.java
+
+:46 - 101
+
+*** Общее
+
+2 папки utils
+Нет бина Complaint (ProcessRunner.java :43)
