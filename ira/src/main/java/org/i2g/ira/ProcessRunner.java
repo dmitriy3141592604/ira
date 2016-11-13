@@ -14,29 +14,28 @@ import utils.IraProcessorsContextHolder;
 @Component
 public class ProcessRunner extends ContextClass implements ApplicationContextAware {
 
-	// �������� ��� � IraProcessorsContextHolder
 	public void execute(String processName) {
 		try {
-			for (Object pt : getProcessors(processName)) {
+			for (final Object pt : getProcessors(processName)) {
 
-				Method execcute = findExecutor(pt);
+				final Method execcute = findExecutor(pt);
 
-				LinkedList<Object> arguments = fillArguments(execcute);
+				final LinkedList<Object> arguments = fillArguments(execcute);
 
 				execcute.invoke(pt, arguments.toArray());
 
 			}
-		} catch (ReflectiveOperationException e) {
+		} catch (final ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	private LinkedList<Object> fillArguments(Method execcute) {
-		Class<?>[] parameterTypes = execcute.getParameterTypes();
+		final Class<?>[] parameterTypes = execcute.getParameterTypes();
 
-		LinkedList<Object> arguments = new LinkedList<Object>();
-		Object ctx = IraProcessorsContextHolder.getValue();
-		for (Class<?> type : parameterTypes) {
+		final LinkedList<Object> arguments = new LinkedList<Object>();
+		final Object ctx = IraProcessorsContextHolder.getValue();
+		for (final Class<?> type : parameterTypes) {
 			if (type.equals(ctx.getClass())) {
 				arguments.add(ctx);
 			} else {
@@ -48,8 +47,8 @@ public class ProcessRunner extends ContextClass implements ApplicationContextAwa
 
 	private Method findExecutor(Object pt) {
 		Method execute = null;
-		String methodName = "execute";
-		for (Method method : pt.getClass().getMethods()) {
+		final String methodName = "execute";
+		for (final Method method : pt.getClass().getMethods()) {
 			if (methodName.equals(method.getName())) {
 				if (execute != null) {
 					throw new IllegalArgumentException("Many " + methodName + " methods");
@@ -65,10 +64,10 @@ public class ProcessRunner extends ContextClass implements ApplicationContextAwa
 	}
 
 	public Collection<Object> getProcessors(String processName) {
-		Collection<Object> values = applicationContext.getBeansOfType(Object.class).values();
-		TreeSet<Object> retVal = new TreeSet<Object>();
-		for (Object p : values) {
-			String targetProcess = new ProcessNameExtractor().getProcessName(p.toString());
+		final Collection<Object> values = applicationContext.getBeansOfType(Object.class).values();
+		final TreeSet<Object> retVal = new TreeSet<Object>();
+		for (final Object p : values) {
+			final String targetProcess = new ProcessNameExtractor().getProcessName(p.toString());
 			if (targetProcess != null) {
 				retVal.add(p);
 			}

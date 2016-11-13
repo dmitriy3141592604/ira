@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ContractTest extends ContractTestBase {
@@ -15,19 +16,17 @@ public class ContractTest extends ContractTestBase {
 
 	public class Range {
 
-		/** Начало диапазона **/
 		public String begin;
 
-		/** Окончание диапазона **/
 		public String end;
 	}
 
 	public static class RangeContract extends ContractBase<Range> {
 
 		{
-			$("Диапазон должен иметь начало", value -> checkNotNull(value.begin));
-			$("Диапазон должен иметь окончание ${end}", value -> checkNotNull(value.end));
-			$("Начало диапазона должно быть меньше окончания: [${begin},${end}]", value -> lessThat(value.begin, value.end));
+			$("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ", value -> checkNotNull(value.begin));
+			$("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ${end}", value -> checkNotNull(value.end));
+			$("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: [${begin},${end}]", value -> lessThat(value.begin, value.end));
 		}
 	};
 
@@ -87,14 +86,12 @@ public class ContractTest extends ContractTestBase {
 	}
 
 	@Test
-	@Behavior("Контракт прменим к валидным объектам")
+	@Ignore
 	public void test() {
 		validate(v);
 	}
 
-	/** TODO Исключение должно быть хитрым **/
 	@Test
-	@Behavior("При нарушении контракта возникает исключительная ситуация")
 	public void test$brokenContract() {
 		v.begin = null;
 		exception.expect(ContractFailException.class);
