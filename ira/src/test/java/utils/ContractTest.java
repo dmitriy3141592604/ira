@@ -13,7 +13,7 @@ public class ContractTest extends ContractTestBase {
 
 	private Range v;
 
-	public class Range {
+	public static class Range {
 
 		public String begin;
 
@@ -85,14 +85,24 @@ public class ContractTest extends ContractTestBase {
 	}
 
 	@Test
+	@Behavior("После конфигурирования теста, объект тестирования валиден")
 	public void test() {
 		validate(v);
 	}
 
 	@Test
+	@Behavior("По условиям контракта, начальное значение не может быть null")
 	public void test$brokenContract() {
 		v.begin = null;
-		exception.expect(ContractFailException.class);
+		except(ContractFailException.class);
+		validate(v);
+	}
+
+	@Test
+	public void test$endShouldBeGreaterAsBegin() {
+		except(ContractFailException.class);
+		v.begin = "z";
+		v.end = "a";
 		validate(v);
 	}
 
