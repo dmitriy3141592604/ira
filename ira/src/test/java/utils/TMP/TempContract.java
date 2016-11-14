@@ -1,16 +1,23 @@
 package utils.TMP;
 
-import org.junit.Test;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
+import org.junit.Test;
+
+/**
+ * TODO Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ РѕРїРёСЃР°РЅРёСЏ С‚РµСЃС‚Р°. Р—Р°Р±С‹Р», С‡С‚Рѕ РІРѕРѕР±С‰Рµ РґРµР»Р°Р»Рё.
+ *
+ * @author fdv.741
+ *
+ */
 public class TempContract extends TempContractBase {
 
 	public static class Holder {
+
 		public static String publicValue = "";
 
 		public static List<String> messages = new LinkedList<String>();
@@ -29,11 +36,11 @@ public class TempContract extends TempContractBase {
 
 	public static class ContractSample extends BaseContract<Integer> {
 		{
-			$("Другое ограничение", value -> Holder.messages.add("" + marker + "#" + "Другое: " + value));
+			$("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", value -> Holder.messages.add("" + marker + "#" + "пїЅпїЅпїЅпїЅпїЅпїЅ: " + value));
 
-			$("Другое ограничение2", value -> {
-				Holder.messages.add("" + marker + "#" + "Другое: " + value);
-				Holder.messages.add("" + marker + "#" + "Другое: " + value);
+			$("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ2", value -> {
+				Holder.messages.add("" + marker + "#" + "пїЅпїЅпїЅпїЅпїЅпїЅ: " + value);
+				Holder.messages.add("" + marker + "#" + "пїЅпїЅпїЅпїЅпїЅпїЅ: " + value);
 			});
 		}
 	}
@@ -44,9 +51,9 @@ public class TempContract extends TempContractBase {
 		final ContractSample cs = new ContractSample();
 		cs.marker = 1;
 
-		cs.asserts.get("Другое ограничение").accept(cs.marker);
+		cs.asserts.get("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ").accept(cs.marker);
 
-		assertEquals("[1#Другое: 1]", Holder.messages.toString());
+		assertEquals("[1#пїЅпїЅпїЅпїЅпїЅпїЅ: 1]", Holder.messages.toString());
 	}
 
 }

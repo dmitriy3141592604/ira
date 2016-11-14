@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ContractTest extends ContractTestBase {
@@ -24,9 +23,9 @@ public class ContractTest extends ContractTestBase {
 	public static class RangeContract extends ContractBase<Range> {
 
 		{
-			$("�������� ������ ����� ������", value -> checkNotNull(value.begin));
-			$("�������� ������ ����� ��������� ${end}", value -> checkNotNull(value.end));
-			$("������ ��������� ������ ���� ������ ���������: [${begin},${end}]", value -> lessThat(value.begin, value.end));
+			$("Должно быть задано начало диапазона", value -> checkNotNull(value.begin));
+			$("Должен быть задан конец диапазона ${end}", value -> checkNotNull(value.end));
+			$("Начало диапазона должно быть меньше, чем конец: [${begin},${end}]", value -> lessThat(value.begin, value.end));
 		}
 	};
 
@@ -76,7 +75,7 @@ public class ContractTest extends ContractTestBase {
 	public final void setUpContractTest() {
 		v = new Range();
 		v.begin = "a";
-		v.begin = "b";
+		v.end = "b";
 	}
 
 	@Override
@@ -86,7 +85,6 @@ public class ContractTest extends ContractTestBase {
 	}
 
 	@Test
-	@Ignore
 	public void test() {
 		validate(v);
 	}

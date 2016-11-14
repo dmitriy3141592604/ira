@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static utils.IraUtils.freeze;
 import static utils.IraUtils.unfreeze;
 
-import java.lang.reflect.Proxy;
 import java.util.HashMap;
 
 import org.junit.Before;
@@ -29,7 +28,7 @@ public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 	}
 
 	@Test
-	@Behavior("По умолчанию полю можно присвоит значение и его получить")
+	@Behavior("РџРѕР»СѓС‡РµРЅРЅРѕРјСѓ РѕР±СЉРµРєС‚Сѓ РјРѕР¶РЅРѕ РїСЂРёСЃРІР°РёРІР°С‚СЊ Р·РЅР°С‡РµРЅРёСЏ")
 	public void testAssignFieldValue() {
 
 		named.setName(randomName);
@@ -38,7 +37,7 @@ public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 	}
 
 	@Test
-	@Behavior("Значения null недопустимы для сеттеров")
+	@Behavior("РќСѓР»РµРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РїСЂРёСЃРІР°РёРІР°С‚СЊ РЅРµР»СЊР·СЏ")
 	public void test$null() {
 
 		exception.expect(IllegalArgumentException.class);
@@ -47,21 +46,21 @@ public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 	}
 
 	@Test
-	@Behavior("До рисваивания значения, геттеры возвращают дефолтные значения. String")
+	@Behavior("Р•СЃР»Рё СЃС‚СЂРѕРєРѕРІРѕРµ РїРѕР»Рµ РЅРµ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°РЅРѕ, С‚Рѕ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°")
 	public void test$default$String() {
 
 		assertEquals("", named.getName());
 	}
 
 	@Test
-	@Behavior("До рисваивания значения, геттеры возвращают дефолтные значения.Long")
+	@Behavior("Р”Р»СЏ Р·РЅР°С‡РµРЅРёР№ С‚РёРїР° Number РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІРѕР·РІСЂР°С‰Р°РµС‚СЃСЏ -1")
 	public void test$default$Long() {
 
 		assertEquals(new Long(-1), named.getAge());
 	}
 
 	@Test
-	@Behavior("Состояние объекта можно заморозить")
+	@Behavior("РњРѕР¶РЅРѕ Р·Р°РїСЂРµС‚РёС‚СЊ СѓСЃС‚Р°РЅРѕРІРєСѓ Р·РЅР°С‡РµРЅРёР№")
 	public void test$freeze() {
 		named.setName(randomName);
 
@@ -73,7 +72,7 @@ public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 	}
 
 	@Test
-	@Behavior("Состояние объекта можно разморочить")
+	@Behavior("Р—Р°РјРѕСЂРѕР¶РµРЅРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РјРѕР¶РЅРѕ СЂР°Р·РјРѕСЂРѕР·РёС‚СЊ")
 	public void test$unFreeze() {
 		named.setName(randomName);
 
@@ -84,7 +83,7 @@ public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 	}
 
 	@Test
-	@Behavior("Состояние объекта можно заморозить одной блокировкой оодин раз")
+	@Behavior("РќРµР»СЊР·СЏ РїРѕРІС‚РѕСЂРЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°СЊ РёРјСЏ Р±Р»РѕРєРёСЂРѕРІРєР°")
 	public void test$freeze$oneLock() {
 
 		exception.expect(IllegalArgumentException.class);
