@@ -13,4 +13,8 @@
 	<context:annotation-config />
 	<context:component-scan base-package="org.i2g.ira" />
 	
+	<bean id="myFlag" name="flagAlias1,flagAlias2" class="java.lang.String">
+		<constructor-arg>myFlagValue</constructor-arg>
+	</bean>
+	
 </beans>
