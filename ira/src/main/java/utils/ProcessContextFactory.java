@@ -41,8 +41,6 @@ public class ProcessContextFactory {
 				if (oldValue == null) {
 					final Class<?> returnType = method.getReturnType();
 					if (Number.class.isAssignableFrom(returnType)) {
-						System.out.println(returnType.getConstructors());
-
 						return (returnType.getConstructors()[0]).newInstance(-1);
 					}
 					return returnType.newInstance();
@@ -58,7 +56,6 @@ public class ProcessContextFactory {
 			if (!freezeLockers.add(lockName)) {
 				throw new IllegalArgumentException("Блокировка " + lockName + "уже используется.");
 			}
-			;
 		}
 
 		@Override

@@ -5,12 +5,15 @@ import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class NamedVariableTest {
+import utils.IraTest;
+
+public class NamedVariableTest extends IraTest {
 
 	public interface NamedVariable {
 		void setName(String variableName);
@@ -62,9 +65,16 @@ public class NamedVariableTest {
 		}
 	}
 
+	public static class GlobalValueHolder {
+		public static String value = "";
+	}
+
 	public static class User {
 
+		private final Logger logger = Logger.getLogger(this.getClass());
+
 		private final Container<String> myNewUserNameField = new Container<String>("initvalue", this);
+
 		private final Container<String> additionalField = new Container<String>("some value", this);
 
 		public Container<String> getUserName() {
@@ -72,8 +82,7 @@ public class NamedVariableTest {
 		}
 
 		public void valueUpdated() {
-			// TODO Убрать value updated
-			System.out.println("Value updated");
+			GlobalValueHolder.value = "Value updated";
 		}
 
 		@Override
@@ -119,7 +128,10 @@ public class NamedVariableTest {
 			final User user = ctx.getBean(User.class);
 			assertNotNull(user);
 
+			assertEquals("", GlobalValueHolder.value);
 			user.getUserName().setValue("new user name");
+			assertEquals("Value updated", GlobalValueHolder.value);
+
 			assertEquals("myNewUserNameField", user.getUserName().getVariableName());
 			assertEquals("myNewUserNameField = new user name additionalField = some value ", user.toString());
 		}
