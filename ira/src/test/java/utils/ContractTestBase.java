@@ -4,7 +4,7 @@ import org.junit.Before;
 
 public abstract class ContractTestBase<T> extends IraTest {
 
-	private Range v;
+	// private Range v;
 
 	public static class Range {
 

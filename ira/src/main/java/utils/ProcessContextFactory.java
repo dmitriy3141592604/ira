@@ -12,9 +12,9 @@ public class ProcessContextFactory {
 
 	private final class MethodProcessor implements InvocationHandler, Freezable {
 
-		private Map<String, Object> valuesHolder;
+		private final Map<String, Object> valuesHolder;
 
-		private Set<String> freezeLockers = new TreeSet<String>();
+		private final Set<String> freezeLockers = new TreeSet<String>();
 
 		public MethodProcessor(Map<String, Object> valuesHolder) {
 			this.valuesHolder = valuesHolder;
@@ -22,14 +22,13 @@ public class ProcessContextFactory {
 
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-			String name = method.getName();
-			String beanFieldName = name.substring(2);
+			final String name = method.getName();
+			final String beanFieldName = name.substring(2);
 			if (name.startsWith("set")) {
 				if (!freezeLockers.isEmpty()) {
-					throw new IllegalStateException("Замороженный объект нельзя редактировать. Существуют блокировки: "
-							+ freezeLockers.toString());
+					throw new IllegalStateException("Замороженный объект нельзя редактировать. Существуют блокировки: " + freezeLockers.toString());
 				}
-				Object newValue = args[0];
+				final Object newValue = args[0];
 				if (newValue == null) {
 					throw new IllegalArgumentException("Ира против нулевых объектов");
 				}
@@ -38,9 +37,9 @@ public class ProcessContextFactory {
 			}
 
 			if (name.startsWith("get")) {
-				Object oldValue = valuesHolder.get(beanFieldName);
+				final Object oldValue = valuesHolder.get(beanFieldName);
 				if (oldValue == null) {
-					Class<?> returnType = method.getReturnType();
+					final Class<?> returnType = method.getReturnType();
 					if (Number.class.isAssignableFrom(returnType)) {
 						System.out.println(returnType.getConstructors());
 
@@ -73,7 +72,7 @@ public class ProcessContextFactory {
 
 		final Map<String, Object> valuesHolder_ = valuesHolder;
 		final ClassLoader classLoader = this.getClass().getClassLoader();
-		final Class[] interfaces = new Class[] { clazz, Freezable.class };
+		final Class<?>[] interfaces = new Class[] { clazz, Freezable.class };
 		final MethodProcessor methodProcessor = new MethodProcessor(valuesHolder_);
 		return (T) Proxy.newProxyInstance(classLoader, interfaces, methodProcessor);
 	}

@@ -42,8 +42,8 @@ public class NamedVariableTest {
 		}
 
 		public void setValue(Value value) {
-			if( owner instanceof User) {
-				((User)owner).valueUpdated();
+			if (owner instanceof User) {
+				((User) owner).valueUpdated();
 			}
 			this.value = value;
 		}
@@ -72,9 +72,11 @@ public class NamedVariableTest {
 		}
 
 		public void valueUpdated() {
+			// TODO Убрать value updated
 			System.out.println("Value updated");
 		}
 
+		@Override
 		public String toString() {
 			return show(myNewUserNameField) + show(additionalField);
 		}
@@ -89,15 +91,15 @@ public class NamedVariableTest {
 		@Override
 		public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
 			try {
-				for (Field field : bean.getClass().getDeclaredFields()) {
-					Class<?> fieldType = field.getType();
+				for (final Field field : bean.getClass().getDeclaredFields()) {
+					final Class<?> fieldType = field.getType();
 					if (NamedVariable.class.isAssignableFrom(fieldType)) {
 						field.setAccessible(true);
 						((NamedVariable) field.get(bean)).setName(field.getName());
 					}
 				}
 				return bean;
-			} catch (Exception exception) {
+			} catch (final Exception exception) {
 				throw new RuntimeException(exception);
 			}
 		}
@@ -111,15 +113,16 @@ public class NamedVariableTest {
 
 	@Test
 	public void testyName() {
-		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(User.class,
-				SetVariableNameBeanPostProcessor.class);
+		try (final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(User.class,
+				SetVariableNameBeanPostProcessor.class)) {
 
-		User user = ctx.getBean(User.class);
-		assertNotNull(user);
-		
-		user.getUserName().setValue("new user name");
-		assertEquals("myNewUserNameField", user.getUserName().getVariableName());
-		assertEquals("myNewUserNameField = new user name additionalField = some value ", user.toString());
+			final User user = ctx.getBean(User.class);
+			assertNotNull(user);
+
+			user.getUserName().setValue("new user name");
+			assertEquals("myNewUserNameField", user.getUserName().getVariableName());
+			assertEquals("myNewUserNameField = new user name additionalField = some value ", user.toString());
+		}
 	}
 
 }
