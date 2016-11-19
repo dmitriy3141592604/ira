@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -71,7 +70,7 @@ public class NamedVariableTest extends IraTest {
 
 	public static class User {
 
-		private final Logger logger = Logger.getLogger(this.getClass());
+		// private final Logger logger = Logger.getLogger(this.getClass());
 
 		private final Container<String> myNewUserNameField = new Container<String>("initvalue", this);
 

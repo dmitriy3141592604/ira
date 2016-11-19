@@ -1,5 +1,7 @@
 package test.uibuilder;
 
+import org.i2g.ira.uibuilder.Attribute;
+import org.i2g.ira.uibuilder.StringAttributeSerializer;
 import org.junit.Before;
 
 import testutils.RandomizedTest;

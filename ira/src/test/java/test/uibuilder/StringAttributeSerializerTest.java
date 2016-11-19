@@ -2,6 +2,7 @@ package test.uibuilder;
 
 import static org.junit.Assert.assertEquals;
 
+import org.i2g.ira.uibuilder.StringAttributeSerializer;
 import org.junit.Test;
 
 import utils.Behavior;

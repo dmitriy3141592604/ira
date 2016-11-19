@@ -1,7 +1,8 @@
-package test.uibuilder;
+package org.i2g.ira.uibuilder;
 
 /**
  * Выполняет сериализацию модели html аттрибута {@linkplain Attribute}
+ * TODO Добавить возможность использовать внешний StringBuilder
  */
 public class StringAttributeSerializer {
 

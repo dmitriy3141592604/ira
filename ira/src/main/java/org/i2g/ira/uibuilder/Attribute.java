@@ -1,4 +1,4 @@
-package test.uibuilder;
+package org.i2g.ira.uibuilder;
 
 /**
  * Простое представление для Html аттрибутов
@@ -6,7 +6,7 @@ package test.uibuilder;
  * @author fdv.741
  *
  */
-interface Attribute {
+public interface Attribute {
 
 	/**
 	 * @return Имя html аттрибута
