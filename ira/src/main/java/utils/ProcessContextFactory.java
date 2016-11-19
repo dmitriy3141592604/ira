@@ -26,12 +26,12 @@ public class ProcessContextFactory {
 			String beanFieldName = name.substring(2);
 			if (name.startsWith("set")) {
 				if (!freezeLockers.isEmpty()) {
-					throw new IllegalStateException("Замороженный объект нельзя редактировать. Существуют блокировки: "
+					throw new IllegalStateException("Р—Р°РјРѕСЂРѕР¶РµРЅРЅС‹Р№ РѕР±СЉРµРєС‚ РЅРµР»СЊР·СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°С‚СЊ. РЎСѓС‰РµСЃС‚РІСѓСЋС‚ Р±Р»РѕРєРёСЂРѕРІРєРё: "
 							+ freezeLockers.toString());
 				}
 				Object newValue = args[0];
 				if (newValue == null) {
-					throw new IllegalArgumentException("Ира против нулевых объектов");
+					throw new IllegalArgumentException("РСЂР° РїСЂРѕС‚РёРІ РЅСѓР»РµРІС‹С… РѕР±СЉРµРєС‚РѕРІ");
 				}
 				valuesHolder.put(beanFieldName, newValue);
 				return null;
@@ -57,7 +57,7 @@ public class ProcessContextFactory {
 		@Override
 		public void freeze(String lockName) {
 			if (!freezeLockers.add(lockName)) {
-				throw new IllegalArgumentException("Блокировка " + lockName + "уже используется.");
+				throw new IllegalArgumentException("Р‘Р»РѕРєРёСЂРѕРІРєР° " + lockName + "СѓР¶Рµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ.");
 			}
 			;
 		}
