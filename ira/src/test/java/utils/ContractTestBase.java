@@ -2,7 +2,7 @@ package utils;
 
 import org.junit.Before;
 
-public abstract class ContractTestBase extends IraTest {
+public abstract class ContractTestBase<T> extends IraTest {
 
 	private Range v;
 
@@ -18,10 +18,10 @@ public abstract class ContractTestBase extends IraTest {
 
 	}
 
-	protected <T> void validate(T v) {
+	protected void validate(T v) {
 		createValidator().validate(v);
 	}
 
-	protected abstract <T> Contract<T> createValidator();
+	protected abstract Contract<T> createValidator();
 
 }

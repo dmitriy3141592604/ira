@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ContractTest extends ContractTestBase {
+public class ContractTest extends ContractTestBase<ContractTest.Range> {
 
 	private Range v;
 
@@ -79,7 +79,6 @@ public class ContractTest extends ContractTestBase {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	protected Contract<Range> createValidator() {
 		return new RangeContract();
 	}
