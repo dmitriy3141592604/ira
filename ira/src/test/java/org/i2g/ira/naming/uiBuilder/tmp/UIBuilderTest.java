@@ -1,4 +1,4 @@
-package org.i2g.ira.naming.uiBuilder;
+package org.i2g.ira.naming.uiBuilder.tmp;
 
 import static org.junit.Assert.assertEquals;
 
