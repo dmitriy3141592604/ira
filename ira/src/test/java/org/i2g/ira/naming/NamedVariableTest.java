@@ -42,8 +42,8 @@ public class NamedVariableTest {
 		}
 
 		public void setValue(Value value) {
-			if( owner instanceof User) {
-				((User)owner).valueUpdated();
+			if (owner instanceof User) {
+				((User) owner).valueUpdated();
 			}
 			this.value = value;
 		}
@@ -68,7 +68,7 @@ public class NamedVariableTest {
 		private final Container<String> additionalField = new Container<String>("some value", this);
 
 		public Container<String> getUserName() {
-			return myNewUserNameField;
+			return getMyNewUserNameField();
 		}
 
 		public void valueUpdated() {
@@ -76,12 +76,17 @@ public class NamedVariableTest {
 		}
 
 		public String toString() {
-			return show(myNewUserNameField) + show(additionalField);
+			return show(getMyNewUserNameField()) + show(additionalField);
 		}
 
 		private String show(Container<String> var) {
 			return var.variableName + " = " + var.value + " ";
 		}
+
+		public Container<String> getMyNewUserNameField() {
+			return myNewUserNameField;
+		}
+
 	}
 
 	public static class SetVariableNameBeanPostProcessor implements BeanPostProcessor {
@@ -116,7 +121,7 @@ public class NamedVariableTest {
 
 		User user = ctx.getBean(User.class);
 		assertNotNull(user);
-		
+
 		user.getUserName().setValue("new user name");
 		assertEquals("myNewUserNameField", user.getUserName().getVariableName());
 		assertEquals("myNewUserNameField = new user name additionalField = some value ", user.toString());
