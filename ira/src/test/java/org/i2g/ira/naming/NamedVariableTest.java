@@ -77,7 +77,7 @@ public class NamedVariableTest extends IraTest {
 		private final Container<String> additionalField = new Container<String>("some value", this);
 
 		public Container<String> getUserName() {
-			return myNewUserNameField;
+			return getMyNewUserNameField();
 		}
 
 		public void valueUpdated() {
@@ -86,12 +86,17 @@ public class NamedVariableTest extends IraTest {
 
 		@Override
 		public String toString() {
-			return show(myNewUserNameField) + show(additionalField);
+			return show(getMyNewUserNameField()) + show(additionalField);
 		}
 
 		private String show(Container<String> var) {
 			return var.variableName + " = " + var.value + " ";
 		}
+
+		public Container<String> getMyNewUserNameField() {
+			return myNewUserNameField;
+		}
+
 	}
 
 	public static class SetVariableNameBeanPostProcessor implements BeanPostProcessor {
