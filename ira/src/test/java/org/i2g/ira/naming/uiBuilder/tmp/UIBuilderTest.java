@@ -192,6 +192,7 @@ public class UIBuilderTest extends A {
 		final H html = new UIBuilderFactory(product).create(H.class, Runnable.class);
 
 		if ("".isEmpty()) {
+			@SuppressWarnings("unused")
 			final H head = html.head();
 			final H body = html.body();
 
@@ -199,6 +200,7 @@ public class UIBuilderTest extends A {
 			body.a(href("http://some.url"));
 			body.p().div();
 		} else {
+			@SuppressWarnings("unused")
 			final H ret = html.body().p().other().ret();
 		}
 
@@ -209,6 +211,7 @@ public class UIBuilderTest extends A {
 
 	}
 
+	@SuppressWarnings("unused")
 	private H newMethod(H html) {
 		return html.body().p().other().ret();
 	}
