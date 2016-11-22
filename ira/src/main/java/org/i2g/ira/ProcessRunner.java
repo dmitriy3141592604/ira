@@ -67,7 +67,7 @@ public class ProcessRunner extends ContextClass implements ApplicationContextAwa
 		final Collection<Object> values = applicationContext.getBeansOfType(Object.class).values();
 		final TreeSet<Object> retVal = new TreeSet<Object>();
 		for (final Object p : values) {
-			final String targetProcess = new ProcessNameExtractor().getProcessName(p.toString());
+			final String targetProcess = new ProcessNameExtractor("org.i2g.ira.processlist.").getProcessName(p.toString());
 			if (targetProcess != null) {
 				retVal.add(p);
 			}

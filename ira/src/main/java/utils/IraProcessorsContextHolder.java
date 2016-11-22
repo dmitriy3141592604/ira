@@ -1,7 +1,7 @@
 package utils;
 
 @SuppressWarnings("unchecked")
-public class IraProcessorsContextHolder {
+public abstract class IraProcessorsContextHolder {
 
 	private static final ThreadLocal<Object> value = new ThreadLocal<Object>();
 
