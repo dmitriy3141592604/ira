@@ -3,6 +3,7 @@ package utils;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
+/** TODO Добавить проверку, что у теста есть необходимые аннотации с описанием его ответственности **/
 public class IraTest {
 
 	private StringBuilder testLog;

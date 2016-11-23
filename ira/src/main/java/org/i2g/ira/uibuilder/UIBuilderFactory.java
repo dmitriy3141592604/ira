@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 
 public class UIBuilderFactory<ValueType> {
 
-	private ClassLoader classLoader = this.getClass().getClassLoader();
+	private final ClassLoader classLoader = this.getClass().getClassLoader();
 
 	private final Forest<ValueType> productRoot;
 
@@ -38,8 +38,5 @@ public class UIBuilderFactory<ValueType> {
 	private ValueType asValueType(Method method, Object[] args) {
 		return valueTransformer.transform(method, args);
 	}
-
-	public void setClassLoader(ClassLoader classLoader) {
-		this.classLoader = classLoader;
-	}
+	// TODO Нужно обеспечить инжекцию класлоадера
 }

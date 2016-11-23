@@ -1,4 +1,4 @@
 /**
  * Пакет содержит диаграмму использования системы
  */
-package l1.uml.usercases;
+package l1.uml.diagrams.usecases;

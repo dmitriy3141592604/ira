@@ -6,6 +6,7 @@ import org.junit.Test;
 
 public class FunnyVariables {
 
+	@SuppressWarnings("unused")
 	@Test
 	public void tryIt() {
 		final String ＿ = "";
