@@ -1,15 +1,17 @@
 package utils;
 
 /**
- *  F_IXME Тут можно проверить покрытие тестами невызываемого дефолтного конструктора
+ * F_IXME Тут можно проверить покрытие тестами невызываемого дефолтного
+ * конструктора
  *
- *  Result: Специальный тест с вызовом дефолтного конструктора обеспечил полное покрытие.
+ * Result: Специальный тест с вызовом дефолтного конструктора обеспечил полное
+ * покрытие.
  *
  */
 public abstract class ActorUtils {
 
 	public static boolean hasActorAnnotation(Class<?> c) {
-		return c.isAnnotationPresent(Actor.class);
+		return ReflectionUtils.isAnnotationPresent(c, Actor.class);
 	}
 
 }
