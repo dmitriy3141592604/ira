@@ -6,10 +6,6 @@ public class Tuple<F, S> {
 
 	private final S snd;
 
-	public <D> Tuple(F fst, S snd, D f) {
-		this(fst, snd);
-	}
-
 	public Tuple(F fst, S snd) {
 		this.fst = fst;
 		this.snd = snd;
@@ -23,7 +19,7 @@ public class Tuple<F, S> {
 		return snd;
 	}
 
-	public static <FF, SS> Tuple<FF, SS> newTuple(FF name, SS consumer) {
-		return new Tuple<FF, SS>(name, consumer);
+	public static <FF, SS> Tuple<FF, SS> newTuple(FF fst, SS snd) {
+		return new Tuple<FF, SS>(fst, snd);
 	}
 }

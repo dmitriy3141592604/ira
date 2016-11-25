@@ -1,14 +1,13 @@
 package l1.uml.usecases;
 
-import org.junit.Before;
+import static org.junit.Assert.assertNotNull;
 
-public class BayProductTest {
+import org.junit.Test;
 
-	private BayProduct bayProduct;
+public abstract class BayProductTest {
 
-	@Before
-	public final void setUpBayProductTest() {
-		bayProduct = new BayProduct();
+	@Test
+	public final void test$instantiate() {
+		assertNotNull(new BayProduct());
 	}
-
 }

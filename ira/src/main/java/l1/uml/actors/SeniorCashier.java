@@ -1,7 +1,5 @@
 package l1.uml.actors;
 
-import org.springframework.stereotype.Component;
-
 import l1.uml.diagrams.usecases.ModelElement;
 import utils.Actor;
 import utils.Translation;

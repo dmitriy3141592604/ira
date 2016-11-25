@@ -3,7 +3,10 @@ package utils;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
-/** TODO Добавить проверку, что у теста есть необходимые аннотации с описанием его ответственности **/
+/**
+ * TODO Добавить проверку, что у теста есть необходимые аннотации с описанием
+ * его ответственности
+ **/
 public class IraTest {
 
 	private StringBuilder testLog;
@@ -21,6 +24,19 @@ public class IraTest {
 
 	protected String resultLog() {
 		return testLog.toString();
+	}
+
+	protected void print(Object... items) {
+		boolean first = true;
+		for (final Object object : items) {
+			if (!first) {
+				System.out.print(" ");
+
+			}
+			System.out.print(object.toString());
+			first = false;
+		}
+		System.out.println();
 	}
 
 }

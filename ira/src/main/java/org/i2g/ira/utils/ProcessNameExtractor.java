@@ -42,7 +42,7 @@ public class ProcessNameExtractor {
 		return i;
 	}
 
-	public static ProcessNameExtractor newInstance(String prefix) {
+	public static ProcessNameExtractor newProcessNameExtractor(String prefix) {
 		return new ProcessNameExtractor(prefix);
 	}
 
