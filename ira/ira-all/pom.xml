@@ -14,10 +14,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.plugin.version>3.6.0</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
-
 		<mockito.core.version>1.9.5</mockito.core.version>
-		<!-- TODO Change to 4.3.4 2016.11.19 -->
-		<spring.version>4.2.6.RELEASE</spring.version>
+		<spring.version>4.3.4.RELEASE</spring.version>
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.14</log4j.version>
 	</properties>
