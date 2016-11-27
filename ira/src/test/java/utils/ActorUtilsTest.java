@@ -8,9 +8,8 @@ import org.junit.Test;
 
 public class ActorUtilsTest {
 
-	@Actor
 	/** Анотация {@see Actor} присутствует **/
-	public static class ActorUtilsTestHelperPositive {
+	public static class ActorUtilsTestHelperPositive implements Actor {
 
 	}
 

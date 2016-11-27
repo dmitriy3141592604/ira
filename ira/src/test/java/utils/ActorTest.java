@@ -1,11 +1,10 @@
 package utils;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-@Actor
-class ActorTestHelper {
+class ActorTestHelper implements Actor {
 
 }
 
@@ -13,7 +12,7 @@ public class ActorTest extends IraTest {
 
 	@Test
 	public void test$isPresent() {
-		assertNotNull(ActorTestHelper.class.getAnnotation(Actor.class));
+		assertEquals(true, Actor.class.isAssignableFrom(ActorTestHelper.class));
 	}
 
 }
