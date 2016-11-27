@@ -1,7 +1,7 @@
 package test.uibuilder;
 
 import org.i2g.ira.uibuilder.Attribute;
-import org.i2g.ira.uibuilder.StringAttributeSerializer;
+import org.i2g.ira.uibuilder.AttributeSerializer;
 import org.junit.Before;
 
 import utils.IraTest;
@@ -11,7 +11,7 @@ public class AttributeBuilderTestBase extends IraTest {
 	protected AttributeBiulderTestTagHelper attrs;
 
 	protected String transform(Attribute attr) {
-		final StringAttributeSerializer serializer = new StringAttributeSerializer();
+		final AttributeSerializer serializer = new AttributeSerializer();
 		return serializer.serialize(attr);
 	}
 

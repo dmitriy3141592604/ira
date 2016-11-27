@@ -1,12 +1,15 @@
 package test.uibuilder;
 
+import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.Forest;
-import org.junit.Assert;
+import org.i2g.ira.uibuilder.Tag;
 import org.junit.Before;
 
-public class ForestTestBase extends Assert {
+import utils.IraTest;
 
-	protected Forest<String> root;
+public class ForestTestBase extends IraTest {
+
+	protected Forest<Tag> root;
 
 	protected StringBuilder log;
 
@@ -16,8 +19,8 @@ public class ForestTestBase extends Assert {
 		this.log = new StringBuilder();
 	}
 
-	protected Forest<String> newForest(String string) {
-		return new Forest<String>("root");
+	protected Forest<Tag> newForest(String string) {
+		return new Forest<Tag>(new Element("root"));
 	}
 
 }

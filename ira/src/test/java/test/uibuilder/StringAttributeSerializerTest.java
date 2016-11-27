@@ -2,13 +2,13 @@ package test.uibuilder;
 
 import static org.junit.Assert.assertEquals;
 
-import org.i2g.ira.uibuilder.StringAttributeSerializer;
+import org.i2g.ira.uibuilder.AttributeSerializer;
 import org.junit.Test;
 
 import utils.Behavior;
 import utils.Responsibility;
 
-@Responsibility(type = StringAttributeSerializer.class, value = "Обеспечивает сериализацию модели html аттрибута")
+@Responsibility(type = AttributeSerializer.class, value = "Обеспечивает сериализацию модели html аттрибута")
 public class StringAttributeSerializerTest extends StringAttributeSerializerTestBase {
 
 	@Test

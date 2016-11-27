@@ -3,12 +3,13 @@ package test.uibuilder;
 import java.lang.reflect.Method;
 
 import org.i2g.ira.uibuilder.Forest;
+import org.i2g.ira.uibuilder.Tag;
 import org.i2g.ira.uibuilder.Transformer;
 import org.i2g.ira.uibuilder.UIBuilderFactory;
 import org.junit.Assert;
 import org.junit.Before;
 
-public abstract class UIBuilderTestBase<ValueType> extends Assert {
+public abstract class UIBuilderTestBase<ValueType extends Tag> extends Assert {
 
 	protected UIBuilderFactory<ValueType> factory;
 

@@ -1,7 +1,7 @@
 package test.uibuilder;
 
 import org.i2g.ira.uibuilder.Attribute;
-import org.i2g.ira.uibuilder.StringAttributeSerializer;
+import org.i2g.ira.uibuilder.AttributeSerializer;
 import org.junit.Before;
 
 import testutils.RandomizedTest;
@@ -9,7 +9,7 @@ import utils.IraTest;
 
 public abstract class StringAttributeSerializerTestBase extends IraTest implements RandomizedTest {
 
-	private StringAttributeSerializer serializer;
+	private AttributeSerializer serializer;
 
 	private String aName;
 
@@ -30,7 +30,7 @@ public abstract class StringAttributeSerializerTestBase extends IraTest implemen
 
 	@Before
 	public void setAttribute2StringTransformerTestBase() {
-		serializer = new StringAttributeSerializer();
+		serializer = new AttributeSerializer();
 	}
 
 	/**

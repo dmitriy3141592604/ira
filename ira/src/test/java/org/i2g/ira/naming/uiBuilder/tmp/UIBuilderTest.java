@@ -132,22 +132,17 @@ class UIBuilderFactory {
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 				final Forest child = parent.addChild(method.getName());
 				if (method.getName().equals("a")) {
-					//					System.out.println(method.getName());
 				}
 				for (final Object top : args) {
-					//					System.out.println(top.getClass());
 					if (top.getClass().toString().charAt(6) == '[') {
 						for (final Object inner : (Object[]) top) {
 							if (inner instanceof Attribute) {
 								final Attribute attr = (Attribute) inner;
-								//								 System.out.println(method.getName());
 								child.addAttribute(attr);
 							}
 						}
 					}
 				}
-				//System.out.println(method.getName());
-
 				return create(child, method.getReturnType());
 			}
 

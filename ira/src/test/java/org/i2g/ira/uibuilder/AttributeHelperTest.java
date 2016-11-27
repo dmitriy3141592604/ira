@@ -6,12 +6,11 @@ import org.junit.Test;
 
 public class AttributeHelperTest {
 
-	@Test
+	@Test // Требуется для Emma
 	public void test() {
-		final AttributeHelper attributeHelper = new AttributeHelper() {
+		assertNotNull(new AttributeHelper() {
 
-		};
-		assertNotNull(attributeHelper);
+		});
 	}
 
 }

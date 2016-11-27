@@ -1,16 +1,19 @@
 package test.uibuilder;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.concurrent.Callable;
 
+import org.i2g.ira.uibuilder.Attribute;
+import org.i2g.ira.uibuilder.Attributes;
+import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.ProductVisitor;
+import org.i2g.ira.uibuilder.Tag;
+import org.i2g.ira.uibuilder.TextElement;
 import org.i2g.ira.uibuilder.Transformer;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class UIBuilderTest extends UIBuilderTestBase<String> {
+public class UIBuilderTest extends UIBuilderTestBase<Tag> implements Attributes {
 
 	private ProductVisitor visitor;
 
@@ -52,7 +55,7 @@ public class UIBuilderTest extends UIBuilderTestBase<String> {
 	@Test
 	public void test$productCreation() {
 		newRoot();
-		assertEquals("root", productRoot.getValue());
+		assertEquals("root", ((Element) productRoot.getValue()).getName());
 	}
 
 	/** TODO С этого места нужно форкать тест, и делать другой TestCase. **/
@@ -101,17 +104,25 @@ public class UIBuilderTest extends UIBuilderTestBase<String> {
 	}
 
 	interface Tagged {
-		Tagged script(String src);
+		Tagged script(Attribute src);
+
+		Tagged text(String string);
 	}
 
 	@Test
-	@Ignore
 	public void test$attributesCreation() {
-		newTaggedRoot().script("//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js");
+		newTaggedRoot().script(src("//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"));
 
 		productRoot.visit(visitor);
 
-		assertEquals("<root><script src='//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script></root>", visitor.resultLog());
+		assertEquals("<root><script src=\"//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js\"></script></root>", visitor.resultLog());
+	}
+
+	@Test
+	public void test$textNodeCreation() {
+		newTaggedRoot().text("Hello");
+		productRoot.visit(visitor);
+		assertEquals("<root>Hello</root>", visitor.resultLog());
 	}
 
 	private I newRoot() {
@@ -123,28 +134,27 @@ public class UIBuilderTest extends UIBuilderTestBase<String> {
 	}
 
 	@Override
-	protected String newRootValueType() {
-		return "root";
+	protected Element newRootValueType() {
+		return new Element("root");
 	}
 
 	@Override
-	protected Transformer<Method, String> newMethodTransformer() {
-		return new Transformer<Method, String>() {
+	protected Transformer<Method, Tag> newMethodTransformer() {
+		return new Transformer<Method, Tag>() {
 
 			@Override
-			public String transform(Method from, Object[] args) {
-				final StringBuilder result = new StringBuilder();
-				final String name = from.getName();
-				result.append(name);
-				final Parameter[] parameters = from.getParameters();
-				for (final Parameter p : parameters) {
-					result.append(" ");
-					result.append(p.getName());
-					result.append("=");
-					result.append('"');
-					result.append('"');
+			public Tag transform(Method from, Object[] args) {
+				final Element element = new Element(from.getName());
+				if (args != null) {
+					for (final Object arg : args) {
+						if (arg instanceof Attribute) {
+							element.addAttribute((Attribute) arg);
+						} else if (arg instanceof String) {
+							return new TextElement(arg.toString());
+						}
+					}
 				}
-				return result.toString();
+				return element;
 			}
 		};
 	}

@@ -3,7 +3,7 @@ package org.i2g.ira.uibuilder;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Forest<ValueType> {
+public class Forest<ValueType extends Tag> {
 
 	private final ValueType value;
 
@@ -30,6 +30,6 @@ public class Forest<ValueType> {
 	public void visit(ForestVisitor<ValueType> visitor) {
 		visitor.begin(value);
 		children.forEach(child -> child.visit(visitor));
-		visitor.endValue(value);
+		visitor.end(value);
 	}
 }

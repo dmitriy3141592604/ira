@@ -114,6 +114,7 @@ class SequenceDiagramModel {
 		return new Dimension(width, height);
 	}
 
+	@SuppressWarnings("unused")
 	private void drawLabel(Graphics2D g) {
 
 		final String str = "Здравствуй, Мир!";

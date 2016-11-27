@@ -1,10 +1,12 @@
 package org.i2g.ira.uibuilder;
 
+import java.util.Collection;
+
 /**
  * Выполняет сериализацию модели html аттрибута {@linkplain Attribute}
  * TODO Добавить возможность использовать внешний StringBuilder
  */
-public class StringAttributeSerializer {
+public class AttributeSerializer {
 
 	/**
 	 * Сериализует определение html аттрибута в строку, начинающуюся с пробела (для облегчения вывода в поток)
@@ -12,7 +14,7 @@ public class StringAttributeSerializer {
 	 * @param attribute
 	 * @return строка, в которой символы в значении аттрибута экранированы
 	 */
-	public String serialize(Attribute attribute) {
+	public String serialize(Attribute attribute, StringBuilder sb) {
 
 		final String aName = attribute.getName();
 		final String aValue = attribute.getValue();
@@ -22,7 +24,6 @@ public class StringAttributeSerializer {
 			throw new IllegalArgumentException(s);
 		}
 
-		final StringBuilder sb = new StringBuilder();
 		sb.append(" ");
 		sb.append(aName);
 
@@ -110,6 +111,17 @@ public class StringAttributeSerializer {
 			return prefferedQuote;
 		}
 
+	}
+
+	public String serialize(Attribute attribute) {
+		final StringBuilder sb = new StringBuilder();
+		serialize(attribute, sb);
+		return sb.toString();
+	}
+
+	public String serialize(Collection<Attribute> attributes, StringBuilder sb) {
+		attributes.forEach(a -> serialize(a, sb));
+		return sb.toString();
 	}
 
 }
