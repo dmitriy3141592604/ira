@@ -21,8 +21,19 @@
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.14</log4j.version>
 	</properties>
+	<scm>
+		<developerConnection>scm:git:https://github.com/dmitriy3141592604/ira.git</developerConnection>
+	</scm>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
