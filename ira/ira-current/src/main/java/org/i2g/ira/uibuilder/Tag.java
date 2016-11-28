@@ -8,4 +8,8 @@ public interface Tag {
 
 	public void end(StringBuilder log);
 
+	public Tag addChield(Tag tag);
+
+	public void visit(TagVisitor visitor);
+
 }

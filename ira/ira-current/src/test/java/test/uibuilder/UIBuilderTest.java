@@ -6,16 +6,14 @@ import java.util.concurrent.Callable;
 import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.Element;
-import org.i2g.ira.uibuilder.ProductVisitor;
 import org.i2g.ira.uibuilder.Tag;
-import org.i2g.ira.uibuilder.TextElement;
 import org.i2g.ira.uibuilder.Transformer;
 import org.junit.Before;
 import org.junit.Test;
 
 public class UIBuilderTest extends UIBuilderTestBase<Tag> implements Attributes {
 
-	private ProductVisitor visitor;
+	private TagVisitorSerializer visitor;
 
 	interface I {
 		J a();
@@ -55,13 +53,13 @@ public class UIBuilderTest extends UIBuilderTestBase<Tag> implements Attributes 
 	@Test
 	public void test$productCreation() {
 		newRoot();
-		assertEquals("root", ((Element) productRoot.getValue()).getName());
+		assertEquals("root", ((Element) productRoot).getName());
 	}
 
 	/** TODO С этого места нужно форкать тест, и делать другой TestCase. **/
 	@Before
 	public void setUpUIBuilderTest() {
-		visitor = new ProductVisitor();
+		visitor = new TagVisitorSerializer(new StringBuilder());
 	}
 
 	@Test
@@ -140,23 +138,7 @@ public class UIBuilderTest extends UIBuilderTestBase<Tag> implements Attributes 
 
 	@Override
 	protected Transformer<Method, Tag> newMethodTransformer() {
-		return new Transformer<Method, Tag>() {
-
-			@Override
-			public Tag transform(Method from, Object[] args) {
-				final Element element = new Element(from.getName());
-				if (args != null) {
-					for (final Object arg : args) {
-						if (arg instanceof Attribute) {
-							element.addAttribute((Attribute) arg);
-						} else if (arg instanceof String) {
-							return new TextElement(arg.toString());
-						}
-					}
-				}
-				return element;
-			}
-		};
+		return new DefaultMethodTransformer();
 	}
 
 }

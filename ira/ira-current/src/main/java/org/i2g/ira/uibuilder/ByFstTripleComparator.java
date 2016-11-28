@@ -4,11 +4,11 @@ import java.util.Comparator;
 
 import utils.Triple;
 
-public class ByFstComparator implements Comparator<Triple<Character, String, String>> {
+public class ByFstTripleComparator implements Comparator<Triple<Character, String, String>> {
 
-	private static ByFstComparator instance = new ByFstComparator();
+	private static ByFstTripleComparator instance = new ByFstTripleComparator();
 
-	public static ByFstComparator byFstComparatorInstance() {
+	public static ByFstTripleComparator byFstComparatorInstance() {
 		return instance;
 	}
 

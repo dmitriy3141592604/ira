@@ -1,6 +1,6 @@
 package org.i2g.ira.uibuilder;
 
-import static org.i2g.ira.uibuilder.ByFstComparator.byFstComparatorInstance;
+import static org.i2g.ira.uibuilder.ByFstTripleComparator.byFstComparatorInstance;
 import static utils.Triple.newTriple;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class AttributeSerializer {
 		char[] protectableCharsList;
 		String[] noProtectablesingleQuoteCharsList;
 		String[] noProtectableDoubleQuoteCharsList;
-		private ByFstComparator byFstComparator = byFstComparatorInstance();
+		private ByFstTripleComparator byFstComparator = byFstComparatorInstance();
 
 		private final List<Triple<Character, String, String>> tmpArray = new ArrayList<Triple<Character, String, String>>();
 
@@ -78,7 +78,7 @@ public class AttributeSerializer {
 			tmpArray.add(newTriple(c, string, string2));
 		}
 
-		public void setByFstComparatorInstance(ByFstComparator byFstComparator) {
+		public void setByFstComparatorInstance(ByFstTripleComparator byFstComparator) {
 			this.byFstComparator = byFstComparator;
 		}
 

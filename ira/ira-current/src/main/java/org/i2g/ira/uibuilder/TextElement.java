@@ -17,7 +17,7 @@ public class TextElement implements Tag {
 
 	@Override
 	public void end(StringBuilder log) {
-		
+
 	}
 
 	@Override
@@ -27,6 +27,16 @@ public class TextElement implements Tag {
 
 	public String getText() {
 		return text;
+	}
+
+	@Override
+	public Tag addChield(Tag tag) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void visit(TagVisitor visitor) {
+		visitor.onText(text);
 	}
 
 }

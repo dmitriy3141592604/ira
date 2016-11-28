@@ -2,7 +2,6 @@ package test.uibuilder;
 
 import java.lang.reflect.Method;
 
-import org.i2g.ira.uibuilder.Forest;
 import org.i2g.ira.uibuilder.Tag;
 import org.i2g.ira.uibuilder.Transformer;
 import org.i2g.ira.uibuilder.UIBuilderFactory;
@@ -11,18 +10,18 @@ import org.junit.Before;
 
 public abstract class UIBuilderTestBase<ValueType extends Tag> extends Assert {
 
-	protected UIBuilderFactory<ValueType> factory;
+	protected UIBuilderFactory factory;
 
-	protected Forest<ValueType> productRoot;
+	protected Tag productRoot;
 
 	@Before
 	public void setUIBuilderFactoryBase() {
-		productRoot = new Forest<ValueType>(newRootValueType());
-		factory = new UIBuilderFactory<ValueType>(productRoot, newMethodTransformer());
+		productRoot = newRootValueType();
+		factory = new UIBuilderFactory(productRoot, newMethodTransformer());
 	}
 
-	protected abstract Transformer<Method, ValueType> newMethodTransformer();
+	protected abstract Transformer<Method, Tag> newMethodTransformer();
 
-	protected abstract ValueType newRootValueType();
+	protected abstract Tag newRootValueType();
 
 }

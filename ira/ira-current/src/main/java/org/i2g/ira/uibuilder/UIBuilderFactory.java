@@ -4,15 +4,15 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public class UIBuilderFactory<ValueType extends Tag> {
+public class UIBuilderFactory {
 
 	private final ClassLoader classLoader = this.getClass().getClassLoader();
 
-	private final Forest<ValueType> productRoot;
+	private final Tag productRoot;
 
-	private final Transformer<Method, ValueType> valueTransformer;
+	private final Transformer<Method, Tag> valueTransformer;
 
-	public UIBuilderFactory(Forest<ValueType> productRoot, Transformer<Method, ValueType> valueTransformer) {
+	public UIBuilderFactory(Tag productRoot, Transformer<Method, Tag> valueTransformer) {
 		this.productRoot = productRoot;
 		this.valueTransformer = valueTransformer;
 	}
@@ -24,7 +24,7 @@ public class UIBuilderFactory<ValueType extends Tag> {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T> T newProxy(Forest<ValueType> currentRoot, final Class<?>... interfaces) {
+	private <T> T newProxy(Tag currentRoot, final Class<?>... interfaces) {
 		return (T) Proxy.newProxyInstance(classLoader, interfaces, new InvocationHandler() {
 
 			@Override
@@ -35,7 +35,7 @@ public class UIBuilderFactory<ValueType extends Tag> {
 		});
 	}
 
-	private ValueType asValueType(Method method, Object[] args) {
+	private Tag asValueType(Method method, Object[] args) {
 		return valueTransformer.transform(method, args);
 	}
 	// TODO Нужно обеспечить инжекцию класлоадера
