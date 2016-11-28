@@ -125,6 +125,7 @@ public class NamedVariableTest extends IraTest {
 	}
 
 	@Test
+	@ToDenis
 	public void testyName() {
 		try (final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(User.class,
 				SetVariableNameBeanPostProcessor.class)) {
