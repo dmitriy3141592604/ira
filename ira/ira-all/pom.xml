@@ -8,9 +8,11 @@
 	<version>0.0.1-SHAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
+		<module>../ira-spec</module>
 		<module>../ira-current</module>
 	</modules>
 	<properties>
+		<ira.project.version>0.0.1-SHAPSHOT</ira.project.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.plugin.version>3.6.0</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>3.0.2</maven.jar.plugin.version>
@@ -30,20 +32,8 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<!-- 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven.jar.plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			 -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> <version>${maven.jar.plugin.version}</version> <executions> 
+				<execution> <goals> <goal>test-jar</goal> </goals> </execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 
