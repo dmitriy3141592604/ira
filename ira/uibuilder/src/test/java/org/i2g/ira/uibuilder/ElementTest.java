@@ -22,12 +22,4 @@ public class ElementTest implements RandomizedTest {
 		assertEquals(aName, element.getAttributes().get(0).getName());
 	}
 
-	@Test
-	public void test$body() {
-		final Element e = new Element(randomString());
-		final StringBuilder sb = new StringBuilder();
-		e.body(sb);
-		assertEquals("", sb.toString());
-	}
-
 }

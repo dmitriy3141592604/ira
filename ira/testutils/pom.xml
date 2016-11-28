@@ -10,13 +10,6 @@
 	<artifactId>testutils</artifactId>
 
 	<dependencies>
-<!--
-		<dependency>
-			<groupId>ira</groupId>
-			<artifactId>ira-spec</artifactId>
-			<version>${ira.project.version}</version>
-		</dependency>
--->
 	</dependencies>
 
 </project>

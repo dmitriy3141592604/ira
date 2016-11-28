@@ -16,9 +16,12 @@ public final class DefaultMethodTransformer implements Transformer<Method, Tag> 
 			for (final Object arg : args) {
 				if (arg instanceof Attribute) {
 					element.addAttribute((Attribute) arg);
+					continue;
 				} else if (arg instanceof String) {
 					return new TextElement(arg.toString());
 				}
+
+				throw new IllegalArgumentException("Argument with class: " + arg.getClass() + " not supported");
 			}
 		}
 		return element;

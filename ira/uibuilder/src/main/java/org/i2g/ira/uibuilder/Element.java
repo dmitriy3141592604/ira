@@ -11,8 +11,6 @@ public class Element implements Tag {
 
 	private final List<Tag> childred = new ArrayList<Tag>();
 
-	private final AttributeSerializer attributeSerializer = new AttributeSerializer();
-
 	public Element(String name) {
 		this.name = name;
 	}
@@ -20,26 +18,6 @@ public class Element implements Tag {
 	public Element addAttribute(Attribute attribute) {
 		attributes.add(attribute);
 		return this;
-	}
-
-	@Override
-	public void body(StringBuilder log) {
-		log.append("");
-	}
-
-	@Override
-	public void start(StringBuilder log) {
-		log.append("</");
-		log.append(name);
-		attributes.forEach(a -> attributeSerializer.serialize(a, log));
-		log.append(">");
-	}
-
-	@Override
-	public void end(StringBuilder log) {
-		log.append("<");
-		log.append(name);
-		log.append(">");
 	}
 
 	public String getName() {

@@ -2,40 +2,36 @@ package org.i2g.ira.uibuilder;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import test.uibuilder.TagVisitorSerializer;
 import testutils.RandomizedTest;
 
 public class TextElementTest implements RandomizedTest {
 
-	private StringBuilder sb;
-
-	@Before
-	public void setUpTextElementTestBase() {
-		sb = new StringBuilder();
-	}
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
 
 	@Test
 	public void test$start() {
-		new TextElement(randomString()).start(sb);
-		assertEquals("", sb.toString());
-
+		final TagVisitorSerializer visitor = new TagVisitorSerializer();
+		final String randomString = randomString();
+		new TextElement(randomString).visit(visitor);
+		assertEquals(randomString, visitor.resultLog());
 	}
 
 	@Test
-	public void test$end() {
-		new TextElement(randomString()).end(sb);
-		assertEquals("", sb.toString());
-
+	public void test$getText() {
+		final String rs = randomString();
+		assertEquals(rs, new TextElement(rs).getText());
 	}
 
 	@Test
-	public void test$body() {
-		final String body = randomString();
-		new TextElement(body).body(sb);
-		assertEquals(body, sb.toString());
-
+	public void test$addChield() {
+		exception.expect(UnsupportedOperationException.class);
+		new TextElement(randomString()).addChield(new Element(randomString()));
 	}
 
 }

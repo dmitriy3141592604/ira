@@ -11,20 +11,6 @@ public class TextElement implements Tag {
 		this.text = text;
 	}
 
-	@Override
-	public void start(StringBuilder log) {
-	}
-
-	@Override
-	public void end(StringBuilder log) {
-
-	}
-
-	@Override
-	public void body(StringBuilder log) {
-		log.append(getText());
-	}
-
 	public String getText() {
 		return text;
 	}

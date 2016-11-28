@@ -49,7 +49,7 @@ public class AttributeSerializer {
 		char[] protectableCharsList;
 		String[] noProtectablesingleQuoteCharsList;
 		String[] noProtectableDoubleQuoteCharsList;
-		private ByFstTripleComparator byFstComparator = byFstComparatorInstance();
+		private final ByFstTripleComparator byFstComparator = byFstComparatorInstance();
 
 		private final List<Triple<Character, String, String>> tmpArray = new ArrayList<Triple<Character, String, String>>();
 
@@ -77,10 +77,6 @@ public class AttributeSerializer {
 
 		private void registerMapping(char c, String string, String string2) {
 			tmpArray.add(newTriple(c, string, string2));
-		}
-
-		public void setByFstComparatorInstance(ByFstTripleComparator byFstComparator) {
-			this.byFstComparator = byFstComparator;
 		}
 
 	}
