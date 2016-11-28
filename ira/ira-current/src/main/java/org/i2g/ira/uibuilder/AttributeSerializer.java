@@ -1,10 +1,17 @@
 package org.i2g.ira.uibuilder;
 
+import static org.i2g.ira.uibuilder.ByFstComparator.byFstComparatorInstance;
+import static utils.Triple.newTriple;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+
+import utils.Triple;
 
 /**
  * Выполняет сериализацию модели html аттрибута {@linkplain Attribute}
- * TODO Добавить возможность использовать внешний StringBuilder
  */
 public class AttributeSerializer {
 
@@ -17,7 +24,6 @@ public class AttributeSerializer {
 	public String serialize(Attribute attribute, StringBuilder sb) {
 
 		final String aName = attribute.getName();
-		final String aValue = attribute.getValue();
 
 		if (aName == null || !aName.matches("^[-_0-9a-zA-Z]+$")) {
 			final String s = "Имя должно быт не пустым значением и содержать только буквы, цифры, подчеркивания и знак дефиса.";
@@ -27,30 +33,71 @@ public class AttributeSerializer {
 		sb.append(" ");
 		sb.append(aName);
 
+		final String aValue = attribute.getValue();
 		if (null == aValue) {
 			return sb.toString();
 		}
 
-		final ProtectResult protectResult = protect(aValue);
 		sb.append("=");
-		sb.append(protectResult.getPrefferedQuote());
-		sb.append(protectResult.getProtectedValue());
-		sb.append(protectResult.getPrefferedQuote());
+		protect(aValue, sb);
 		return sb.toString();
 	}
 
-	private ProtectResult protect(CharSequence value) {
-		final char[] protectableChars = new char[] { '\'', '"', '<', '>', '&' };
-		final String[] noProtectSingleQuote = new String[] { "'", "&quot;", "&lt;", "&gt;", "&amp;" };
-		final String[] noProtectDoubleQuote = new String[] { "&#39;", "\"", "&lt;", "&gt;", "&amp;" };
+	public static class CharProtectionSymbolsBuilder {
+
+		char[] protectableCharsList;
+		String[] noProtectablesingleQuoteCharsList;
+		String[] noProtectableDoubleQuoteCharsList;
+		private ByFstComparator byFstComparator = byFstComparatorInstance();
+
+		private final List<Triple<Character, String, String>> tmpArray = new ArrayList<Triple<Character, String, String>>();
+
+		{
+			registerMapping('\'', "'", "&39;");
+			registerMapping('"', "&quot;", "\"");
+			registerMapping('<', "&lt;", "&lt;");
+			registerMapping('>', "&gt;", "&gt;");
+			registerMapping('&', "&amp;", "&amp;");
+			@SuppressWarnings("unchecked")
+			final Triple<Character, String, String>[] sortedArray = tmpArray.toArray(new Triple[0]);
+
+			Arrays.sort(sortedArray, byFstComparator);
+			protectableCharsList = new char[sortedArray.length];
+			noProtectablesingleQuoteCharsList = new String[sortedArray.length];
+			noProtectableDoubleQuoteCharsList = new String[sortedArray.length];
+
+			for (int i = 0; i < sortedArray.length; ++i) {
+				final Triple<Character, String, String> triple = sortedArray[i];
+				protectableCharsList[i] = triple.getFst();
+				noProtectablesingleQuoteCharsList[i] = triple.getSnd();
+				noProtectableDoubleQuoteCharsList[i] = triple.getThird();
+			}
+		}
+
+		private void registerMapping(char c, String string, String string2) {
+			tmpArray.add(newTriple(c, string, string2));
+		}
+
+		public void setByFstComparatorInstance(ByFstComparator byFstComparator) {
+			this.byFstComparator = byFstComparator;
+		}
+
+	}
+
+	private final CharProtectionSymbolsBuilder precompiledCharacterMapping = new CharProtectionSymbolsBuilder();
+
+	private void protect(CharSequence value, StringBuilder sb) {
+		final char[] protectableChars = precompiledCharacterMapping.protectableCharsList;
+		final String[] noProtectSingleQuote = precompiledCharacterMapping.noProtectablesingleQuoteCharsList;
+		final String[] noProtectDoubleQuote = precompiledCharacterMapping.noProtectableDoubleQuoteCharsList;
+
 		String[] protectResult = noProtectSingleQuote;
 
-		final StringBuilder out = new StringBuilder();
+		final StringBuilder out = sb;
 		boolean hasSingleQuote = false;
 		boolean hasDoubleQuote = false;
 
-		// TODO Нет необходимости проходить весь массив. Как только включится режим mixed можно заканчивать
-		for (int i = 0; i < value.length(); ++i) {
+		for (int i = 0; i < value.length() && (!hasSingleQuote && !hasDoubleQuote); ++i) {
 			final char c = value.charAt(i);
 			hasSingleQuote |= c == '\'';
 			hasDoubleQuote |= c == '"';
@@ -65,52 +112,25 @@ public class AttributeSerializer {
 			prefferedQuote = '\'';
 			protectResult = noProtectDoubleQuote;
 		}
-
+		sb.append(prefferedQuote);
+		final char maxChar = protectableChars[protectableChars.length - 1];
 		for (int i = 0; i < value.length(); ++i) {
-			final char c = value.charAt(i);
-			String outString = String.valueOf(c);
-			// TODO Лучше бы использовать бинарый поиск
-			for (int j = 0; j < protectableChars.length; ++j) {
-				if (c == protectableChars[j]) {
-					outString = protectResult[j];
-				}
-			}
-			out.append(outString);
+			calculateOutString(value.charAt(i), protectableChars, protectResult, maxChar, out);
 		}
-
-		return new ProtectResult(out.toString(), prefferedQuote);
+		sb.append(prefferedQuote);
 	}
 
-	/**
-	 * Результат обработки входной строки в которой необходимо экранировать символы
-	 *
-	 */
-	private static class ProtectResult {
-
-		private final CharSequence protectedValue;
-
-		private final Character prefferedQuote;
-
-		public ProtectResult(CharSequence protectedValue, Character prefferedQuote) {
-			this.protectedValue = protectedValue;
-			this.prefferedQuote = prefferedQuote;
+	private void calculateOutString(final char c, final char[] protectableChars, String[] protectResult, char maxChar, StringBuilder out) {
+		if (c > maxChar) {
+			out.append(c);
+			return;
 		}
-
-		/**
-		 * @return Результирующая строка с экранированными символами
-		 */
-		public CharSequence getProtectedValue() {
-			return protectedValue;
+		final int idx = Arrays.binarySearch(protectableChars, c);
+		if (idx >= 0) {
+			out.append(protectResult[idx]);
+			return;
 		}
-
-		/**
-		 *
-		 * @return Результат с рекомендуемым символом ограничителя для строки
-		 */
-		public Character getPrefferedQuote() {
-			return prefferedQuote;
-		}
-
+		out.append(c);
 	}
 
 	public String serialize(Attribute attribute) {
