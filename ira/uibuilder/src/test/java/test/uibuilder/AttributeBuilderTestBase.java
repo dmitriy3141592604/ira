@@ -4,9 +4,7 @@ import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.AttributeSerializer;
 import org.junit.Before;
 
-import utils.IraTest;
-
-public class AttributeBuilderTestBase extends IraTest {
+public class AttributeBuilderTestBase {
 
 	protected AttributeBiulderTestTagHelper attrs;
 

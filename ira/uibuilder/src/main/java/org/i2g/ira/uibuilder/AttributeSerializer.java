@@ -1,6 +1,6 @@
 package org.i2g.ira.uibuilder;
 
-import static org.i2g.ira.uibuilder.ByFstTripleComparator.byFstComparatorInstance;
+import static utils.ByFstTripleComparator.byFstComparatorInstance;
 import static utils.Triple.newTriple;
 
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import utils.ByFstTripleComparator;
 import utils.Triple;
 
 /**

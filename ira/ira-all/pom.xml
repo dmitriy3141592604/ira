@@ -8,7 +8,10 @@
 	<version>0.0.1-SHAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
+		<module>../testutils</module>
+		<module>../utils</module>
 		<module>../ira-spec</module>
+		<module>../uibuilder</module>
 		<module>../ira-current</module>
 	</modules>
 	<properties>

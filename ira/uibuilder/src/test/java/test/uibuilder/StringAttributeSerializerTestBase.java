@@ -5,9 +5,8 @@ import org.i2g.ira.uibuilder.AttributeSerializer;
 import org.junit.Before;
 
 import testutils.RandomizedTest;
-import utils.IraTest;
 
-public abstract class StringAttributeSerializerTestBase extends IraTest implements RandomizedTest {
+public abstract class StringAttributeSerializerTestBase implements RandomizedTest {
 
 	private AttributeSerializer serializer;
 

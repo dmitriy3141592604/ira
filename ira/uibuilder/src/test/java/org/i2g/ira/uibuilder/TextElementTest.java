@@ -6,9 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import testutils.RandomizedTest;
-import utils.IraTest;
 
-public class TextElementTest extends IraTest implements RandomizedTest {
+public class TextElementTest implements RandomizedTest {
 
 	private StringBuilder sb;
 

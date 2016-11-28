@@ -5,9 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import testutils.RandomizedTest;
-import utils.IraTest;
 
-public class AttributesTest extends IraTest implements RandomizedTest {
+public class AttributesTest implements RandomizedTest {
 
 	@Test
 	public void test() {
