@@ -32,15 +32,15 @@ public class SpecWriter {
 			out.println(head);
 			for (final Action executedAction : spec.getExecutedActions()) {
 				final Triple<String, String, String> command = executedAction.getSeleniumCode();
-				final StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append("<tr><td>");
-				stringBuilder.append(nullAsEmptyString(command.getFst()));
-				stringBuilder.append("</td><td>");
-				stringBuilder.append(nullAsEmptyString(command.getSnd()));
-				stringBuilder.append("</td><td>");
-				stringBuilder.append(nullAsEmptyString(command.getThird()));
-				stringBuilder.append("</td></tr>");
-				out.println(stringBuilder.toString());
+				final StringBuilder sb = new StringBuilder();
+				sb.append("<tr><td>");
+				sb.append(nullAsEmptyString(command.getFst()));
+				sb.append("</td><td>");
+				sb.append(nullAsEmptyString(command.getSnd()));
+				sb.append("</td><td>");
+				sb.append(nullAsEmptyString(command.getThird()));
+				sb.append("</td></tr>");
+				out.println(sb.toString());
 			}
 			out.println(footer);
 		});
