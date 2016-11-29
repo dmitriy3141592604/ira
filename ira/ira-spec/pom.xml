@@ -7,5 +7,17 @@
 		<relativePath>..\ira-all</relativePath>
 	</parent>
 	<artifactId>ira-spec</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>ira</groupId>
+			<artifactId>utils</artifactId>
+			<version>${ira.project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ira</groupId>
+			<artifactId>uibuilder</artifactId>
+			<version>${ira.project.version}</version>
+		</dependency>
+	</dependencies>
 </project>
 
