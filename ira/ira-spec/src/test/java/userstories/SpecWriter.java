@@ -1,8 +1,8 @@
 package userstories;
 
+import static utils.io.OnFileWriter.onFileWriter;
+
 import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 
 import userstories.actions.Action;
 import userstories.actions.ActionDescription;
@@ -19,8 +19,8 @@ public class SpecWriter {
 		dumpSeleniumTest(spec, "c:\\wks\\tmp\\tmpPage\\tests\\" + UserCaseVanilaSpec.class.getSimpleName() + ".html");
 	}
 
-	private static void dumpSeleniumTest(UserCaseVanilaSpec spec, String setleniumTestCaseFileName) throws Exception {
-		try (PrintWriter out = new PrintWriter(new FileWriter(new File(setleniumTestCaseFileName)))) {
+	private static void dumpSeleniumTest(UserCaseVanilaSpec spec, String setleniumTestCaseFileName) {
+		onFileWriter(new File(setleniumTestCaseFileName), out -> {
 			final String head = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n"
 					+ "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n"
 					+ "<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">\r\n" + "<body>\r\n"
@@ -43,7 +43,7 @@ public class SpecWriter {
 				out.println(stringBuilder.toString());
 			}
 			out.println(footer);
-		}
+		});
 
 	}
 

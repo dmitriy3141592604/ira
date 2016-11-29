@@ -29,4 +29,8 @@ public class OnFileWriter {
 		}
 	}
 
+	public static void onFileWriter(File file, IOConsumer<PrintWriter> f) {
+		new OnFileWriter(file).accept(f);
+	}
+
 }
