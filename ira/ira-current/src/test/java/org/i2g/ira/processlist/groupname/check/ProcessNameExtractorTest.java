@@ -65,4 +65,5 @@ abstract class ProcessNameExtractorTestBase extends IraTest implements Randomize
 		final ProcessNameExtractor extractor = newProcessNameExtractor(prefix);
 		return extractor.getProcessName(className);
 	}
+
 }
