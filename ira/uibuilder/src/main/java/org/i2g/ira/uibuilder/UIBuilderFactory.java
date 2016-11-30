@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 
 public class UIBuilderFactory {
 
-	private final ClassLoader classLoader = this.getClass().getClassLoader();
+	private ClassLoader classLoader = this.getClass().getClassLoader();
 
 	private final Tag productRoot;
 
@@ -25,7 +25,7 @@ public class UIBuilderFactory {
 
 	@SuppressWarnings("unchecked")
 	private <T> T newProxy(Tag currentRoot, final Class<?>... interfaces) {
-		return (T) Proxy.newProxyInstance(classLoader, interfaces, new InvocationHandler() {
+		return (T) Proxy.newProxyInstance(getClassLoader(), interfaces, new InvocationHandler() {
 
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) {
@@ -38,5 +38,12 @@ public class UIBuilderFactory {
 	private Tag asValueType(Method method, Object[] args) {
 		return valueTransformer.transform(method, args);
 	}
-	// TODO Нужно обеспечить инжекцию класлоадера
+
+	public ClassLoader getClassLoader() {
+		return classLoader;
+	}
+
+	public void setClassLoader(ClassLoader classLoader) {
+		this.classLoader = classLoader;
+	}
 }
