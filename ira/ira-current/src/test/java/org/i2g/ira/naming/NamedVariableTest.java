@@ -14,11 +14,11 @@ import utils.IraTest;
 
 public class NamedVariableTest extends IraTest {
 
-	public interface NamedVariable {
+	public interface OldNamedVariable {
 		void setName(String variableName);
 	}
 
-	public static class Container<Value> implements NamedVariable {
+	public static class Container<Value> implements OldNamedVariable {
 
 		private Value value;
 
@@ -106,9 +106,9 @@ public class NamedVariableTest extends IraTest {
 			try {
 				for (final Field field : bean.getClass().getDeclaredFields()) {
 					final Class<?> fieldType = field.getType();
-					if (NamedVariable.class.isAssignableFrom(fieldType)) {
+					if (OldNamedVariable.class.isAssignableFrom(fieldType)) {
 						field.setAccessible(true);
-						((NamedVariable) field.get(bean)).setName(field.getName());
+						((OldNamedVariable) field.get(bean)).setName(field.getName());
 					}
 				}
 				return bean;
@@ -125,7 +125,6 @@ public class NamedVariableTest extends IraTest {
 	}
 
 	@Test
-	@ToDenis
 	public void testyName() {
 		try (final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(User.class,
 				SetVariableNameBeanPostProcessor.class)) {

@@ -45,10 +45,8 @@ body {
 
 /** Отключаем отображение страниц по умолчанию */
 .pages > ul.tab-titles ~ div {
-	/*
 	margin-top: 40px;
 	display: none;
-	*/
 }
 
 /* Размещаем содержимое страницы в новой строке */
@@ -56,6 +54,9 @@ body {
 	display: block;
 	clear: both;
 }
+
+.pages.tab-1 > ul.tab-titles ~ div.tab-1 { display:block; }
+.pages.tab-2 > ul.tab-titles ~ div.tab-2 { display:block; }
 
 /** Все лейблы страницы слева */
 .pages > div > label {

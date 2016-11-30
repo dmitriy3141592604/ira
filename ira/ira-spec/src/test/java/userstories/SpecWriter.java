@@ -11,12 +11,22 @@ import utils.Triple;
 public class SpecWriter {
 
 	public static void main(String[] args) throws Exception {
+		// Application
+
 		final UserCaseVanilaSpec spec = new UserCaseVanilaSpec();
 		spec.execute();
-
+		// Спека
 		dumpSpecToConsole(spec);
 
+		// Тесты
 		dumpSeleniumTest(spec, "c:\\wks\\tmp\\tmpPage\\tests\\" + UserCaseVanilaSpec.class.getSimpleName() + ".html");
+
+		// Html для шаблонов
+		//
+
+		// Js для фронта
+
+		// CSS для фронта
 	}
 
 	private static void dumpSeleniumTest(UserCaseVanilaSpec spec, String setleniumTestCaseFileName) {
