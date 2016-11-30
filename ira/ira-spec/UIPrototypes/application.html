@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+	<head>
+		<title>ККА система</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="reset200802.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+		<div class="pages tab-2">
+
+			<ul class='tab-titles'>
+				<li>Касса</li>
+				<li>Витрина товаров</li>
+			</ul>
+
+			<div class="cash-mashine-page selected">
+				<label>Посчитать сумму</label>
+				<button>Посчитать сумму заказа</button>
+
+				<label>Сумма к оплате</label>
+				<input />
+
+				<label>Сумма наличности в кассу</label>
+				<input id="use-cash-summ"/>
+
+				<label>Внести сумму</label>
+				<button id="pay-products-in-car">Оплатить</button>
+				
+			</div>
+
+			<div class="product-selection-page">
+				<label>Выберите товар</label>
+				<select class="product-list">
+					<option>Potatos</option>
+					<option>Bread</option>
+				</select>
+
+				<label>Выберите количество</label>
+				<select>
+					<option selected>1</option>
+					<option>2</option>
+				</select>
+
+				<label>Положите в корзину</label>
+				<button id="add-selected-product-to-car-action">Положить в корзину</button>
+			</div>
+
+
+		</div>
+	<body>
+	</body>
+</html>
