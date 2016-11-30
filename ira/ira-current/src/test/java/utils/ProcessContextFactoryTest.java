@@ -11,20 +11,14 @@ import org.junit.Test;
 
 public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 
-	private Named named;
+	private NameWithAgeAware named;
 
-	// TODO rename
-	public interface Named {
-		String getName();
-
-		String setName(String string);
-
-		Long getAge();
+	public interface NameWithAgeAware extends AgeAware, NameAware {
 	}
 
 	@Before
 	public void setUpProcessContextFactoryTest() {
-		named = factory.create(Named.class, new HashMap<String, Object>());
+		named = factory.create(NameWithAgeAware.class, new HashMap<String, Object>());
 	}
 
 	@Test
