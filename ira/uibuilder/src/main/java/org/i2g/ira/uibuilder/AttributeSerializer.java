@@ -9,11 +9,10 @@ import java.util.Collection;
 import java.util.List;
 
 import utils.ByFstTripleComparator;
+import utils.Responsibility;
 import utils.Triple;
 
-/**
- * Выполняет сериализацию модели html аттрибута {@linkplain Attribute}
- */
+@Responsibility("Обеспечивает сериализацию модели html аттрибута")
 public class AttributeSerializer {
 
 	/**

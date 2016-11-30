@@ -32,7 +32,7 @@ public class OnFileWriterTestBase implements RandomizedTest {
 
 	}
 
-	protected void execute(final IOConsumer<PrintWriter> execute) {
+	protected void execute(final ExceptionConsumer<PrintWriter> execute) {
 		try {
 			exchangePoint = tmpFolder.newFile(fileName);
 		} catch (final IOException e) {

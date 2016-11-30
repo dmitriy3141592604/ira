@@ -1,20 +1,24 @@
 package utils.io;
 
+import static utils.Safer.safe;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
+
+import utils.Responsibility;
 
 /**
  * Предоставляет интерфейс для возможности записи в файл или Writer
  * без необходимости объявлять функцию с throws IOException или ловить IOException.
  *
  */
+@Responsibility("Скрывает особенности жизненного цикла файлого потока на запись. В том числе исключительные ситуации")
 public class OnFileWriter {
 
-	public static void onFileWriter(File file, IOConsumer<PrintWriter> f) {
+	public static void onFileWriter(File file, ExceptionConsumer<PrintWriter> f) {
 		new OnFileWriter(file).accept(f);
 	}
 
@@ -25,15 +29,11 @@ public class OnFileWriter {
 	}
 
 	public OnFileWriter(File exchangePoint) {
-		try {
-			this.writer = new FileWriter(exchangePoint);
-		} catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
+		this.writer = safe(() -> new FileWriter(exchangePoint));
 	}
 
-	public void accept(IOConsumer<PrintWriter> f) {
-		try (final PrintWriter out = new PrintWriter(new BufferedWriter(writer));) {
+	public void accept(ExceptionConsumer<PrintWriter> f) {
+		try (final PrintWriter out = new PrintWriter(new BufferedWriter(writer))) {
 			f.save(out);
 		}
 	}

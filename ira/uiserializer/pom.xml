@@ -7,19 +7,19 @@
 		<relativePath>..\ira-all</relativePath>
 	</parent>
 
-	<artifactId>ira-current</artifactId>
+	<artifactId>uiserializer</artifactId>
 
 	<dependencies>
 
 		<dependency>
 			<groupId>ira</groupId>
-			<artifactId>ira-spec</artifactId>
+			<artifactId>uibuilder</artifactId>
 			<version>${ira.project.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>ira</groupId>
-			<artifactId>uibuilder</artifactId>
+			<artifactId>uicomponents</artifactId>
 			<version>${ira.project.version}</version>
 		</dependency>
 
@@ -32,5 +32,4 @@
 
 	</dependencies>
 
-	<description>Существующий артефакт, из которого выделяются модули с четкими задачами</description>
 </project>

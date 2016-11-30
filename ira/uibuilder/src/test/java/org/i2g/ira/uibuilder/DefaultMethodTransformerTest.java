@@ -1,43 +1,52 @@
 package org.i2g.ira.uibuilder;
 
+import static org.i2g.ira.uibuilder.AttributeHelper.newAttribute;
 import static org.junit.Assert.assertEquals;
+import static utils.Safer.safe;
 
 import java.lang.reflect.Method;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import test.uibuilder.DefaultMethodTransformer;
 import testutils.RandomizedTest;
 
-public class DefaultMethodTransformerTest implements RandomizedTest {
+public class DefaultMethodTransformerTest extends DefaultMethodTransformerTestBase implements RandomizedTest {
 
-	@Rule
-	public ExpectedException exception = ExpectedException.none();
+	private final Method toStringMethod = safe(() -> String.class.getMethod("toString"));
 
 	@Test
 	public void test$StringArgument() throws Exception {
-		final DefaultMethodTransformer t = new DefaultMethodTransformer();
-		final String rs = randomString();
-		final Method toStringMethod = String.class.getMethod("toString");
-		final Tag tag = t.transform(toStringMethod, new Object[] { rs });
+
+		final Tag tag = transform(toStringMethod, rs);
+
 		assertEquals(rs, ((TextElement) tag).getText());
 	}
 
 	@Test
 	public void test$unsupportedArgumet() throws Exception {
+
 		exception.expect(IllegalArgumentException.class);
 
-		final DefaultMethodTransformer t = new DefaultMethodTransformer();
-		final Method toStringMethod = String.class.getMethod("toString");
-
-		t.transform(toStringMethod, new Object[] { new Runnable() {
-			@Override
-			public void run() {
-			}
-		} });
+		transform(toStringMethod, runnable);
 
 	}
+
+	@Test
+	public void test$argsIsNull() {
+		final Tag transform = transform(toStringMethod);
+		assertEquals("toString", ((Element) transform).getName());
+	}
+
+	@Test
+	public void test$twoArgument() {
+		final Tag transform = transform(toStringMethod, newAttribute("one"), newAttribute("two"));
+		assertEquals("toString", ((Element) transform).getName());
+	}
+
+	//	@Test
+	//	public void test$varargsSupport() {
+	//		final Tag transform = transform(toStringMethod, new Object[] { new Object[] { newAttribute(rs) } });
+	//		assertEquals(rs, ((Element) transform).getAttributes().get(0).getName());
+	//	}
 
 }

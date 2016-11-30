@@ -6,7 +6,9 @@
 		<version>0.0.1-SHAPSHOT</version>
 		<relativePath>..\ira-all</relativePath>
 	</parent>
+
 	<artifactId>uibuilder</artifactId>
+
 	<dependencies>
 		<dependency>
 			<groupId>ira</groupId>

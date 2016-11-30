@@ -10,6 +10,7 @@
 	<modules>
 		<module>../testutils</module>
 		<module>../utils</module>
+		<module>../uicomponents</module>
 		<module>../ira-spec</module>
 		<module>../uibuilder</module>
 		<module>../ira-current</module>
@@ -68,4 +69,5 @@
 		</dependency>
 
 	</dependencies>
+	<description>Корневой обобщающий проект для сборки.</description>
 </project>

@@ -9,13 +9,8 @@ public class UserBayProductsVanilaSpec extends ApplicationSpec {
 		final CashMashinePage cmp = a.getCashMashinePage();
 
 		cmp.calculateOrderSumm();
-		cmp.putCashIntoCashMashine(rub(100));
+		cmp.putCashIntoCashMashine(100);
 		cmp.pay();
 
 	}
-
-	private Rub rub(int i) {
-		return null;
-	}
-
 }

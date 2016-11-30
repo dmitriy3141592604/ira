@@ -6,18 +6,25 @@
 		<version>0.0.1-SHAPSHOT</version>
 		<relativePath>..\ira-all</relativePath>
 	</parent>
+
 	<artifactId>ira-spec</artifactId>
+
 	<dependencies>
+
 		<dependency>
 			<groupId>ira</groupId>
 			<artifactId>utils</artifactId>
 			<version>${ira.project.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>ira</groupId>
-			<artifactId>uibuilder</artifactId>
+			<artifactId>uicomponents</artifactId>
 			<version>${ira.project.version}</version>
 		</dependency>
+
 	</dependencies>
+
+	<description>Спецификация разрабатваемого приложения</description>
 </project>
 

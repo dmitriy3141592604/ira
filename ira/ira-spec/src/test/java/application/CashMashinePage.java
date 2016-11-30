@@ -1,7 +1,5 @@
 package application;
 
-import java.util.ArrayList;
-
 import userstories.actions.ActionDescription;
 
 // TOD Сменить аннотацию
@@ -12,13 +10,8 @@ public class CashMashinePage extends Page {
 	private final UIButton calculateSumm;
 
 	public CashMashinePage() {
-		$(calculateSumm = new UIButton("Посчитать сумму"));
-		$(otherSummCalculator = new UIButton());
-	}
-
-	private void $(UIButton uiButton) {
-		arrayList = new ArrayList<Object>();
-		arrayList.add(uiButton);
+		calculateSumm = new UIButton("Посчитать сумму");
+		otherSummCalculator = new UIButton();
 	}
 
 	@ActionDescription("Другой Запрос на рассчет суммы заказа")
@@ -30,15 +23,12 @@ public class CashMashinePage extends Page {
 	@ActionDescription("Внести оплату за товар")
 	private final PayAction payAction = new PayAction();
 
-	private ArrayList<Object> arrayList;
-
-	// @ActionDescription("Запросить на кассе сумму товара")
 	public void calculateOrderSumm() {
 		calculateSumm.run();
 	}
 
-	public void putCashIntoCashMashine(Rub rub) {
-		putCashAction.runWith(rub);
+	public void putCashIntoCashMashine(int i) {
+		putCashAction.runWith(i);
 	}
 
 	public void pay() {
