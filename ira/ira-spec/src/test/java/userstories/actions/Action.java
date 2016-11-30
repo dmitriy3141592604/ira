@@ -7,7 +7,6 @@ import utils.Triple;
 public abstract class Action implements NamedVariable {
 
 	private Observer observer;
-	private String variableName;
 
 	@Override
 	public void setOwner(Observer observer) {
@@ -24,14 +23,12 @@ public abstract class Action implements NamedVariable {
 		return this;
 	}
 
-	@Deprecated
 	public Triple<String, String, String> getSeleniumCode() {
 		throw new IllegalStateException("");
 	}
 
 	@Override
 	public void setVariableName(String variableName) {
-		this.variableName = variableName;
 	}
 
 	@Override
