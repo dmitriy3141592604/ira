@@ -6,11 +6,11 @@ import utils.Triple;
 public class UIButton extends Action {
 
 	public UIButton() {
-		// TODO Auto-generated constructor stub
+		// XXX Auto-generated constructor stub
 	}
 
 	public UIButton(String string) {
-		// TODO Auto-generated constructor stub
+		// XXX Auto-generated constructor stub
 	}
 
 	@Override
