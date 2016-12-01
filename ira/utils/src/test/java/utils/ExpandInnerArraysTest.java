@@ -2,9 +2,19 @@ package utils;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Before;
 import org.junit.Test;
 
-public class ExpandInnerArraysTest {
+import testutils.RandomizedTest;
+
+public class ExpandInnerArraysTest implements RandomizedTest {
+
+	private ExpandInnerArray expander;
+
+	@Before
+	public void setUpExpandInnerArrayTestBase() {
+		expander = new ExpandInnerArray();
+	}
 
 	@Test
 	public void test$expand() {
@@ -21,8 +31,8 @@ public class ExpandInnerArraysTest {
 		assertEquals("|one|two|three", log.toString());
 	}
 
-	private Object[] expand(Object[] objects3) {
-		return new ExpandInnerArray().expand(objects3);
+	private Iterable<Object> expand(Object[] objects3) {
+		return expander.expand(objects3);
 	}
 
 }

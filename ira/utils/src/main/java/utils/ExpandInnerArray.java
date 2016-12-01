@@ -1,5 +1,8 @@
 package utils;
 
+import static java.util.Arrays.asList;
+import static utils.BuiltinArraysUtils.isBuiltinArray;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -7,23 +10,18 @@ import java.util.Collection;
 /** TODO Обеспечить работу с Collection **/
 public class ExpandInnerArray {
 
-	public Object[] expand(Object[] objects3) {
-		return expand(objects3, new ArrayList<Object>()).toArray(new Object[0]);
+	public Iterable<Object> expand(Object[] objects) {
+		return expand(new ArrayList<Object>(), objects);
 	}
 
-	private Collection<Object> expand(Object objects, Collection<Object> acc) {
-		// TODO Выделить 2016.12.01 общий метод (startsWith 'class ["
-		if (objects.getClass().toString().charAt(6) != '[') {
-			acc.add(objects);
-		} else {
-			for (final Object o : (Object[]) objects) {
-				if (o.getClass().toString().charAt(6) != '[') {
-					acc.add(o);
-				} else {
-					expand(o, acc);
-				}
+	private Collection<Object> expand(Collection<Object> acc, Object... objects) {
+		asList(objects).forEach(object -> {
+			if (isBuiltinArray(object)) {
+				expand(acc, (Object[]) object);
+			} else {
+				acc.add(object);
 			}
-		}
+		});
 		return acc;
 	}
 
