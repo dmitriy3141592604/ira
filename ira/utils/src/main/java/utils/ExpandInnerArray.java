@@ -10,6 +10,7 @@ import java.util.Collection;
 /** TODO Обеспечить работу с Collection **/
 public class ExpandInnerArray {
 
+	/** Извлекает из многоуровнего массива массивов линейный список объектов */
 	public Iterable<Object> expand(Object[] objects) {
 		return expand(new ArrayList<Object>(), objects);
 	}

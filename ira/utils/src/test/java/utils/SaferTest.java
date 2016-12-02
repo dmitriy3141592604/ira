@@ -5,7 +5,6 @@ import static org.junit.Assert.assertNotNull;
 import static utils.Safer.safe;
 
 import java.io.IOException;
-import java.util.Random;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +20,7 @@ public class SaferTest implements RandomizedTest {
 	@Test
 	@Behavior("При нормальной работе возвращает значение из замыкания")
 	public void test$positive$noException() {
-		final Random r = random();
+		final String r = randomString();
 		assertEquals(r, safe(() -> r));
 	}
 
@@ -36,7 +35,7 @@ public class SaferTest implements RandomizedTest {
 
 	@Test
 	@Behavior("Заглушка для эммы, проверяем, что дефолтный конструктор не взрывается")
-	public void test$defaultConstructorWorking() {
+	public void test$forEmma() {
 		assertNotNull(new Safer());
 	}
 
