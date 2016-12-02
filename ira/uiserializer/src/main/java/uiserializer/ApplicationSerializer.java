@@ -1,7 +1,6 @@
 package uiserializer;
 
 import java.io.File;
-import java.lang.reflect.Method;
 
 import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.Element;
@@ -21,23 +20,16 @@ public class ApplicationSerializer implements Attributes {
 
 	private HTMLElements html;
 
+	final Class<Translation> trnsitionLabel = Translation.class;
+
 	private TagVisitorSerializer visitor;
 
 	{
-		UIBuilderFactory factory;
 		sb = new StringBuilder();
 		documentRoot = new Element("html");
-		factory = new UIBuilderFactory(documentRoot, new DefaultMethodTransformer());
+		final UIBuilderFactory factory = new UIBuilderFactory(documentRoot, new DefaultMethodTransformer());
 		html = factory.create(HTMLElements.class);
-		visitor = new TagVisitorSerializer(sb) {
-
-			@Override
-			public void beforeElement() {
-				sb.append("\n");
-				super.beforeElement();
-			}
-
-		};
+		visitor = new IndentTagVisitorSerializer(sb);
 	}
 
 	private final String rootPath = "./html/";
@@ -60,31 +52,33 @@ public class ApplicationSerializer implements Attributes {
 			{
 				final HTMLElements pages = body.div(klass("pages"));
 				{
-					final HTMLElements ul = pages.ul();
-					final HTMLElements pageContent = pages;
-					for (final Method method : navigator.methods()) {
-						final String value = method.getAnnotation(Translation.class).value();
-						ul.li().text(value);
+
+					{
+						final HTMLElements ul = pages.ul();
+						navigator.models().forEach(m -> ul.li().text(m.from(trnsitionLabel).value()));
 					}
-					for (final Method method : navigator.methods()) {
-						final HTMLElements page = pageContent.div(klass(method.getName()));
-						final Class<?> pageItems = method.getReturnType();
-						for (final Method pageMethod : pageItems.getMethods()) {
+
+					for (final MethodModel method : navigator.models()) {
+
+						final HTMLElements page = pages.div(klass(method.getName()));
+						for (final MethodModel pageMethod : method.getReturnTypeNavigator().models()) {
+
 							final String methodName = pageMethod.getName();
-							if (methodName.startsWith("set") || methodName.startsWith("get") || methodName.startsWith("submit")) {
 
-								try {
-									final Translation annotation = pageMethod.getAnnotation(Translation.class);
-									page.label().text(annotation.value());
+							if (methodName.startsWith("set")) {
+								page.label().text(pageMethod.from(trnsitionLabel).value());
+								page.input(type("text"));
+							}
 
-									page.input(type("text"));
-
-								} catch (final Exception exception) {
-									System.err.println("Errory by processing: " + pageItems + " " + pageMethod);
-									throw new RuntimeException(exception);
-								}
+							if (methodName.startsWith("get")) {
+								page.label().text(pageMethod.from(trnsitionLabel).value());
+								page.input(type("text"));
+							}
+							if (methodName.startsWith("submit")) {
+								page.input(type("submit"));
 							}
 						}
+
 					}
 				}
 			}

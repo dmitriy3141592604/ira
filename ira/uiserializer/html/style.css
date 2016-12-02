@@ -14,7 +14,7 @@ body {
 }
 
 /** Выравниваем заголовки страниц в одну строку */
-.pages > ul.tab-titles li {
+.pages > ul li {
 	display: inline;
 	float:left;
 }
@@ -61,13 +61,13 @@ body {
 /** Все лейблы страницы слева */
 .pages > div > label {
 	float: left;
-	clear: both;
+	clear: left;
 	margin: 3px;
 	min-width: 200px;
 }
 
 /** все, что не метки на странице - справа */
-.pages > div > :not(label) {
+.pages > div > input {
 	float: left;
 	clear: right;
 	margin: 3px;

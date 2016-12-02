@@ -17,6 +17,13 @@ import utils.Value;
 public class OnFileWriterTest extends OnFileWriterTestBase implements RandomizedTest {
 
 	@Test
+	public void test$staticConstructor() {
+		createExchangePoint();
+		OnFileWriter.onFileWriter(exchangePoint, pw -> {
+		});
+	}
+
+	@Test
 	public void testFileWriting() throws Exception {
 
 		execute(out -> {

@@ -4,7 +4,7 @@ package utils;
 public class Safer {
 
 	public static <T> T safe(ExceptionSupplier<T> ec) {
-		return ec.save();
+		return ec.safe();
 	}
 
 }

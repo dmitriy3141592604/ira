@@ -33,12 +33,16 @@ public class OnFileWriterTestBase implements RandomizedTest {
 	}
 
 	protected void execute(final ExceptionConsumer<PrintWriter> execute) {
+		createExchangePoint();
+		new OnFileWriter(exchangePoint).accept(execute);
+	}
+
+	protected File createExchangePoint() {
 		try {
-			exchangePoint = tmpFolder.newFile(fileName);
+			return exchangePoint = tmpFolder.newFile(fileName);
 		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
-		new OnFileWriter(exchangePoint).accept(execute);
 	}
 
 }

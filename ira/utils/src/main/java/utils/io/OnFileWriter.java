@@ -33,9 +33,13 @@ public class OnFileWriter {
 	}
 
 	public void accept(ExceptionConsumer<PrintWriter> f) {
-		try (final PrintWriter out = new PrintWriter(new BufferedWriter(writer))) {
+		try (final PrintWriter out = wrap()) {
 			f.save(out);
 		}
+	}
+
+	private PrintWriter wrap() {
+		return new PrintWriter(new BufferedWriter(writer));
 	}
 
 }

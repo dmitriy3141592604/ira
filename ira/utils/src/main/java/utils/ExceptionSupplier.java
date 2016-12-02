@@ -5,7 +5,7 @@ public interface ExceptionSupplier<T> {
 
 	T get() throws Exception;
 
-	default T save() {
+	default T safe() {
 		try {
 			return get();
 		} catch (final Exception exception) {

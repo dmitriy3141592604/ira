@@ -1,5 +1,7 @@
 package uiserializer;
 
+import static java.util.stream.Collectors.toList;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +15,6 @@ public class TypeNavigator {
 
 	public TypeNavigator(Class<?> cursor) {
 		this.cursor = cursor;
-
 	}
 
 	public Collection<Method> methods() {
@@ -22,6 +23,14 @@ public class TypeNavigator {
 			methods.add(method);
 		}
 		return methods;
+	}
+
+	public Collection<MethodModel> models() {
+		return methods().stream().map(MethodModel::new).collect(toList());
+	}
+
+	public String simpleName() {
+		return cursor.getSimpleName();
 	}
 
 }
