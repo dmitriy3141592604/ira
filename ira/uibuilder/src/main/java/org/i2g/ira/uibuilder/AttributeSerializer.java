@@ -16,7 +16,8 @@ import utils.Triple;
 public class AttributeSerializer {
 
 	/**
-	 * Сериализует определение html аттрибута в строку, начинающуюся с пробела (для облегчения вывода в поток)
+	 * Сериализует определение html аттрибута в строку, начинающуюся с пробела
+	 * (для облегчения вывода в поток)
 	 *
 	 * @param attribute
 	 * @return строка, в которой символы в значении аттрибута экранированы
@@ -135,9 +136,8 @@ public class AttributeSerializer {
 		return sb.toString();
 	}
 
-	public String serialize(Collection<Attribute> attributes, StringBuilder sb) {
+	public void serialize(Collection<Attribute> attributes, StringBuilder sb) {
 		attributes.forEach(a -> serialize(a, sb));
-		return sb.toString();
 	}
 
 }

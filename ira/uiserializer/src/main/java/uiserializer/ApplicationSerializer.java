@@ -19,13 +19,12 @@ public class ApplicationSerializer implements Attributes {
 
 	private Element documentRoot;
 
-	private UIBuilderFactory factory;
-
 	private HTMLElements html;
 
 	private TagVisitorSerializer visitor;
 
 	{
+		UIBuilderFactory factory;
 		sb = new StringBuilder();
 		documentRoot = new Element("html");
 		factory = new UIBuilderFactory(documentRoot, new DefaultMethodTransformer());
@@ -49,6 +48,7 @@ public class ApplicationSerializer implements Attributes {
 
 		final TypeNavigator navigator = new TypeNavigator(application);
 		{
+			/** Создаем блок head **/
 			final HTMLElements head = html.head();
 			head.title().text("ККА система");
 			head.meta(charset("utf-8"));
@@ -70,19 +70,29 @@ public class ApplicationSerializer implements Attributes {
 						final HTMLElements page = pageContent.div(klass(method.getName()));
 						final Class<?> pageItems = method.getReturnType();
 						for (final Method pageMethod : pageItems.getMethods()) {
-							page.label().text(pageMethod.getAnnotation(Translation.class).value());
+							final String methodName = pageMethod.getName();
+							if (methodName.startsWith("set") || methodName.startsWith("get") || methodName.startsWith("submit")) {
+
+								try {
+									final Translation annotation = pageMethod.getAnnotation(Translation.class);
+									page.label().text(annotation.value());
+
+									page.input(type("text"));
+
+								} catch (final Exception exception) {
+									System.err.println("Errory by processing: " + pageItems + " " + pageMethod);
+									throw new RuntimeException(exception);
+								}
+							}
 						}
 					}
-
 				}
 			}
 		}
 
 		documentRoot.visit(visitor);
 
-		applictionHtml.accept(out -> {
-			out.write(sb.toString());
-		});
+		applictionHtml.accept(out -> out.write(sb.toString()));
 
 	}
 
