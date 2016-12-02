@@ -8,7 +8,8 @@ import org.i2g.ira.uibuilder.TagVisitorBase;
 
 public class TagVisitorSerializer extends TagVisitorBase {
 
-	private final StringBuilder sb;
+	// XXX Протестировать protected
+	protected final StringBuilder sb;
 
 	private final AttributeSerializer as = new AttributeSerializer();
 

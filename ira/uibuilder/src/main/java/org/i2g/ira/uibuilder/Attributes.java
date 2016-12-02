@@ -1,6 +1,7 @@
 package org.i2g.ira.uibuilder;
 
 import static org.i2g.ira.uibuilder.AttributeBuilder.asAttribute;
+import static org.i2g.ira.uibuilder.AttributeBuilder.asNamedAttribute;
 
 import utils.Responsibility;
 
@@ -13,5 +14,21 @@ public interface Attributes {
 
 	default Attribute type(String type) {
 		return asAttribute(type);
+	}
+
+	default Attribute charset(String charset) {
+		return asAttribute(charset);
+	}
+
+	default Attribute rel(String rel) {
+		return asAttribute(rel);
+	}
+
+	default Attribute href(String href) {
+		return asAttribute(href);
+	}
+
+	default Attribute klass(String className) {
+		return asNamedAttribute("class", className);
 	}
 }

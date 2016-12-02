@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -125,6 +126,7 @@ public class NamedVariableTest extends IraTest {
 	}
 
 	@Test
+	@Ignore
 	public void testyName() {
 		try (final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(User.class,
 				SetVariableNameBeanPostProcessor.class)) {

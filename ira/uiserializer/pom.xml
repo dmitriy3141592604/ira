@@ -13,6 +13,12 @@
 
 		<dependency>
 			<groupId>ira</groupId>
+			<artifactId>ira-spec</artifactId>
+			<version>${ira.project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ira</groupId>
 			<artifactId>uibuilder</artifactId>
 			<version>${ira.project.version}</version>
 		</dependency>

@@ -1,4 +1,4 @@
-package application.support;
+package application;
 
 import userstories.actions.ActionDescription;
 

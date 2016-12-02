@@ -6,10 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// XXXF Удалить использования TYPE
-@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
-@Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.METHOD })
 public @interface ActionDescription {
 
 	String value();

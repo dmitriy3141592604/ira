@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.ANNOTATION_TYPE, ElementType.TYPE })
+@Target({ ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.METHOD })
 public @interface Translation {
 
 	/**
