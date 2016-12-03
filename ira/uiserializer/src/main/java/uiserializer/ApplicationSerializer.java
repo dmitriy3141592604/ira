@@ -39,14 +39,7 @@ public class ApplicationSerializer implements Attributes {
 	public void process(Class<?> application) {
 
 		final TypeNavigator navigator = new TypeNavigator(application);
-		{
-			/** Создаем блок head **/
-			final HTMLElements head = html.head();
-			head.title().text("ККА система");
-			head.meta(charset("utf-8"));
-			head.link(rel("stylesheet"), href("reset200802.css"));
-			head.link(rel("stylesheet"), href("style.css"));
-		}
+		asHeader();
 		{
 			final HTMLElements body = html.body();
 			{
@@ -88,6 +81,17 @@ public class ApplicationSerializer implements Attributes {
 
 		applictionHtml.accept(out -> out.write(sb.toString()));
 
+	}
+
+	public void asHeader() {
+		asSerializer(html.head());
+	}
+
+	private void asSerializer(final HTMLElements head) {
+		head.title().text("ККА система");
+		head.meta(charset("utf-8"));
+		head.link(rel("stylesheet"), href("reset200802.css"));
+		head.link(rel("stylesheet"), href("style.css"));
 	}
 
 }

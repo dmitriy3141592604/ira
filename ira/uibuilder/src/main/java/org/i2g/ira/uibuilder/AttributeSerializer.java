@@ -1,12 +1,14 @@
 package org.i2g.ira.uibuilder;
 
+import static java.util.Arrays.binarySearch;
+import static java.util.Arrays.sort;
 import static utils.ByFstTripleComparator.byFstComparatorInstance;
 import static utils.Triple.newTriple;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import utils.ByFstTripleComparator;
 import utils.Responsibility;
@@ -14,6 +16,12 @@ import utils.Triple;
 
 @Responsibility("Обеспечивает сериализацию модели html аттрибута")
 public class AttributeSerializer {
+
+	private static final Pattern ALLOWED_TAG_NAME_PATTERN = Pattern.compile("^[-_0-9a-zA-Z]+$");
+
+	private static final char SINGLE_QUOTE_CHAR = '\'';
+
+	private static final char DOUBLE_QUOTE_CHAR = '"';
 
 	/**
 	 * Сериализует определение html аттрибута в строку, начинающуюся с пробела
@@ -26,7 +34,7 @@ public class AttributeSerializer {
 
 		final String aName = attribute.getName();
 
-		if (aName == null || !aName.matches("^[-_0-9a-zA-Z]+$")) {
+		if (aName == null || !ALLOWED_TAG_NAME_PATTERN.matcher(aName).matches()) {
 			final String s = "Имя должно быт не пустым значением и содержать только буквы, цифры, подчеркивания и знак дефиса.";
 			throw new IllegalArgumentException(s);
 		}
@@ -59,10 +67,12 @@ public class AttributeSerializer {
 			registerMapping('<', "&lt;", "&lt;");
 			registerMapping('>', "&gt;", "&gt;");
 			registerMapping('&', "&amp;", "&amp;");
+
 			@SuppressWarnings("unchecked")
 			final Triple<Character, String, String>[] sortedArray = tmpArray.toArray(new Triple[0]);
 
-			Arrays.sort(sortedArray, byFstComparator);
+			sort(sortedArray, byFstComparator);
+
 			protectableCharsList = new char[sortedArray.length];
 			noProtectablesingleQuoteCharsList = new String[sortedArray.length];
 			noProtectableDoubleQuoteCharsList = new String[sortedArray.length];
@@ -96,17 +106,17 @@ public class AttributeSerializer {
 
 		for (int i = 0; i < value.length() && (!hasSingleQuote && !hasDoubleQuote); ++i) {
 			final char c = value.charAt(i);
-			hasSingleQuote |= c == '\'';
-			hasDoubleQuote |= c == '"';
+			hasSingleQuote |= c == SINGLE_QUOTE_CHAR;
+			hasDoubleQuote |= c == DOUBLE_QUOTE_CHAR;
 		}
 
-		char prefferedQuote = '"';
+		char prefferedQuote = DOUBLE_QUOTE_CHAR;
 		protectResult = noProtectSingleQuote;
 		if (!hasDoubleQuote) {
-			prefferedQuote = '\"';
+			prefferedQuote = DOUBLE_QUOTE_CHAR;
 			protectResult = noProtectSingleQuote;
 		} else if (!hasSingleQuote) {
-			prefferedQuote = '\'';
+			prefferedQuote = SINGLE_QUOTE_CHAR;
 			protectResult = noProtectDoubleQuote;
 		}
 		sb.append(prefferedQuote);
@@ -122,7 +132,7 @@ public class AttributeSerializer {
 			out.append(c);
 			return;
 		}
-		final int idx = Arrays.binarySearch(protectableChars, c);
+		final int idx = binarySearch(protectableChars, c);
 		if (idx >= 0) {
 			out.append(protectResult[idx]);
 			return;
