@@ -6,6 +6,9 @@
 		<version>0.0.1-SHAPSHOT</version>
 		<relativePath>..\ira-all</relativePath>
 	</parent>
+	<properties>
+		<jettyVersion>9.3.9.v20160517</jettyVersion>
+	</properties>
 
 	<artifactId>uiserializer</artifactId>
 
@@ -34,6 +37,12 @@
 			<artifactId>testutils</artifactId>
 			<version>${ira.project.version}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>${jettyVersion}</version>
 		</dependency>
 
 	</dependencies>

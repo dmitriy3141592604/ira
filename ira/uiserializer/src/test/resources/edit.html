@@ -1,0 +1,163 @@
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<style>
+			table tr td div { width : 20px; height: 30px;  background-color: #ccc;}
+			table tr td div.selected {background-color: green;}
+		</style>
+		<script>
+		/*
+		var number = "0123456789" ;
+		var lower = "abcdefghijklmnopqrstuvwxyz";
+		var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		var special1 = "!@#$%^&*()_+|";
+		var special2 = "-=\\";
+		var special3 = "[];',./";
+		var special4 = "{}:\"<>?";
+		var symbols = number + lower + upper + special1 + special2 + special3 + special4 ;
+		for(var i = 0 ;i < symbols.length ; ++i) {
+			// $("<a href=\"edit.html?=\" + symbols[i] + ">" + symbols[i] + "</a>").appendTo("#jumps");
+			$(" <a href='/edit.html?=\"c=\"'>"+ symbols[i] + "</a").appendTo("#jumps");
+		}
+		*/
+		
+		
+		$( document ).ready(function() {
+		
+			var requestedCh = window.location.search.substring(3);
+			
+			$("#charInput").val(requestedCh);
+			$("#charInput").change(function(){
+				window.location.search = "c=" + $(this).val();
+			});
+		
+			for( var x = 0 ; x < 8 ; ++ x ) {
+				for(var y = 0 ; y < 8 ; ++ y ) {
+					(function(x,y){
+					$.get("getStatus", {"x":x,"y":y,"c":$("#charInput").val()}, function(data){
+						cellStatus = data == "+" ? "selected" : "notSelected" ;
+						var address = "table " + "tr:eq(" + y + ") td:eq(" + x + ") div";
+						var cellStatus = data == "+" ? "selected" : "notSelected"; 
+    					console.log($(address).attr("class", cellStatus));
+					});
+					})(x,y);
+				}
+				
+			}
+		
+    		$("table tr td div").each(function(index) { 
+    			var x = "" + (index%8) ;
+    			var y = ((""+(index/8)).substr(0,1)) ;
+    			$(this).text("" +  x + "," + y + "")
+    			//$(this).click(function(){ console.log("clicked: [" + x + "," + y + "]" ); }); 
+    			$(this).click(function(){ 
+    				console.log("clicked: [" + x + "," + y + "]" ); 
+    				$.post("flip" , { "x":x, "y":y, "c": $("#charInput").val()}, function() {
+    						$.get(
+    							"getStatus", 
+    							{"x":x, "y":y, "c":$("#charInput").val()},
+    							function(data) {
+    								console.log(data);
+    								var address = "table " + "tr:eq(" + y + ") td:eq(" + x + ") div";
+    								console.log(address);
+    								console.log(data);
+    								var cellStatus = data == "+" ? "selected" : "notSelected"; 
+    								console.log($(address).attr("class", cellStatus)); 
+    							}
+    						);
+    					}
+    				);
+    			});
+    		});
+		});
+		</script>
+	</head>
+	<body>
+		<h3>Font editor</h3>
+		<input type="text" id="charInput" value="0"/>
+		<table>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+			<tr>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+				<td><div></div></td>
+			</tr>
+		</table>
+		<div id="jumps">
+		</div>
+	</body>
+</html>
