@@ -58,16 +58,20 @@ public class ApplicationSerializer implements Attributes {
 
 							final String methodName = pageMethod.getName();
 
-							if (methodName.startsWith("set")) {
+							final boolean isSetter = methodName.startsWith("set");
+
+							if (isSetter) {
 								page.label().text(pageMethod.from(trnsitionLabel).value());
 								page.input(type("text"));
 							}
 
-							if (methodName.startsWith("get")) {
+							final boolean isGetter = methodName.startsWith("get");
+							if (isGetter) {
 								page.label().text(pageMethod.from(trnsitionLabel).value());
 								page.input(type("text"));
 							}
-							if (methodName.startsWith("submit")) {
+							final boolean isSubmit = methodName.startsWith("submit");
+							if (isSubmit) {
 								page.input(type("submit"));
 							}
 						}

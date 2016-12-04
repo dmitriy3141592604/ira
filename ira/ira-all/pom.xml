@@ -10,6 +10,7 @@
 	<modules>
 		<module>../testutils</module>
 		<module>../utils</module>
+		<module>../logic</module>
 		<module>../uicomponents</module>
 		<module>../ira-spec</module>
 		<module>../uibuilder</module>
