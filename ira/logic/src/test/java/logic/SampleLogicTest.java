@@ -16,10 +16,31 @@ public class SampleLogicTest {
 	private Condition isSubmit;
 	private StringBuilder log;
 	private Condition printSetter;
+	private Condition isField;
 
-	public static class Combinator {
+	public static abstract class Combinator {
 
 		public static class And extends Combinator {
+
+			@Override
+			public boolean combine(StringBuilder log, Condition left, Condition right) {
+				log.append("and(");
+				final boolean v = left.getValue(log) && prorogue(() -> right.getValue(log.append(","))).get();
+				log.append(")");
+				return v;
+			}
+
+		}
+
+		public static class Or extends Combinator {
+
+			@Override
+			public boolean combine(StringBuilder log, Condition left, Condition right) {
+				log.append("or(");
+				final boolean v = left.getValue(log) || prorogue(() -> right.getValue(log.append(","))).get();
+				log.append(")");
+				return v;
+			}
 
 		}
 
@@ -29,12 +50,13 @@ public class SampleLogicTest {
 
 		public static Combinator and = new And();
 
-		public boolean eval(StringBuilder log, Condition left, Condition right) {
-			log.append("and(");
-			final boolean v = left.getValue(log) && prorogue(() -> right.getValue(log.append(","))).get();
-			log.append(")");
-			return v;
+		public static Combinator or = new Or();
+
+		public boolean eval(Combinator combinator, StringBuilder log, Condition left, Condition right) {
+			return combinator.combine(log, left, right);
 		}
+
+		public abstract boolean combine(StringBuilder log, Condition left, Condition right);
 
 	}
 
@@ -47,6 +69,8 @@ public class SampleLogicTest {
 		public String getName();
 
 		void setValue(boolean b);
+
+		Condition or(Condition isGetter);
 	}
 
 	public static class SimpleCondition implements Condition {
@@ -87,6 +111,11 @@ public class SampleLogicTest {
 			return combinedCondition;
 		}
 
+		@Override
+		public Condition or(Condition condition) {
+			return new CombinedCondition(Combinator.or, name, this, condition);
+		}
+
 	}
 
 	public static class CombinedCondition implements Condition {
@@ -117,7 +146,7 @@ public class SampleLogicTest {
 			final Iterator<Condition> iterator = source.iterator();
 			final Condition first = iterator.next();
 			while (iterator.hasNext()) {
-				retVal = combinator.eval(log, first, iterator.next());
+				retVal = combinator.eval(combinator, log, first, iterator.next());
 			}
 			return retVal;
 		}
@@ -131,6 +160,11 @@ public class SampleLogicTest {
 		public String getName() {
 			return name;
 		}
+
+		@Override
+		public Condition or(Condition condition) {
+			return new CombinedCondition(Combinator.and, name, this, condition);
+		}
 	}
 
 	@Before
@@ -141,6 +175,8 @@ public class SampleLogicTest {
 		isSubmit = new SimpleCondition("isSubmit");
 
 		printSetter = isPage.and("printSetter", isSetter);
+
+		isField = isSetter.or(isGetter);
 
 		log = new StringBuilder();
 	}
@@ -185,5 +221,21 @@ public class SampleLogicTest {
 		isSetter.setValue(true);
 		printSetter.getValue(log);
 		assertEquals("and(isPage:true,isSetter:true)", log.toString());
+	}
+
+	@Test
+	public void test$combined$or() {
+		isSetter.setValue(true);
+		isGetter.setValue(true);
+		isField.getValue(log);
+		assertEquals("or(isSetter:true)", log.toString());
+	}
+
+	@Test
+	public void test$combined$or$deepth() {
+		isSetter.setValue(false);
+		isGetter.setValue(true);
+		isField.getValue(log);
+		assertEquals("or(isSetter:false,isGetter:true)", log.toString());
 	}
 }
