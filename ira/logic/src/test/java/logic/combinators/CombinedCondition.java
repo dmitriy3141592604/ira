@@ -36,7 +36,7 @@ public class CombinedCondition extends BinaryCondition {
 		final Iterator<Condition> iterator = source.iterator();
 		final Condition first = iterator.next();
 		while (iterator.hasNext()) {
-			retVal = combinator.eval(combinator, log, first, iterator.next());
+			retVal = combinator.combine(log, first, iterator.next());
 		}
 		return retVal;
 	}

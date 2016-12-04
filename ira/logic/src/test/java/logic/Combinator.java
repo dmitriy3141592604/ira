@@ -8,29 +8,27 @@ import logiс.operators.Or;
 
 public abstract class Combinator {
 
-	public static Combinator and = new And();
+	public static And and = new And();
 
-	public static Combinator or = new Or();
+	public static Or or = new Or();
 
 	public Supplier<Boolean> prorogue(Supplier<Boolean> supplier) {
 		return supplier;
 	}
 
-	public boolean eval(Combinator combinator, StringBuilder log, Condition left, Condition right) {
-		return combinator.combine(combinator, log, left, right);
-	}
+	protected abstract String operatorName();
 
-	public abstract String operatorName();
-
-	protected boolean wrap(Combinator combinator, StringBuilder log, Condition left, Condition right) {
+	private boolean wrap(Combinator combinator, StringBuilder log, Condition left, Condition right) {
 		log.append(operatorName());
 		log.append("(");
-		final boolean v = eval(combinator, log, left, right);
+		final boolean v = eval(log, left, right);
 		log.append(")");
 		return v;
 	}
 
-	public boolean combine(Combinator combinator, StringBuilder log, Condition left, Condition right) {
+	protected abstract boolean eval(StringBuilder log, Condition left, Condition right);
+
+	public boolean combine(StringBuilder log, Condition left, Condition right) {
 		return wrap(this, log, left, right);
 	}
 

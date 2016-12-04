@@ -39,7 +39,22 @@ public class SampleLogicTest {
 	}
 
 	@Test
-	public void test$001() {
+	public void test$isPageTest$false() {
+		assertEquals("false isPage:false", withLog(isPage));
+	}
+
+	@Test
+	public void test$isPageTest$true() {
+		isPage.setValue(true);
+		assertEquals("true isPage:true", withLog(isPage));
+	}
+
+	private String withLog(Condition condition) {
+		return "" + condition.getValue(log) + " " + log.toString();
+	}
+
+	@Test
+	public void tetst$001() {
 		final Condition printSetter = isPage.and("printSetter", isSetter);
 		assertEquals(false, printSetter.getValue(new StringBuilder()));
 	}
@@ -55,14 +70,13 @@ public class SampleLogicTest {
 	@Test
 	public void test$simpleEvidence$true() {
 		isPage.setValue(true);
-		isPage.getValue(log);
-		assertEquals("isPage:true", log.toString());
+		assertEquals("true isPage:true", withLog(isPage));
 	}
 
 	@Test
 	public void test$simpleEvidence$false() {
 		isPage.setValue(false);
-		isPage.getValue(log);
+		withLog(isPage);
 		assertEquals("isPage:false", log.toString());
 	}
 

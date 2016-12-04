@@ -6,10 +6,11 @@ import logic.condition.Condition;
 public class Or extends Combinator {
 
 	@Override
-	public String operatorName() {
+	protected String operatorName() {
 		return "or";
 	}
 
+	@Override
 	protected boolean eval(StringBuilder log, Condition left, Condition right) {
 		return left.getValue(log) || prorogue(() -> right.getValue(log.append(","))).get();
 	}
