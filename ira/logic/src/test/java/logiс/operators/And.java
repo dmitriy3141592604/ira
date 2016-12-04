@@ -1,4 +1,7 @@
-package logic;
+package logiс.operators;
+
+import logic.Combinator;
+import logic.condition.Condition;
 
 public class And extends Combinator {
 

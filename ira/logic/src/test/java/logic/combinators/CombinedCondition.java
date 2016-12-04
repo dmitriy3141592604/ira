@@ -1,8 +1,12 @@
-package logic;
+package logic.combinators;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import logic.Combinator;
+import logic.condition.BinaryCondition;
+import logic.condition.Condition;
 
 public class CombinedCondition extends BinaryCondition {
 

@@ -1,6 +1,10 @@
-package logic;
+package logic.combinators;
 
 import static logic.Const.wrappedConst;
+
+import logic.Combinator;
+import logic.condition.BinaryCondition;
+import logic.condition.Condition;
 
 public class SimpleCondition extends BinaryCondition {
 

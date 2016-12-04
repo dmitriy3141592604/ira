@@ -1,4 +1,7 @@
-package logic;
+package logic.condition;
+
+import logic.Combinator;
+import logic.combinators.CombinedCondition;
 
 public abstract class BinaryCondition extends NamedCondition {
 

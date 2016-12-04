@@ -1,4 +1,4 @@
-package logic;
+package logic.condition;
 
 public abstract class NamedCondition implements Condition {
 

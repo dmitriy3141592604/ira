@@ -2,6 +2,10 @@ package logic;
 
 import java.util.function.Supplier;
 
+import logic.condition.Condition;
+import logiс.operators.And;
+import logiс.operators.Or;
+
 public abstract class Combinator {
 
 	public static Combinator and = new And();
@@ -12,7 +16,7 @@ public abstract class Combinator {
 		return supplier;
 	}
 
-	protected boolean eval(Combinator combinator, StringBuilder log, Condition left, Condition right) {
+	public boolean eval(Combinator combinator, StringBuilder log, Condition left, Condition right) {
 		return combinator.combine(combinator, log, left, right);
 	}
 
