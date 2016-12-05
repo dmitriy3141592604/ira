@@ -31,6 +31,12 @@
 			<artifactId>uicomponents</artifactId>
 			<version>${ira.project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>ira</groupId>
+			<artifactId>logic</artifactId>
+			<version>${ira.project.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>ira</groupId>

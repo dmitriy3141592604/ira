@@ -7,6 +7,7 @@ import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
 import org.i2g.ira.uibuilder.UIBuilderFactory;
 
+import logic.ConditionSimple;
 import test.uibuilder.DefaultMethodTransformer;
 import test.uibuilder.TagVisitorSerializer;
 import utils.Translation;
@@ -58,22 +59,23 @@ public class ApplicationSerializer implements Attributes {
 
 							final String methodName = pageMethod.getName();
 
-							final boolean isSetter = methodName.startsWith("set");
+							final ConditionSimple isSetter = new ConditionSimple("isSetter", methodName.startsWith("set"));
+							final ConditionSimple isGetter = new ConditionSimple("isGetter", methodName.startsWith("get"));
+							final ConditionSimple isSubmit = new ConditionSimple("isSubmit", methodName.startsWith("submit"));
 
-							if (isSetter) {
+							isSetter.run(() -> {
 								page.label().text(pageMethod.from(trnsitionLabel).value());
 								page.input(type("text"));
-							}
+							});
 
-							final boolean isGetter = methodName.startsWith("get");
-							if (isGetter) {
+							isGetter.run(() -> {
 								page.label().text(pageMethod.from(trnsitionLabel).value());
 								page.input(type("text"));
-							}
-							final boolean isSubmit = methodName.startsWith("submit");
-							if (isSubmit) {
+							});
+
+							isSubmit.run(() -> {
 								page.input(type("submit"));
-							}
+							});
 						}
 
 					}
