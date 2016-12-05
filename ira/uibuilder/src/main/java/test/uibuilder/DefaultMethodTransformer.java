@@ -8,34 +8,72 @@ import org.i2g.ira.uibuilder.Tag;
 import org.i2g.ira.uibuilder.TextElement;
 import org.i2g.ira.uibuilder.Transformer;
 
+import logic.Condition;
+import logic.ConditionSimple;
+import logic.LogicOperatorUtils;
 import utils.ExpandInnerArray;
 import utils.Responsibility;
+import utils.Value;
 
 @Responsibility("Отвечает создание html элемента при использовании интерфейсного метода")
-public final class DefaultMethodTransformer implements Transformer<Method, Tag> {
+public class DefaultMethodTransformer implements Transformer<Method, Tag>, LogicOperatorUtils {
 
 	private final ExpandInnerArray expander = new ExpandInnerArray();
 
+	/**
+	 * // TODO Если после атрибутов пойдет текст, то существующие аттрибуты зафейлятся
+	 */
 	@Override
 	public Tag transform(Method from, Object[] args) {
-		final Element element = new Element(from.getName());
-		if (args != null) {
-			// TODO Если после атрибутов пойдет текст, то существующие аттрибуты зафейлятся
-			boolean attributeFound = false;
-			for (final Object arg : expander.expand(args)) {
-				if (arg instanceof Attribute) {
-					attributeFound = true;
-					element.addAttribute((Attribute) arg);
-					continue;
-				} else if (arg instanceof String) {
-					if (attributeFound) {
-						throw new IllegalArgumentException("Attributes and text mixed");
-					}
-					return new TextElement(arg.toString());
-				}
-				throw new IllegalArgumentException("Argument with class: " + arg.getClass() + " not supported");
-			}
+		final Value<Tag> element = new Value<Tag>(new Element(from.getName()));
+
+		final ConditionSimple stringFound = new ConditionSimple("stringFound");
+		final ConditionSimple attributeFound = new ConditionSimple("attributeFound");
+
+		final ConditionSimple hasArgs = new ConditionSimple("hasArgs", args != null);
+		final ConditionSimple isString = new ConditionSimple("isString");
+		final ConditionSimple isAttribute = new ConditionSimple("isAttribute");
+
+		final Condition notAallowedArgument = not("notAllowedArgument", or("allowedArgument", isAttribute, isString));
+		final Condition mixedState = and("mixedState", attributeFound, stringFound);
+
+		hasArgs.run(() -> {
+			expander.expand(args).forEach(arg -> {
+
+				isAttribute.setValue(isAttribute(arg));
+				isString.setValue(isString(arg));
+
+				mixedState.run(() -> throwIllegalArgumentException("Attributes and text mixed"));
+				notAallowedArgument.run(() -> throwIllegalArgumentException("Argument with class:", arg.getClass(), "not supported"));
+
+				isAttribute.run(attributeFound::setOn);
+				isAttribute.run(() -> ((Element) element.getValue()).addAttribute((Attribute) arg));
+
+				isString.run(stringFound::setOn);
+				isString.run(() -> element.setValue(new TextElement(arg.toString())));
+
+			});
+		});
+		return element.getValue();
+
+	}
+
+	private boolean isString(Object arg) {
+		return String.class.isAssignableFrom(arg.getClass());
+	}
+
+	private boolean isAttribute(Object arg) {
+		return Attribute.class.isAssignableFrom(arg.getClass());
+	}
+
+	private void throwIllegalArgumentException(Object... s) {
+		final StringBuilder message = new StringBuilder();
+		String separator = "";
+		for (final Object str : s) {
+			message.append(separator);
+			message.append(str);
+			separator = " ";
 		}
-		return element;
+		throw new IllegalArgumentException(message.toString());
 	}
 }

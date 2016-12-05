@@ -24,4 +24,14 @@ public class ConditionSimple extends ConditionBase {
 	public void setValue(boolean value) {
 		this.value = value;
 	}
+
+	// TODO not tested
+	public void setOn() {
+		setValue(true);
+	}
+
+	// TODO not tested
+	public void setOff() {
+		setValue(false);
+	}
 }
