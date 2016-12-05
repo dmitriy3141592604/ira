@@ -8,6 +8,10 @@ public interface RandomizedTest {
 		return "" + random().nextInt();
 	}
 
+	default boolean randomBoolean() {
+		return random().nextInt(5) > 2;
+	}
+
 	default Random random() {
 		return new Random();
 	}

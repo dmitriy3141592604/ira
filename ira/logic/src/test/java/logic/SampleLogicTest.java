@@ -5,24 +5,21 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import logic.combinators.SimpleCondition;
-import logic.condition.Condition;
+public class SampleLogicTest implements LogicOperator {
 
-public class SampleLogicTest {
+	private SimpleCondition isPage;
 
-	private Condition isPage;
+	private SimpleCondition isSetter;
 
-	private Condition isSetter;
+	private SimpleCondition isGetter;
 
-	private Condition isGetter;
-
-	private Condition isSubmit;
+	private SimpleCondition isSubmit;
 
 	private StringBuilder log;
 
-	private Condition printSetter;
+	private CombinedCondition printSetter;
 
-	private Condition isField;
+	private CombinedCondition isField;
 
 	@Before
 	public void setUpSampleLogicTestBase() {
@@ -31,11 +28,12 @@ public class SampleLogicTest {
 		isGetter = new SimpleCondition("isGetter");
 		isSubmit = new SimpleCondition("isSubmit");
 
-		printSetter = isPage.and("printSetter", isSetter);
+		printSetter = and("printSetter", isPage, isSetter);
 
-		isField = isSetter.or("isField", isGetter);
+		isField = or("isField", isSetter, isGetter);
 
 		log = new StringBuilder();
+
 	}
 
 	@Test
@@ -55,7 +53,6 @@ public class SampleLogicTest {
 
 	@Test
 	public void tetst$001() {
-		final Condition printSetter = isPage.and("printSetter", isSetter);
 		assertEquals(false, printSetter.getValue(new StringBuilder()));
 	}
 
