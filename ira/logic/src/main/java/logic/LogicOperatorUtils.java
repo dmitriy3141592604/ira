@@ -2,11 +2,11 @@ package logic;
 
 public interface LogicOperatorUtils {
 
-	default CombinedCondition and(String name, Condition... conditions) {
-		return new CombinedCondition(name, new LogicOperatorAnd(), conditions);
+	default ConditionCombined and(String name, Condition... conditions) {
+		return new ConditionCombined(name, new LogicOperatorAnd(), conditions);
 	};
 
-	default CombinedCondition or(String name, Condition... conditions) {
-		return new CombinedCondition(name, new LogicOperatorOr(), conditions);
+	default ConditionCombined or(String name, Condition... conditions) {
+		return new ConditionCombined(name, new LogicOperatorOr(), conditions);
 	};
 }

@@ -8,8 +8,8 @@ import org.junit.Test;
 public abstract class LogicOperatorTestBase {
 
 	protected LogicOperator operator;
-	protected SimpleCondition foo;
-	protected SimpleCondition bar;
+	protected ConditionSimple foo;
+	protected ConditionSimple bar;
 	protected ConditionBase excepton;
 	protected StringBuilder sb;
 
@@ -20,8 +20,8 @@ public abstract class LogicOperatorTestBase {
 	@Before
 	public final void LogicOperatorAndTestBase() {
 		sb = new StringBuilder();
-		foo = new SimpleCondition("foo");
-		bar = new SimpleCondition("bar");
+		foo = new ConditionSimple("foo");
+		bar = new ConditionSimple("bar");
 		excepton = new ConditionBase("exception") {
 
 			@Override

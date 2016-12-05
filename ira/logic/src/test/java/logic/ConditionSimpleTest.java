@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class SimpleConditionTest extends SimpleConditionTestBase {
+public class ConditionSimpleTest extends ConditionSimpleTestBase {
 
 	@Test
 	public void test$value() {
@@ -14,7 +14,7 @@ public class SimpleConditionTest extends SimpleConditionTestBase {
 
 	@Test
 	public void test$setValue() {
-		final SimpleCondition simpleCondition = new SimpleCondition(randomString(), randomBoolean());
+		final ConditionSimple simpleCondition = new ConditionSimple(randomString(), randomBoolean());
 
 		final boolean value = randomBoolean();
 

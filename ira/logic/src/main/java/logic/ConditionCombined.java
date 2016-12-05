@@ -1,12 +1,12 @@
 package logic;
 
-public class CombinedCondition extends ConditionBase {
+public class ConditionCombined extends ConditionBase {
 
 	private final LogicOperator operator;
 
 	private final Condition[] conditions;
 
-	public CombinedCondition(String name, LogicOperator operator, Condition... conditions) {
+	public ConditionCombined(String name, LogicOperator operator, Condition... conditions) {
 		super(name);
 		this.operator = operator;
 		this.conditions = conditions;

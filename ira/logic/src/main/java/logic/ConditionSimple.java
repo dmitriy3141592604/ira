@@ -1,14 +1,14 @@
 package logic;
 
-public class SimpleCondition extends ConditionBase {
+public class ConditionSimple extends ConditionBase {
 
 	private boolean value;
 
-	public SimpleCondition(String name) {
+	public ConditionSimple(String name) {
 		this(name, false);
 	}
 
-	public SimpleCondition(String name, boolean value) {
+	public ConditionSimple(String name, boolean value) {
 		super(name);
 		this.value = value;
 	}

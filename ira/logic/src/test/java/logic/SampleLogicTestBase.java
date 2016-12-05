@@ -4,18 +4,18 @@ import org.junit.Before;
 
 public abstract class SampleLogicTestBase implements LogicOperatorUtils {
 
-	protected SimpleCondition isPage;
-	protected SimpleCondition isSetter;
-	protected SimpleCondition isGetter;
+	protected ConditionSimple isPage;
+	protected ConditionSimple isSetter;
+	protected ConditionSimple isGetter;
 	protected StringBuilder log;
-	protected CombinedCondition printSetter;
-	protected CombinedCondition isField;
+	protected ConditionCombined printSetter;
+	protected ConditionCombined isField;
 
 	@Before
 	public void setUpSampleLogicTestBase() {
-		isPage = new SimpleCondition("isPage");
-		isSetter = new SimpleCondition("isSetter");
-		isGetter = new SimpleCondition("isGetter");
+		isPage = new ConditionSimple("isPage");
+		isSetter = new ConditionSimple("isSetter");
+		isGetter = new ConditionSimple("isGetter");
 
 		printSetter = and("printSetter", isPage, isSetter);
 
