@@ -15,6 +15,9 @@ public class SimpleCondition extends ConditionBase {
 
 	@Override
 	public boolean getValue(StringBuilder log) {
+		if (log != null) {
+			log.append(name).append(":").append(value);
+		}
 		return value;
 	}
 

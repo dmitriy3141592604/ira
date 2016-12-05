@@ -2,13 +2,23 @@ package logic;
 
 public class CombinedCondition extends ConditionBase {
 
-	public CombinedCondition(String name, Condition... conditions) {
+	private final LogicOperator operator;
+
+	private final Condition[] conditions;
+
+	public CombinedCondition(String name, LogicOperator operator, Condition... conditions) {
 		super(name);
+		this.operator = operator;
+		this.conditions = conditions;
 	}
 
 	@Override
 	public boolean getValue(StringBuilder log) {
-		throw new RuntimeException("Not implemented");
+		log.append(name);
+		log.append("[");
+		final boolean eval = operator.eval(log, conditions);
+		log.append("]");
+		return eval;
 	}
 
 }

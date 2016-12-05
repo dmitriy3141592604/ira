@@ -2,11 +2,8 @@ package logic;
 
 public interface LogicOperator {
 
-	default CombinedCondition and(String name, Condition... conditions) {
-		throw new RuntimeException("Not implemented");
-	};
+	public boolean eval(StringBuilder log, Condition... conditions);
 
-	default CombinedCondition or(String name, Condition... conditions) {
-		throw new RuntimeException("Not implemented");
-	};
+	public String getName();
+
 }
