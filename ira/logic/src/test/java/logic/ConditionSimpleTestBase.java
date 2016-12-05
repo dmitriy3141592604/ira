@@ -7,7 +7,7 @@ import testutils.RandomizedTest;
 public abstract class ConditionSimpleTestBase implements RandomizedTest {
 
 	@Before
-	public final void setUpSimpleConditionTestBase() {
+	public final void setUpConditionSimpleTestBase() {
 
 	}
 

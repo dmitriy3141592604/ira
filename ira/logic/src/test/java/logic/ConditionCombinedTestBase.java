@@ -13,7 +13,7 @@ public abstract class ConditionCombinedTestBase implements RandomizedTest {
 	protected LogicOperatorAnd and;
 
 	@Before
-	public final void setUpCombinedConditionTestBase() {
+	public final void setUpConditionCombinedTestBase() {
 		foo = new ConditionSimple("foo");
 		barCondition = new ConditionSimple("bar");
 		and = new LogicOperatorAnd();
