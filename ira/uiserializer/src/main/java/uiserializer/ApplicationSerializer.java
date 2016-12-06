@@ -3,46 +3,30 @@ package uiserializer;
 import java.io.File;
 
 import org.i2g.ira.uibuilder.Attributes;
-import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
-import org.i2g.ira.uibuilder.UIBuilderFactory;
 
 import logic.ConditionSimple;
-import test.uibuilder.DefaultMethodTransformer;
-import test.uibuilder.TagVisitorSerializer;
 import utils.Translation;
 import utils.io.OnFileWriter;
 
-public class ApplicationSerializer implements Attributes {
+public class ApplicationSerializer extends UIBuilderFactoryBuilder implements Attributes {
 
-	private StringBuilder sb;
+	private final static Class<Translation> trnsitionLabel = Translation.class;
 
-	private Element documentRoot;
+	private final String rootPath = "./html";
 
-	private HTMLElements html;
+	final OnFileWriter applictionHtml = new OnFileWriter(new File(rootPath + "/" + "application.html"));
 
-	final Class<Translation> trnsitionLabel = Translation.class;
-
-	private TagVisitorSerializer visitor;
-
-	{
-		sb = new StringBuilder();
-		documentRoot = new Element("html");
-		final UIBuilderFactory factory = new UIBuilderFactory(documentRoot, new DefaultMethodTransformer());
-		html = factory.create(HTMLElements.class);
-		visitor = new IndentTagVisitorSerializer(sb);
+	public ApplicationSerializer() {
+		build();
 	}
-
-	private final String rootPath = "./html/";
-
-	final OnFileWriter applictionHtml = new OnFileWriter(new File(rootPath + "application.html"));
 
 	public void process(Class<?> application) {
 
 		final TypeNavigator navigator = new TypeNavigator(application);
 		asHeader();
 		{
-			final HTMLElements body = html.body();
+			final HTMLElements body = getHtml().body();
 			{
 				final HTMLElements pages = body.div(klass("pages"));
 				{
@@ -85,12 +69,12 @@ public class ApplicationSerializer implements Attributes {
 
 		documentRoot.visit(visitor);
 
-		applictionHtml.accept(out -> out.write(sb.toString()));
+		applictionHtml.accept(out -> out.write(getSb().toString()));
 
 	}
 
 	public void asHeader() {
-		asSerializer(html.head());
+		asSerializer(getHtml().head());
 	}
 
 	private void asSerializer(final HTMLElements head) {

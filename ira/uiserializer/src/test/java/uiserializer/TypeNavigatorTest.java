@@ -2,7 +2,6 @@ package uiserializer;
 
 import static org.junit.Assert.assertEquals;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 
 import org.junit.Before;
@@ -15,12 +14,6 @@ public class TypeNavigatorTest {
 	@Before
 	public final void setUpTypeNavigatorTest() {
 		navigator = new TypeNavigator(MethodModelTestHelper.class);
-	}
-
-	@Test
-	public void test$methods() {
-		final Collection<Method> methods = navigator.methods();
-		assertEquals("1:getCount", "" + methods.size() + ":" + methods.iterator().next().getName());
 	}
 
 	@Test

@@ -17,7 +17,7 @@ public class TypeNavigator {
 		this.cursor = cursor;
 	}
 
-	public Collection<Method> methods() {
+	private Collection<Method> methods() {
 		final List<Method> methods = Safer.safe(() -> new ArrayList<Method>());
 		for (final Method method : cursor.getMethods()) {
 			methods.add(method);
