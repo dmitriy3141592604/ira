@@ -10,6 +10,10 @@ public class HtmlHeadComponent implements Attributes {
 		head.meta(charset("utf-8"));
 		head.link(rel("stylesheet"), href("reset.css"));
 		head.link(rel("stylesheet"), href("styles.css"));
+		head.script(type("text/javascript"), src("../jquery-3.1.1.js"));
+		head.script(type("text/javascript"), src("../scripts.js"));
+		// TODO Хак, нужно убрать из реализации HeadComponent
+		head.script(type("text/javascript"), src("../tabbedPane.js"));
 	}
 
 }

@@ -13,7 +13,7 @@ public class HtmlHeadComponentTest extends HtmlHeadComponentTestBase {
 
 	@Test
 	public void test$css() {
-		serializeContent(false);
+		serializeContent();
 
 		expected.add("reset.css");
 		expected.add("styles.css");
@@ -23,9 +23,27 @@ public class HtmlHeadComponentTest extends HtmlHeadComponentTestBase {
 
 	@Test
 	public void test$utf8() {
-		serializeContent(false);
+		serializeContent();
 
 		expected.add("utf-8");
+
+		assertEquals(expectedAttributesMessage(), true, attributesHasAll(expected));
+	}
+
+	@Test
+	public void test$jquery() {
+		serializeContent();
+
+		expected.add("../jquery-3.1.1.js");
+
+		assertEquals(expectedAttributesMessage(), true, attributesHasAll(expected));
+	}
+
+	@Test
+	public void test$customScripts() {
+		serializeContent();
+
+		expected.add("../scripts.js");
 
 		assertEquals(expectedAttributesMessage(), true, attributesHasAll(expected));
 	}

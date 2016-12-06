@@ -26,6 +26,7 @@ public class AttributeBuilder {
 	}
 
 	@SafeVarargs
+	// FIXME Если задать только одно значение (пропустить аттрибут name) получается IndexOutOfBoundsException
 	public static <T> Attribute asNamedAttribute(String name, T... values) {
 		return newAttribute(name, joinValues(values));
 	}

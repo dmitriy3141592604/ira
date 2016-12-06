@@ -31,4 +31,8 @@ public interface Attributes {
 	default Attribute klass(String className) {
 		return asNamedAttribute("class", className);
 	}
+
+	default Attribute id(String id) {
+		return asAttribute(id);
+	}
 }

@@ -26,4 +26,6 @@ public interface HTMLElements {
 
 	HTMLElements li(Attribute... attrs);
 
+	HTMLElements script(Attribute... attrs);
+
 }

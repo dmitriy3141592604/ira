@@ -21,7 +21,11 @@ public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
 		return "expected: " + expected + " actual: " + attributeValues;
 	}
 
-	protected boolean attributesHasAll(Collection<String> expected2) {
-		return attributeValues.containsAll(expected2);
+	protected boolean attributesHasAll(Collection<String> expected) {
+		return attributeValues.containsAll(expected);
+	}
+
+	protected String serializeContent() {
+		return serializeContent(false);
 	}
 }

@@ -17,8 +17,8 @@ public class TabbedPaneCompnent implements Attributes {
 	}
 
 	public void add(String tabNameId, Consumer<HTMLElements> paneRoot) {
-		tabs.li().text(tabNameId);
-		paneRoot.accept(content.div());
+		tabs.li(id(tabNameId + "")).text(tabNameId);
+		paneRoot.accept(content.div(id(tabNameId + "-tab")));
 	}
 
 }
