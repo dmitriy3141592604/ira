@@ -3,8 +3,6 @@ package org.i2g.ira.uibuilder;
 /**
  * Простое представление для Html аттрибутов
  *
- * @author fdv.741
- *
  */
 public interface Attribute {
 

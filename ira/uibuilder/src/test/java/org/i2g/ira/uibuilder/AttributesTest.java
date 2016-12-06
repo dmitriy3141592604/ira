@@ -4,17 +4,36 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import testutils.RandomizedTest;
-
-public class AttributesTest implements RandomizedTest {
+public class AttributesTest extends AttributeTestBase {
 
 	@Test
-	public void test() {
-		final Attributes attributes = new Attributes() {
+	public void test$src() {
+		assertEquals("src|" + randomValue, with(attributes::src));
+	}
 
-		};
-		final String randomValue = randomString();
-		assertEquals(randomValue, attributes.src(randomValue).getValue());
+	@Test
+	public void test$type() {
+		assertEquals("type|" + randomValue, with(attributes::type));
+	}
+
+	@Test
+	public void test$charset() {
+		assertEquals("charset|" + randomValue, with(attributes::charset));
+	}
+
+	@Test
+	public void test$rel() {
+		assertEquals("rel|" + randomValue, with(attributes::rel));
+	}
+
+	@Test
+	public void test$href() {
+		assertEquals("href|" + randomValue, with(attributes::href));
+	}
+
+	@Test
+	public void test$klass() {
+		assertEquals("class|" + randomValue, with(attributes::klass));
 	}
 
 }
