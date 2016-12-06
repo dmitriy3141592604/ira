@@ -8,6 +8,7 @@ import org.i2g.ira.uibuilder.HTMLElements;
 public class TabbedPaneCompnent implements Attributes {
 
 	private final HTMLElements tabs;
+
 	private final HTMLElements content;
 
 	public TabbedPaneCompnent(HTMLElements html) {
