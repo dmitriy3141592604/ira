@@ -1,38 +1,26 @@
 package uiserializer.bus;
 
 import static org.junit.Assert.assertEquals;
+import static uiserializer.bus.NaronEngine.newJSIntance;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.FileReader;
+import java.io.Reader;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class BusTest {
 
-	private static String scriptsSource;
-
-	private ScriptEngine engine;
-
-	@BeforeClass
-	public static void setUpBusTestClass() throws Exception {
-		final InputStream is = new FileInputStream("scripts.js");
-
-		final String string = IOUtils.toString(is);
-
-		scriptsSource = string;
-	}
+	private final ScriptEngine engine = newJSIntance();
 
 	@Before
 	public final void setUpBusTest() throws Exception {
-		final ScriptEngineManager factory = new ScriptEngineManager();
-		engine = factory.getEngineByName("nashorn");
-		engine.eval(scriptsSource);
+		try (Reader reader = new FileReader("scripts.js")) {
+			engine.eval(reader);
+		}
 	}
 
 	@Test
@@ -44,6 +32,13 @@ public class BusTest {
 		script.append("bus.publish('theme1','someValue');");
 		script.append("marker;");
 		assertEquals("someValue", engine.eval(script.toString()));
+	}
+
+	@Test(expected = ScriptException.class)
+	public void test$002() throws Exception {
+		final StringBuilder script = new StringBuilder();
+		script.append("marker;");
+		engine.eval(script.toString());
 	}
 
 }
