@@ -10,7 +10,11 @@ public class TabbedPaneCompnentTest extends TabbedPaneCompnentTestBase {
 			body.text("Lorem ipsum dolor sit amet, consectetur adipiscing elit");
 		});
 
-		serializeContent(true);
+		serializeContent();
+	}
+
+	private String serializeContent() {
+		return serializeContent(false);
 	}
 
 	@Test
@@ -25,7 +29,7 @@ public class TabbedPaneCompnentTest extends TabbedPaneCompnentTestBase {
 			body.text("Nam libero tempore, cum soluta nobis est eligendi optio");
 		});
 
-		serializeContent(true);
+		serializeContent();
 	}
 
 }
