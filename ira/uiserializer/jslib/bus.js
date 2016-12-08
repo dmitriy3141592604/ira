@@ -1,20 +1,22 @@
-var bus = (function(){
+var bus = (function() {
+
 	var bus = {};
-	return {
-		subscribe: function(theme, listener) {
-			if(bus[theme] == null) {
-				bus[theme] = [] ;
-			}
-			bus[theme].push(listener);
+
+	var forTheme = function(theme) {
+		return bus[theme] ? bus[theme] : bus[theme] = [];
+	}
+
+	var busImpl = {
+		subscribe : function(theme, listener) {
+			forTheme(theme).push(listener);
 		},
-		publish: function(theme, event) {
-			if(bus[theme] == null) {
-				bus[theme] = [] ;
-			}
-			var theme = bus[theme];
-			for( var i = 0 ; i < theme.length ; ++i) {
+		publish : function(theme, event) {
+			var theme = forTheme(theme);
+			for (var i = 0; i < theme.length; ++i) {
 				theme[i](event);
 			}
 		}
 	};
+
+	return busImpl;
 })();
