@@ -1,6 +1,7 @@
 package uiserializer.bus;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static uiserializer.bus.NaronEngine.newJSIntance;
 
 import java.io.BufferedReader;
@@ -65,6 +66,9 @@ public class ScrptsExecutor {
 						//System.out.println("script intput " + s);
 						js.eval((new FileReader(s)));
 					}
+					//if (line.matches("\"test[.].js\"")) {
+					js.eval(new FileReader("jslib/" + "test.js"));
+					//}
 				}
 			}
 		}
@@ -73,7 +77,38 @@ public class ScrptsExecutor {
 
 	@Test
 	public void test() throws Exception {
-		assertEquals("Ok", js.eval(source).toString());
+		//js.eval("test('seed', function(){})");
+		//assertEquals("Ok", js.eval(source).toString());
+
+		js.eval(source);
+
+		js.eval("name = 'Hello';");
+		//final Bindings engineBindings = js.getBindings(ScriptContext.ENGINE_SCOPE);
+		//final Bindings globalBindings = js.getBindings(ScriptContext.GLOBAL_SCOPE);
+
+		if (!"0".equals(js.eval("errors.length").toString())) {
+			fail("errors: " + js.eval("'' + errors"));
+		}
+		assertEquals("0", js.eval("failures.length").toString());
+		assertEquals("No success test found in " + left, "true", js.eval("success.length > 0").toString());
+
+		//dump("Engine", engineBindings);
+		//dump("Global", globalBindings);
 	}
+
+	//	private void dump(String string, Bindings bs) {
+	//		print("----", string, "--------");
+	//		bs.forEach((key, value) -> print(key, "->", value.toString()));
+	//		print("----", "END", string, "--------");
+	//	}
+	//
+	//	private void print(String... strings) {
+	//		final PrintStream out = System.out;
+	//		for (final String s : strings) {
+	//			out.print(s);
+	//			out.print(" ");
+	//		}
+	//		out.println();
+	//	}
 
 }
