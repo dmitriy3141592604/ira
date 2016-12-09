@@ -1,5 +1,8 @@
 package logic;
 
+import static java.util.Optional.of;
+
+import java.util.Optional;
 import java.util.function.BiPredicate;
 
 import org.junit.Before;
@@ -11,7 +14,7 @@ public abstract class LogicOperatorTestBase {
 	protected ConditionSimple foo;
 	protected ConditionSimple bar;
 	protected ConditionBase excepton;
-	protected StringBuilder sb;
+	protected Optional<StringBuilder> osb;
 
 	public static class LogicOperatorTestException extends RuntimeException {
 		private static final long serialVersionUID = 264023030316091260L;
@@ -19,13 +22,13 @@ public abstract class LogicOperatorTestBase {
 
 	@Before
 	public final void LogicOperatorAndTestBase() {
-		sb = new StringBuilder();
+		osb = of(new StringBuilder());
 		foo = new ConditionSimple("foo");
 		bar = new ConditionSimple("bar");
 		excepton = new ConditionBase("exception") {
 
 			@Override
-			public boolean getValue(StringBuilder log) {
+			public boolean getValue(Optional<StringBuilder> osb) {
 				throw new UnsupportedOperationException();
 			}
 
@@ -35,12 +38,12 @@ public abstract class LogicOperatorTestBase {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void test$emptyListNotAllowe() {
-		operator.eval(sb);
+		operator.eval(osb);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void test$nullListNotAllowe() {
-		operator.eval(sb, (Condition[]) null);
+		operator.eval(osb, (Condition[]) null);
 	}
 
 	protected String checkLogicTable(BiPredicate<Boolean, Boolean> bc) {
@@ -53,7 +56,7 @@ public abstract class LogicOperatorTestBase {
 				bar.setValue(items[j]);
 				testLog.append(bc.test(items[i], items[j]));
 				testLog.append("=");
-				testLog.append(operator.eval(sb, foo, bar));
+				testLog.append(operator.eval(osb, foo, bar));
 				testLog.append("|");
 			}
 		}
@@ -61,12 +64,13 @@ public abstract class LogicOperatorTestBase {
 	}
 
 	protected String withLog(Condition... conditions) {
-		final boolean value = operator.eval(sb, conditions);
+		final boolean value = operator.eval(osb, conditions);
 
 		final StringBuilder log = new StringBuilder();
 		log.append(value);
 		log.append("|");
-		log.append(sb);
+		// TODO Переделать
+		log.append(osb.get().toString());
 		return log.toString();
 	}
 

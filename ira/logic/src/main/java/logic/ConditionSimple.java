@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.Optional;
+
 public class ConditionSimple extends ConditionBase {
 
 	private boolean value;
@@ -14,10 +16,10 @@ public class ConditionSimple extends ConditionBase {
 	}
 
 	@Override
-	public boolean getValue(StringBuilder log) {
-		if (log != null) {
+	public boolean getValue(Optional<StringBuilder> oLog) {
+		oLog.ifPresent(log -> {
 			log.append(name).append(":").append(value);
-		}
+		});
 		return value;
 	}
 

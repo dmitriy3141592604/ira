@@ -2,6 +2,8 @@ package logic;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,7 +22,7 @@ public class ConditionTest {
 		condition = new Condition() {
 
 			@Override
-			public boolean getValue(StringBuilder log) {
+			public boolean getValue(Optional<StringBuilder> OLog) {
 				return value;
 			}
 

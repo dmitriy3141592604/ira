@@ -13,14 +13,13 @@
 
 		<dependency>
 			<groupId>ira</groupId>
-			<artifactId>testutils</artifactId>
+			<artifactId>utils</artifactId>
 			<version>${ira.project.version}</version>
-			<scope>test</scope>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>ira</groupId>
-			<artifactId>utils</artifactId>
+			<artifactId>testutils</artifactId>
 			<version>${ira.project.version}</version>
 			<scope>test</scope>
 		</dependency>

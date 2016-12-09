@@ -1,12 +1,15 @@
 package logic;
 
+import static java.util.Optional.of;
+
+import java.util.Optional;
+
 public interface Condition {
 
-	boolean getValue(StringBuilder log);
+	boolean getValue(Optional<StringBuilder> obs);
 
-	// FIXME Дыра в производительности. Нужно пофиксить.
 	default boolean getValue() {
-		return getValue(new StringBuilder());
+		return getValue(of(new StringBuilder()));
 	}
 
 	String getName();

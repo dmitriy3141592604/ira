@@ -1,5 +1,7 @@
 package logic;
 
+import static java.util.Optional.of;
+
 import org.junit.Before;
 
 import testutils.RandomizedTest;
@@ -27,7 +29,7 @@ public abstract class ConditionCombinedTestBase implements RandomizedTest {
 	protected String withLog(ConditionCombined cc) {
 		final StringBuilder evalLog = new StringBuilder();
 		final StringBuilder log = new StringBuilder();
-		final boolean value = cc.getValue(evalLog);
+		final boolean value = cc.getValue(of(evalLog));
 		log.append(value);
 		log.append("|");
 		log.append(evalLog);

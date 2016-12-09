@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.Optional;
+
 public class ConditionCombined extends ConditionBase {
 
 	private final LogicOperator operator;
@@ -13,11 +15,17 @@ public class ConditionCombined extends ConditionBase {
 	}
 
 	@Override
-	public boolean getValue(StringBuilder log) {
-		log.append(name);
-		log.append("[");
-		final boolean eval = operator.eval(log, conditions);
-		log.append("]");
+	public boolean getValue(Optional<StringBuilder> oLog) {
+		oLog.ifPresent((log) -> {
+			log.append(name);
+			log.append("[");
+		});
+
+		final boolean eval = operator.eval(oLog, conditions);
+
+		oLog.ifPresent((log) -> {
+			log.append("]");
+		});
 		return eval;
 	}
 

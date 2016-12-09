@@ -15,13 +15,13 @@ public class LogicOperatorOrTest extends LogicOperatorTestBase {
 	@Test
 	public void test$true() {
 		foo.setValue(true);
-		assertEquals(true, operator.eval(sb, foo));
+		assertEquals(true, operator.eval(osb, foo));
 	}
 
 	@Test
 	public void test$false() {
 		foo.setValue(false);
-		assertEquals(false, operator.eval(sb, foo));
+		assertEquals(false, operator.eval(osb, foo));
 	}
 
 	@Test

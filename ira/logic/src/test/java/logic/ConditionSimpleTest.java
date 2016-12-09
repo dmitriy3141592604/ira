@@ -1,5 +1,6 @@
 package logic;
 
+import static java.util.Optional.empty;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -9,7 +10,7 @@ public class ConditionSimpleTest extends ConditionSimpleTestBase {
 	@Test
 	public void test$value() {
 		final boolean randomValue = randomBoolean();
-		assertEquals(randomValue, newSimpleCondition(randomString(), randomValue).getValue(null));
+		assertEquals(randomValue, newSimpleCondition(randomString(), randomValue).getValue(empty()));
 	}
 
 	@Test
@@ -20,7 +21,7 @@ public class ConditionSimpleTest extends ConditionSimpleTestBase {
 
 		simpleCondition.setValue(value);
 
-		assertEquals(value, simpleCondition.getValue(null));
+		assertEquals(value, simpleCondition.getValue(empty()));
 	}
 
 	@Test

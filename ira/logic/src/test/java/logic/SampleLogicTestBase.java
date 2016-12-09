@@ -1,5 +1,9 @@
 package logic;
 
+import static java.util.Optional.of;
+
+import java.util.Optional;
+
 import org.junit.Before;
 
 public abstract class SampleLogicTestBase implements LogicOperatorUtils {
@@ -7,7 +11,7 @@ public abstract class SampleLogicTestBase implements LogicOperatorUtils {
 	protected ConditionSimple isPage;
 	protected ConditionSimple isSetter;
 	protected ConditionSimple isGetter;
-	protected StringBuilder log;
+	protected Optional<StringBuilder> oLog;
 	protected ConditionCombined printSetter;
 	protected ConditionCombined isField;
 
@@ -21,15 +25,17 @@ public abstract class SampleLogicTestBase implements LogicOperatorUtils {
 
 		isField = or("isField", isSetter, isGetter);
 
-		log = new StringBuilder();
+		oLog = of(new StringBuilder());
 
 	}
 
 	protected String withLog(Condition condition) {
 		final StringBuilder resultString = new StringBuilder();
-		resultString.append(condition.getValue(log));
+		resultString.append(condition.getValue(oLog));
 		resultString.append("|");
-		resultString.append(log.toString());
+		oLog.ifPresent(log -> {
+			resultString.append(log.toString());
+		});
 		return resultString.toString();
 	}
 
