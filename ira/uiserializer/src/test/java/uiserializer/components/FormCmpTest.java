@@ -14,52 +14,10 @@ import utils.collections.Collector;
 
 public class FormCmpTest {
 
-	public interface Cmp {
-
-		void render(HTMLElements html);
-
-	}
-
-	public abstract static class TextInput implements Cmp {
-
-		protected String label;
-
-		protected String initValue;
-
-		void label(String label) {
-			this.label = label;
-		}
-
-		void initValue(String initValue) {
-			this.initValue = initValue;
-		}
-
-	}
-
-	public abstract static class CheckBox implements Cmp {
-
-		protected String label;
-
-		protected Boolean initValue;
-
-		void label(String label) {
-			this.label = label;
-		}
-
-		void initValue(Boolean initValue) {
-			this.initValue = initValue;
-		}
-	}
-
 	public static class Form implements Cmp {
 
+		// TODO Перенести в базовый класс
 		private static final Attributes as = Attributes.as;
-
-		private final Collector<Cmp> items = Collector.newCollector(new ArrayList<Cmp>());
-
-		public void with(Consumer<Form> form) {
-			form.accept(this);
-		}
 
 		private final static class BinaryRow {
 
@@ -83,8 +41,19 @@ public class FormCmpTest {
 
 		}
 
+		private BinaryRow newBinaryRow(HTMLElements html) {
+			return new BinaryRow(html);
+		}
+
+		// TODO Перенести в базовый класс
+		private final Collector<Cmp> items = Collector.newCollector(new ArrayList<Cmp>());
+
+		public void with(Consumer<Form> form) {
+			form.accept(this);
+		}
+
 		public void addTextInput(Consumer<TextInput> textInput) {
-			textInput.accept(register(new TextInput() {
+			textInput.accept(items.remember(new TextInput() {
 
 				@Override
 				public void render(HTMLElements html) {
@@ -96,17 +65,8 @@ public class FormCmpTest {
 			}));
 		}
 
-		private BinaryRow newBinaryRow(HTMLElements html) {
-			return new BinaryRow(html);
-		}
-
-		private <T extends Cmp> T register(T row) {
-			return items.remember(row);
-		}
-
 		public void addCheckBox(Consumer<CheckBox> checkBox) {
-
-			checkBox.accept(register(new CheckBox() {
+			checkBox.accept(items.remember(new CheckBox() {
 
 				@Override
 				public void render(HTMLElements html) {
@@ -118,6 +78,7 @@ public class FormCmpTest {
 			}));
 		}
 
+		// TODO Перенести в базовый класс
 		@Override
 		public void render(HTMLElements html) {
 			final HTMLElements table = html.form().table();
