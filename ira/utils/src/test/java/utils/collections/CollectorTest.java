@@ -9,10 +9,12 @@ import static utils.collections.Collector.newCollector;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import testutils.RandomizedTest;
@@ -56,6 +58,14 @@ public class CollectorTest implements RandomizedTest {
 		collector.remember(rs);
 		final Iterator<String> iterator = collector.iterator();
 		assertEquals(rs + "|false", iterator.next() + "|" + iterator.hasNext());
+	}
+
+	@Test(expected = Collector.CollectorException.class)
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void test$exceptionThrowingIfElementWasNotReallyAdded() {
+		final Set set = Mockito.mock(Set.class);
+		Mockito.when(set.add(Mockito.any())).thenReturn(false);
+		newCollector(set).remember(randomString());
 	}
 
 }

@@ -8,6 +8,16 @@ import utils.Responsibility;
 @Responsibility("Предоставляет возможность регистрировать элементы в коллекции внутри выражения, без использования отдельного оператора")
 public class Collector<T> implements Iterable<T> {
 
+	public static class CollectorException extends RuntimeException {
+
+		private static final long serialVersionUID = -861083677160288392L;
+
+		public CollectorException(String message) {
+			super(message);
+		}
+
+	}
+
 	public static <U> Collector<U> newCollector(Collection<U> storage) {
 		return new Collector<U>(storage);
 	}
@@ -18,14 +28,15 @@ public class Collector<T> implements Iterable<T> {
 		this.storage = storage;
 	}
 
-	// TODO Нужно кидать исключение, если элемент не добавлен.
 	/**  Идея метода в том, что дальнейшая работа ведется с добавленным элементом.
-	 * 	Если он в коллекцию не добавлен, то это ошибочное поведение дальнейшего кода
+	 * 	 Если он в коллекцию не добавлен, то это ошибочное поведение дальнейшего кода
 	 *
 	 * */
 	public <U extends T> U remember(U newItem) {
-		storage.add(newItem);
-		return newItem;
+		if (storage.add(newItem)) {
+			return newItem;
+		}
+		throw new CollectorException("Объект: " + String.valueOf(newItem) + " в коллекцию не добавлен");
 	}
 
 	public Collection<T> getStorage() {
