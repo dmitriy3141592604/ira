@@ -18,7 +18,12 @@ public class Collector<T> implements Iterable<T> {
 		this.storage = storage;
 	}
 
-	public T remember(T newItem) {
+	// TODO Нужно кидать исключение, если элемент не добавлен.
+	/**  Идея метода в том, что дальнейшая работа ведется с добавленным элементом.
+	 * 	Если он в коллекцию не добавлен, то это ошибочное поведение дальнейшего кода
+	 *
+	 * */
+	public <U extends T> U remember(U newItem) {
 		storage.add(newItem);
 		return newItem;
 	}

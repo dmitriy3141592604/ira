@@ -27,7 +27,7 @@ public class UIBuilderFactoryBuilder {
 	// TODO Переместить в тест
 	private TreeSet<String> attributeValues;
 
-	public final void build() {
+	public final UIBuilderFactoryBuilder build() {
 
 		this.tagNames = new TreeSet<String>();
 
@@ -54,6 +54,7 @@ public class UIBuilderFactoryBuilder {
 			}
 
 		};
+		return this;
 	}
 
 	public HTMLElements getHtml() {

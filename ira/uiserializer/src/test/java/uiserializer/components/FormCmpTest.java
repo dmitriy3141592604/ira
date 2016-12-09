@@ -3,7 +3,6 @@ package uiserializer.components;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 import org.i2g.ira.uibuilder.Attributes;
@@ -11,6 +10,7 @@ import org.i2g.ira.uibuilder.HTMLElements;
 import org.junit.Test;
 
 import uiserializer.UIBuilderFactoryBuilder;
+import utils.collections.Collector;
 
 public class FormCmpTest {
 
@@ -28,12 +28,10 @@ public class FormCmpTest {
 
 		void label(String label) {
 			this.label = label;
-
 		}
 
 		void initValue(String initValue) {
 			this.initValue = initValue;
-
 		}
 
 	}
@@ -41,11 +39,11 @@ public class FormCmpTest {
 	public abstract static class CheckBox implements Cmp {
 
 		protected String label;
+
 		protected Boolean initValue;
 
 		void label(String label) {
 			this.label = label;
-
 		}
 
 		void initValue(Boolean initValue) {
@@ -55,10 +53,9 @@ public class FormCmpTest {
 
 	public static class Form implements Cmp {
 
-		private static final Attributes as = new Attributes() {
-		};
+		private static final Attributes as = Attributes.as;
 
-		private final List<Cmp> items = new ArrayList<Cmp>();
+		private final Collector<Cmp> items = Collector.newCollector(new ArrayList<Cmp>());
 
 		public void with(Consumer<Form> form) {
 			form.accept(this);
@@ -67,13 +64,13 @@ public class FormCmpTest {
 		private final static class BinaryRow {
 
 			private final HTMLElements left;
+
 			private final HTMLElements right;
 
 			public BinaryRow(HTMLElements html) {
 				final HTMLElements tr = html.tr();
 				left = tr.td();
 				right = tr.td();
-
 			}
 
 			public HTMLElements left() {
@@ -87,22 +84,24 @@ public class FormCmpTest {
 		}
 
 		public void addTextInput(Consumer<TextInput> textInput) {
-
-			final TextInput input = new TextInput() {
+			textInput.accept(register(new TextInput() {
 
 				@Override
 				public void render(HTMLElements html) {
-					final BinaryRow br = new BinaryRow(html);
+					final BinaryRow br = newBinaryRow(html);
 					br.left().text(label);
 					br.right().input(as.type("text"));
 				}
-			};
-			textInput.accept(register(input));
+
+			}));
 		}
 
-		private <T extends Cmp> T register(T binaryRow) {
-			items.add(binaryRow);
-			return binaryRow;
+		private BinaryRow newBinaryRow(HTMLElements html) {
+			return new BinaryRow(html);
+		}
+
+		private <T extends Cmp> T register(T row) {
+			return items.remember(row);
 		}
 
 		public void addCheckBox(Consumer<CheckBox> checkBox) {
@@ -111,10 +110,11 @@ public class FormCmpTest {
 
 				@Override
 				public void render(HTMLElements html) {
-					final BinaryRow br = new BinaryRow(html);
+					final BinaryRow br = newBinaryRow(html);
 					br.left().text(label);
 					br.right().input(as.type("checkbox"), as.value("" + initValue));
 				}
+
 			}));
 		}
 
@@ -142,10 +142,10 @@ public class FormCmpTest {
 			});
 		});
 
-		final UIBuilderFactoryBuilder b = new UIBuilderFactoryBuilder();
-		b.build();
+		final UIBuilderFactoryBuilder b = new UIBuilderFactoryBuilder().build();
 
 		form.render(b.getHtml());
+
 		assertNotNull("", b.getSerializedContent());
 
 	}

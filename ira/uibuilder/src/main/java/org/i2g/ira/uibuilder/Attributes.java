@@ -8,6 +8,9 @@ import utils.Responsibility;
 @Responsibility("Отвечает за создание html аттрибутов")
 public interface Attributes {
 
+	public static final Attributes as = new Attributes() {
+	};
+
 	default Attribute src(String url) {
 		return asAttribute(url);
 	}
