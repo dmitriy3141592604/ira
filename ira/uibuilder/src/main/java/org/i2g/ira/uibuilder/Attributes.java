@@ -35,4 +35,8 @@ public interface Attributes {
 	default Attribute id(String id) {
 		return asAttribute(id);
 	}
+
+	default Attribute value(String value) {
+		return asAttribute(value);
+	}
 }

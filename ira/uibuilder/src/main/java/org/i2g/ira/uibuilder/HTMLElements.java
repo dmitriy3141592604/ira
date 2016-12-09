@@ -28,4 +28,10 @@ public interface HTMLElements {
 
 	HTMLElements script(Attribute... attrs);
 
+	HTMLElements tr(Attribute... attrs);
+
+	HTMLElements td(Attribute... attrs);
+
+	HTMLElements table(Attribute... attributes);
+
 }
