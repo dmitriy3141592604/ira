@@ -15,6 +15,7 @@
 		<module>../ira-spec</module>
 		<module>../uibuilder</module>
 		<module>../ira-current</module>
+		<module>../sandbox</module>
 	</modules>
 	<properties>
 		<ira.project.version>0.0.1-SHAPSHOT</ira.project.version>
