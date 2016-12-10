@@ -67,7 +67,7 @@ public class ApplicationSerializer extends UIBuilderFactoryBuilder implements At
 			}
 		}
 
-		documentRoot.visit(visitor);
+		root.visit(visitor);
 
 		applictionHtml.accept(out -> out.write(getSb().toString()));
 

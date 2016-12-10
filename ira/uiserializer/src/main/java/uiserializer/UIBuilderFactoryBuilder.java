@@ -1,6 +1,7 @@
 package uiserializer;
 
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.i2g.ira.uibuilder.Attribute;
@@ -15,28 +16,30 @@ public class UIBuilderFactoryBuilder {
 
 	private StringBuilder sb;
 
-	protected Element documentRoot;
+	protected Element root;
 
 	private HTMLElements html;
 
 	protected TagVisitorSerializer visitor;
 
 	// TODO Переместить в тест
-	private TreeSet<String> tagNames;
+	private Set<String> tagNames;
 
 	// TODO Переместить в тест
-	private TreeSet<String> attributeValues;
+	private Set<String> attributeValues;
 
 	public final UIBuilderFactoryBuilder build() {
-
+		final Class<HTMLElements> interfaceClass = HTMLElements.class;
 		this.tagNames = new TreeSet<String>();
-
 		this.attributeValues = new TreeSet<String>();
-
 		this.sb = new StringBuilder();
-		documentRoot = new Element("html");
-		final UIBuilderFactory factory = new UIBuilderFactory(documentRoot, new DefaultMethodTransformer());
-		this.html = factory.create(HTMLElements.class);
+		this.root = new Element("html");
+
+		final DefaultMethodTransformer valueTransformer = new DefaultMethodTransformer();
+
+		final UIBuilderFactory factory = new UIBuilderFactory(root, valueTransformer);
+		this.html = factory.create(interfaceClass);
+
 		visitor = new IndentTagVisitorSerializer(sb) {
 
 			@Override
@@ -62,19 +65,19 @@ public class UIBuilderFactoryBuilder {
 	}
 
 	public String getSerializedContent() {
-		documentRoot.visit(visitor);
-		return getSb().toString();
+		root.visit(visitor);
+		return sb.toString();
 	}
 
 	public StringBuilder getSb() {
 		return sb;
 	}
 
-	public TreeSet<String> getTagNames() {
+	public Set<String> getTagNames() {
 		return tagNames;
 	}
 
-	public TreeSet<String> getAttributeValues() {
+	public Set<String> getAttributeValues() {
 		return attributeValues;
 	}
 

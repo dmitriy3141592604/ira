@@ -1,7 +1,11 @@
 package org.i2g.ira.uibuilder;
 
+import static utils.collections.Collector.newCollector;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import utils.collections.Collector;
 
 public class Element implements Tag {
 
@@ -9,7 +13,7 @@ public class Element implements Tag {
 
 	private final List<Attribute> attributes = new ArrayList<Attribute>();
 
-	private final List<Tag> childred = new ArrayList<Tag>();
+	private final Collector<Tag> childred = newCollector();
 
 	public Element(String name) {
 		this.name = name;
@@ -30,8 +34,7 @@ public class Element implements Tag {
 
 	@Override
 	public Tag addChield(Tag tag) {
-		childred.add(tag);
-		return tag;
+		return childred.remember(tag);
 	}
 
 	@Override

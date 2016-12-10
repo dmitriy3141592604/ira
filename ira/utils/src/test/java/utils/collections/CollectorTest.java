@@ -63,9 +63,15 @@ public class CollectorTest implements RandomizedTest {
 	@Test(expected = Collector.CollectorException.class)
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void test$exceptionThrowingIfElementWasNotReallyAdded() {
-		final Set set = Mockito.mock(Set.class);
-		Mockito.when(set.add(Mockito.any())).thenReturn(false);
+		final Set set = mock(Set.class);
+		when(set.add(Mockito.any())).thenReturn(false);
 		newCollector(set).remember(randomString());
+	}
+
+	@Test
+	public void test$newCollectorCreateAArrayListByDefault() {
+		final Collector<String> c = newCollector();
+		assertEquals(ArrayList.class, c.getStorage().getClass());
 	}
 
 }

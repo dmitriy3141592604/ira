@@ -1,7 +1,7 @@
 package uiserializer.components;
 
 import java.io.File;
-import java.util.TreeSet;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,9 +18,9 @@ public abstract class ComponentTestBase {
 
 	protected UIBuilderFactoryBuilder builder;
 
-	protected TreeSet<String> attributeValues;
+	protected Set<String> attributeValues;
 
-	protected TreeSet<String> tagNames;
+	protected Set<String> tagNames;
 
 	@Before
 	public final void setUpComponentTestBase() {

@@ -1,5 +1,6 @@
 package utils.collections;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -15,11 +16,14 @@ public class Collector<T> implements Iterable<T> {
 		public CollectorException(String message) {
 			super(message);
 		}
-
 	}
 
 	public static <U> Collector<U> newCollector(Collection<U> storage) {
 		return new Collector<U>(storage);
+	}
+
+	public static <U> Collector<U> newCollector() {
+		return newCollector(new ArrayList<U>());
 	}
 
 	private final Collection<T> storage;
