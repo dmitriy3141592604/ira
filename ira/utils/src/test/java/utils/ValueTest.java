@@ -1,6 +1,6 @@
 package utils;
 
-import static java.lang.reflect.Modifier.isPrivate;
+import static java.lang.reflect.Modifier.isPublic;
 import static java.util.stream.Stream.of;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -16,8 +16,8 @@ public class ValueTest implements RandomizedTest {
 	@Test
 	public void test$allConstructorsIsPrivate() {
 		final StringBuilder testLog = new StringBuilder();
-		of(Value.class.getDeclaredConstructors()).forEach(c -> testLog.append(isPrivate(c.getModifiers())));
-		assertEquals("true", testLog.toString());
+		of(Value.class.getDeclaredConstructors()).forEach(c -> testLog.append(isPublic(c.getModifiers())));
+		assertEquals("falsefalse", testLog.toString());
 	}
 
 	@Test

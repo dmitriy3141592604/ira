@@ -16,9 +16,17 @@ public class Value<T> {
 		return newValue((U) null);
 	}
 
+	public static <U> Value<U> onceAssignedValue() {
+		return new OnceAssignmentValue<U>();
+	}
+
 	private T value;
 
-	private Value(T value) {
+	protected Value() {
+		this(null);
+	}
+
+	protected Value(T value) {
 		this.value = value;
 	}
 
