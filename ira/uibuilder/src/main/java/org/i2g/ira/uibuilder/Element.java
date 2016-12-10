@@ -28,10 +28,6 @@ public class Element implements Tag {
 		return name;
 	}
 
-	public List<Attribute> getAttributes() {
-		return attributes;
-	}
-
 	@Override
 	public Tag addChield(Tag tag) {
 		return childred.remember(tag);
