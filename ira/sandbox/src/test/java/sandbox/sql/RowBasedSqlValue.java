@@ -1,4 +1,4 @@
-package sandbox;
+package sandbox.sql;
 
 public class RowBasedSqlValue implements SqlValue {
 

@@ -1,12 +1,12 @@
-package sandbox.test;
+package sandbox.sql.test;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import sandbox.SqlString;
-import sandbox.SqlValueComparator;
+import sandbox.sql.SqlString;
+import sandbox.sql.SqlValueComparator;
 
 public class SqlStringTest {
 
