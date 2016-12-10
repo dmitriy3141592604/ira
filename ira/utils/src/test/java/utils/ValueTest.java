@@ -9,7 +9,9 @@ import static utils.Value.newValue;
 
 import org.junit.Test;
 
-public class ValueTest {
+import testutils.RandomizedTest;
+
+public class ValueTest implements RandomizedTest {
 
 	@Test
 	public void test$allConstructorsIsPrivate() {
@@ -28,4 +30,19 @@ public class ValueTest {
 	public void test$newValueCreateANullStoredValue() {
 		assertNull(newValue().getValue());
 	}
+
+	@Test
+	public void test$setValue$withDeclaredClass() {
+		final Object o = new Object();
+		assertSame(o, newValue().setValue(o));
+	}
+
+	@Test
+	public void test$setVaueWithDerivedClass() {
+		final String rs = randomString();
+		final Value<Object> value = newValue();
+		final String extractedValue = value.setValue(rs);
+		assertSame(rs, extractedValue);
+	}
+
 }

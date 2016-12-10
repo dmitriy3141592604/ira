@@ -26,8 +26,9 @@ public class Value<T> {
 		return value;
 	}
 
-	public void setValue(T value) {
-		this.value = value;
+	@SuppressWarnings("unchecked")
+	public <U extends T> U setValue(U value) {
+		return (U) (this.value = value);
 	}
 
 }
