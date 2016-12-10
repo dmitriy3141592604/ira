@@ -25,14 +25,11 @@ public class ElementTest implements RandomizedTest {
 		final String aName = randomString();
 		final Element element = new Element(randomString()).addAttribute(newAttribute(aName));
 
-		final Value<List<Attribute>> visitedAttributes = newValue();
+		final Value<List<Attribute>> visitedAttributes = newValue(new ArrayList<Attribute>());
 		element.visit(new TagVisitorBase() {
 
 			@Override
 			public void onElementAttributes(List<Attribute> attributes) {
-				if (visitedAttributes.getValue() == null) {
-					visitedAttributes.setValue(new ArrayList<Attribute>());
-				}
 				visitedAttributes.getValue().addAll(attributes);
 			}
 
