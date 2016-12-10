@@ -17,7 +17,7 @@ public class ContextClassTest extends IraTest {
 	@Test
 	public void test$setApplicationContext() {
 		final ApplicationContext mock = Mockito.mock(ApplicationContext.class);
-		final Value<ApplicationContext> value = new Value<ApplicationContext>();
+		final Value<ApplicationContext> value = Value.newValue();
 
 		new ContextClass() {
 

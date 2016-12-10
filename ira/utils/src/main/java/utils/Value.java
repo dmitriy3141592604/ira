@@ -8,13 +8,17 @@ package utils;
 **/
 public class Value<T> {
 
-	private T value;
-
-	public Value() {
-		this(null);
+	public static <U> Value<U> newValue(U u) {
+		return new Value<U>(u);
 	}
 
-	public Value(T value) {
+	public static <U> Value<U> newValue() {
+		return newValue((U) null);
+	}
+
+	private T value;
+
+	private Value(T value) {
 		this.value = value;
 	}
 
@@ -24,10 +28,6 @@ public class Value<T> {
 
 	public void setValue(T value) {
 		this.value = value;
-	}
-
-	public static <U> Value<U> newValue(U u) {
-		return new Value<U>(u);
 	}
 
 }

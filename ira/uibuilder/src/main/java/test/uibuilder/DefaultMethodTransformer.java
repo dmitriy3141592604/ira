@@ -1,5 +1,7 @@
 package test.uibuilder;
 
+import static utils.Value.newValue;
+
 import java.lang.reflect.Method;
 
 import org.i2g.ira.uibuilder.Attribute;
@@ -25,7 +27,7 @@ public class DefaultMethodTransformer implements Transformer<Method, Tag>, Logic
 	 */
 	@Override
 	public Tag transform(Method from, Object[] args) {
-		final Value<Tag> element = new Value<Tag>(new Element(from.getName()));
+		final Value<Tag> element = newValue(new Element(from.getName()));
 
 		final ConditionSimple stringFound = new ConditionSimple("stringFound");
 		final ConditionSimple attributeFound = new ConditionSimple("attributeFound");

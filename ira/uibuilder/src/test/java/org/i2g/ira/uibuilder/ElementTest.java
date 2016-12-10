@@ -2,6 +2,7 @@ package org.i2g.ira.uibuilder;
 
 import static org.i2g.ira.uibuilder.AttributeHelper.newAttribute;
 import static org.junit.Assert.assertEquals;
+import static utils.Value.newValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ElementTest implements RandomizedTest {
 		final String aName = randomString();
 		final Element element = new Element(randomString()).addAttribute(newAttribute(aName));
 
-		final Value<List<Attribute>> visitedAttributes = new Value<>();
+		final Value<List<Attribute>> visitedAttributes = newValue();
 		element.visit(new TagVisitorBase() {
 
 			@Override

@@ -1,6 +1,7 @@
 package logic;
 
 import static org.junit.Assert.assertEquals;
+import static utils.Value.newValue;
 
 import java.util.Optional;
 
@@ -37,7 +38,7 @@ public class ConditionTest {
 	@Test
 	public void test$conditionalRunRunnable$called() {
 		value = true;
-		final Value<String> responseHolder = new Value<String>();
+		final Value<String> responseHolder = newValue();
 		condition.run(() -> responseHolder.setValue("asdf"));
 
 		assertEquals("asdf", responseHolder.getValue());
@@ -46,7 +47,7 @@ public class ConditionTest {
 	@Test
 	public void test$conditionalRunRunnable$notCalled() {
 		value = false;
-		final Value<String> responseHolder = new Value<String>();
+		final Value<String> responseHolder = newValue();
 		condition.run(() -> responseHolder.setValue("asdf"));
 
 		assertEquals(null, responseHolder.getValue());

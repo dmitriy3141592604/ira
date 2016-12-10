@@ -1,6 +1,7 @@
 package utils.io;
 
 import static org.junit.Assert.assertEquals;
+import static utils.Value.newValue;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,7 +31,7 @@ public class OnFileWriterTest extends OnFileWriterTestBase implements Randomized
 			out.println(marker);
 		});
 
-		final Value<String> value = new Value<String>();
+		final Value<String> value = newValue();
 
 		try (final BufferedReader reader = new BufferedReader(new FileReader(exchangePoint))) {
 			value.setValue(reader.readLine());
