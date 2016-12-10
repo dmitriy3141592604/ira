@@ -28,11 +28,11 @@ public abstract class DefaultMethodTransformerTestBase implements RandomizedTest
 	}
 
 	protected Tag transform(final Method method, Object... args) {
-		return methodTransformer.transform(method, args);
+		return methodTransformer.applay(method, args);
 	}
 
 	protected Tag transform(final Method method) {
-		return methodTransformer.transform(method, null);
+		return methodTransformer.applay(method, null);
 	}
 
 }

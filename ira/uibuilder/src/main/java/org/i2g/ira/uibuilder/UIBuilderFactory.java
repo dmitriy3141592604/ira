@@ -1,42 +1,37 @@
 package org.i2g.ira.uibuilder;
 
+import static java.lang.reflect.Proxy.newProxyInstance;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 public class UIBuilderFactory {
 
 	private ClassLoader classLoader = this.getClass().getClassLoader();
 
-	private final Tag productRoot;
+	private final Tag root;
 
 	private final Transformer<Method, Tag> valueTransformer;
 
-	public UIBuilderFactory(Tag productRoot, Transformer<Method, Tag> valueTransformer) {
-		this.productRoot = productRoot;
+	public UIBuilderFactory(Tag root, Transformer<Method, Tag> valueTransformer) {
+		this.root = root;
 		this.valueTransformer = valueTransformer;
 	}
 
 	public <T> T create(Class<T> t) {
-		final Class<?>[] interfaces = new Class<?>[] { t };
-
-		return newProxy(productRoot, interfaces);
+		return newProxy(root, new Class<?>[] { t });
 	}
 
 	@SuppressWarnings("unchecked")
 	private <T> T newProxy(Tag currentRoot, final Class<?>... interfaces) {
-		return (T) Proxy.newProxyInstance(classLoader, interfaces, new InvocationHandler() {
+		return (T) newProxyInstance(classLoader, interfaces, new InvocationHandler() {
 
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) {
-				return newProxy(currentRoot.addChield(asValueType(method, args)), method.getReturnType());
+				return newProxy(currentRoot.addChield(valueTransformer.applay(method, args)), method.getReturnType());
 			}
 
 		});
-	}
-
-	private Tag asValueType(Method method, Object[] args) {
-		return valueTransformer.transform(method, args);
 	}
 
 	public void setClassLoader(ClassLoader classLoader) {

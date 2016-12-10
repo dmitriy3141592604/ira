@@ -26,7 +26,7 @@ public class DefaultMethodTransformer implements Transformer<Method, Tag>, Logic
 	 * // TODO Если после атрибутов пойдет текст, то существующие аттрибуты зафейлятся
 	 */
 	@Override
-	public Tag transform(Method from, Object[] args) {
+	public Tag applay(Method from, Object[] args) {
 		final Value<Tag> element = newValue(new Element(from.getName()));
 
 		final ConditionSimple stringFound = new ConditionSimple("stringFound");
@@ -78,4 +78,5 @@ public class DefaultMethodTransformer implements Transformer<Method, Tag>, Logic
 		}
 		throw new IllegalArgumentException(message.toString());
 	}
+
 }
