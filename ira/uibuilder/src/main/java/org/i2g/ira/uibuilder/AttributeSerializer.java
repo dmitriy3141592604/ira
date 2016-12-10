@@ -6,7 +6,6 @@ import static utils.ByFstTripleComparator.byFstComparatorInstance;
 import static utils.Triple.newTriple;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -146,7 +145,8 @@ public class AttributeSerializer {
 		return sb.toString();
 	}
 
-	public void serialize(Collection<Attribute> attributes, StringBuilder sb) {
+	// TODO То, что attributes Iterable не протестировано
+	public void serialize(Iterable<Attribute> attributes, StringBuilder sb) {
 		attributes.forEach(a -> serialize(a, sb));
 	}
 

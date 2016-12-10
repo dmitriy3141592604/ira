@@ -2,16 +2,13 @@ package org.i2g.ira.uibuilder;
 
 import static utils.collections.Collector.newCollector;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import utils.collections.Collector;
 
 public class Element implements Tag {
 
 	private final String name;
 
-	private final List<Attribute> attributes = new ArrayList<Attribute>();
+	private final Collector<Attribute> attributes = newCollector();
 
 	private final Collector<Tag> childred = newCollector();
 
@@ -20,7 +17,7 @@ public class Element implements Tag {
 	}
 
 	public Element addAttribute(Attribute attribute) {
-		attributes.add(attribute);
+		attributes.remember(attribute);
 		return this;
 	}
 

@@ -1,14 +1,12 @@
 package org.i2g.ira.uibuilder;
 
-import java.util.List;
-
 public interface TagVisitor {
 
 	void beforeElement();
 
 	void onStartElement(String name);
 
-	void onElementAttributes(List<Attribute> attributes);
+	void onElementAttributes(Iterable<Attribute> attributes);
 
 	void onAfterStartElement();
 

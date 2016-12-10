@@ -1,7 +1,5 @@
 package org.i2g.ira.uibuilder;
 
-import java.util.List;
-
 public class TagVisitorBase implements TagVisitor {
 
 	@Override
@@ -13,7 +11,7 @@ public class TagVisitorBase implements TagVisitor {
 	}
 
 	@Override
-	public void onElementAttributes(List<Attribute> attributes) {
+	public void onElementAttributes(Iterable<Attribute> attributes) {
 	}
 
 	@Override

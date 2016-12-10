@@ -1,6 +1,5 @@
 package uiserializer;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -49,11 +48,9 @@ public class UIBuilderFactoryBuilder {
 			}
 
 			@Override
-			public void onElementAttributes(List<Attribute> attributes) {
+			public void onElementAttributes(Iterable<Attribute> attributes) {
 				super.onElementAttributes(attributes);
-				attributes.forEach(a -> {
-					getAttributeValues().add(a.getValue());
-				});
+				attributes.forEach(a -> getAttributeValues().add(a.getValue()));
 			}
 
 		};

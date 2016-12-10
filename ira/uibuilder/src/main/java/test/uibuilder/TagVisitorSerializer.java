@@ -1,7 +1,5 @@
 package test.uibuilder;
 
-import java.util.List;
-
 import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.AttributeSerializer;
 import org.i2g.ira.uibuilder.TagVisitorBase;
@@ -32,7 +30,7 @@ public class TagVisitorSerializer extends TagVisitorBase {
 	}
 
 	@Override
-	public void onElementAttributes(List<Attribute> attributes) {
+	public void onElementAttributes(Iterable<Attribute> attributes) {
 		as.serialize(attributes, sb);
 	}
 

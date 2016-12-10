@@ -29,8 +29,8 @@ public class ElementTest implements RandomizedTest {
 		element.visit(new TagVisitorBase() {
 
 			@Override
-			public void onElementAttributes(List<Attribute> attributes) {
-				visitedAttributes.getValue().addAll(attributes);
+			public void onElementAttributes(Iterable<Attribute> attributes) {
+				attributes.forEach(a -> visitedAttributes.getValue().add(a));
 			}
 
 		});
