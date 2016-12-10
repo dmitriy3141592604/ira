@@ -36,6 +36,7 @@ public class AttributeBuilder {
 	}
 
 	@SafeVarargs
+	// XXX При замене на JoinUtils куча ошибок. Нужно починить
 	private static <T> String joinValues(T... values) {
 		final StringBuilder value = new StringBuilder();
 		for (final T v : values) {
