@@ -2,6 +2,7 @@ package application;
 
 import utils.Translation;
 
+@Name("Витрина")
 public interface FoodPage extends Navigation {
 
 	@Translation("Выбрать продукт")

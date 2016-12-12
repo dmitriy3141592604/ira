@@ -34,4 +34,20 @@ public interface HTMLElements {
 
 	HTMLElements table(Attribute... attributes);
 
+	HTMLElements h1(Attribute... attributes);
+
+	HTMLElements h2(Attribute... attributes);
+
+	HTMLElements h3(Attribute... attributes);
+
+	HTMLElements h4(Attribute... attributes);
+
+	HTMLElements h5(Attribute... attributes);
+
+	HTMLElements h6(Attribute... attributes);
+
+	HTMLElements h7(Attribute... attributes);
+
+	HTMLElements h8(Attribute... attributes);
+
 }

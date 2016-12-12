@@ -9,16 +9,17 @@ import utils.Translation;
  * @author Frolov_D
  *
  */
+@Name("Касса")
 public interface CashMashinePage extends Navigation {
 
 	@ActionDescription("Запросить сумму товара")
 	@Translation("Сумма товара")
-	/** void - нет перехода **/
 	void submintSummCalculation();
 
 	@ActionDescription("Посмотреть предварительную сумму для оплаты")
 	@Translation("Вычесленная сумма")
-	String getCalculatedSumm();
+	@Name("Вычисленная сумма")
+	NamedField getCalculatedSumm();
 
 	@ActionDescription("Внести оплату")
 	@Translation("Оплата")
@@ -26,6 +27,7 @@ public interface CashMashinePage extends Navigation {
 
 	@ActionDescription("Оплатить")
 	@Translation("Оплатить")
-	// TODO Применить соглашение об именовании
 	void pay();
+
+	ReadOnlyValue getTitle();
 }

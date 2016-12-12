@@ -7,13 +7,11 @@ public interface Navigation {
 
 	@Translation("Касса")
 	@ActionDescription("Перейти на страницу оплаты товара")
-	// TODO Следующий код эквтвалентен: GET
-	// http://localhost:8090/akkApplication/cashMashine.html
 	CashMashinePage jumpToCashMashinePage();
 
 	@Translation("Выбор товара")
 	@ActionDescription("Перейти на страницу выбора товара")
-	FoodPage jumpToFootPage();
+	FoodPage jumpToFoodPage();
 
 	@Translation("Помощ")
 	@ActionDescription("Открыть помощ")
