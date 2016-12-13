@@ -1,22 +1,18 @@
 package uiserializer;
 
-import java.util.ArrayList;
+import static utils.collections.Collector.newCollector;
+
 import java.util.function.Consumer;
 
-import org.i2g.ira.uibuilder.HTMLElements;
-
-import uiserializer.components.Cmp;
+import uiserializer.components.Component;
 import utils.collections.Collector;
 
-public abstract class ComponentBuilder implements Cmp {
+public abstract class ComponentBuilder extends ComponentBuilderBase {
 
-	protected final Collector<Cmp> items = new Collector<>(new ArrayList<Cmp>());
+	protected final Collector<Component> items = newCollector();
 
-	public <T extends Cmp> void with(T t, Consumer<T> action) {
+	public <T extends Component> void with(T t, Consumer<T> action) {
 		action.accept(items.remember(t));
 	}
-
-	@Override
-	public abstract void render(HTMLElements html);
 
 }

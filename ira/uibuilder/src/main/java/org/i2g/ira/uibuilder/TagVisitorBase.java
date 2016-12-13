@@ -1,5 +1,8 @@
 package org.i2g.ira.uibuilder;
 
+import utils.Responsibility;
+
+@Responsibility("Дает возможность призводным классам перегружать только интересующие их методы")
 public class TagVisitorBase implements TagVisitor {
 
 	@Override

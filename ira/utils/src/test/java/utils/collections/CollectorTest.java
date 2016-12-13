@@ -60,7 +60,7 @@ public class CollectorTest implements RandomizedTest {
 		assertEquals(rs + "|false", iterator.next() + "|" + iterator.hasNext());
 	}
 
-	@Test(expected = Collector.CollectorException.class)
+	@Test(expected = CollectorException.class)
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void test$exceptionThrowingIfElementWasNotReallyAdded() {
 		final Set set = mock(Set.class);

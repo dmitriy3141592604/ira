@@ -7,7 +7,7 @@ import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.HTMLElements;
 
 import application.NamedField;
-import uiserializer.components.Cmp;
+import uiserializer.components.Component;
 import utils.collections.Collector;
 
 public class Form extends ComponentBuilder implements Attributes {
@@ -47,7 +47,7 @@ public class Form extends ComponentBuilder implements Attributes {
 		items.remember(newBinaryRow(calculatedSumm.label(), calculatedSumm.id(), "text"));
 	}
 
-	private Cmp newBinaryRow(String label, String id, String type) {
+	private Component newBinaryRow(String label, String id, String type) {
 		return new BinaryRow(label, id, type);
 	}
 

@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import org.i2g.ira.uibuilder.HTMLElements;
 
-public class OldForm extends OldFormBase implements Cmp {
+public class OldForm extends OldFormBase implements Component {
 
 	private final static class BinaryRow {
 

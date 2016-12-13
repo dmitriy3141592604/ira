@@ -1,6 +1,6 @@
 package uiserializer.components;
 
-public abstract class CheckBox implements Cmp {
+public abstract class CheckBox implements Component {
 
 	protected String label;
 

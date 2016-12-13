@@ -1,6 +1,6 @@
 package uiserializer.components;
 
-public abstract class TextInput implements Cmp {
+public abstract class TextInput implements Component {
 
 	protected String label;
 

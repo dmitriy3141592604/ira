@@ -2,7 +2,7 @@ package uiserializer;
 
 import org.i2g.ira.uibuilder.HTMLElements;
 
-public class Header extends ComponentBuilder {
+public class Header extends ComponentBuilderBase {
 
 	private String name;
 

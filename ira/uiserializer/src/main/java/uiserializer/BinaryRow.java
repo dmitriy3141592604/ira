@@ -3,9 +3,9 @@ package uiserializer;
 import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.HTMLElements;
 
-import uiserializer.components.Cmp;
+import uiserializer.components.Component;
 
-public class BinaryRow implements Cmp, Attributes {
+public class BinaryRow implements Component, Attributes {
 
 	private final String label;
 

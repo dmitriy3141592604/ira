@@ -4,13 +4,13 @@ import java.util.function.Consumer;
 
 import org.i2g.ira.uibuilder.HTMLElements;
 
-import uiserializer.components.Cmp;
+import uiserializer.components.Component;
 
-public class PageLayout extends ComponentBuilder {
+public class PageLayout extends ComponentBuilderBase {
 
-	private Cmp header;
+	private Component header;
 
-	private Cmp body;
+	private Component body;
 
 	@Override
 	public void render(HTMLElements html) {
@@ -22,20 +22,20 @@ public class PageLayout extends ComponentBuilder {
 			body.render(div.div());
 	}
 
-	public Cmp getHeader() {
+	public Component getHeader() {
 		return header;
 	}
 
-	public <T extends Cmp> void setHeader(T header, Consumer<T> c) {
+	public <T extends Component> void setHeader(T header, Consumer<T> c) {
 		this.header = header;
 		c.accept(header);
 	}
 
-	public Cmp getBody() {
+	public Component getBody() {
 		return body;
 	}
 
-	public <T extends Cmp> void setBody(T body, Consumer<T> c) {
+	public <T extends Component> void setBody(T body, Consumer<T> c) {
 		this.body = body;
 		c.accept(body);
 	}

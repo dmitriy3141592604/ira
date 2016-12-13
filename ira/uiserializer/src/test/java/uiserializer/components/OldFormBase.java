@@ -8,7 +8,7 @@ import utils.collections.Collector;
 
 public abstract class OldFormBase extends AbstractComponent {
 
-	protected final Collector<Cmp> items = Collector.newCollector(new ArrayList<Cmp>());
+	protected final Collector<Component> items = Collector.newCollector(new ArrayList<Component>());
 
 	public void render(HTMLElements html) {
 		final HTMLElements table = html.form().table();
