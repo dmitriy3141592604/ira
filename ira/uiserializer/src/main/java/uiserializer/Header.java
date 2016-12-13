@@ -2,11 +2,11 @@ package uiserializer;
 
 import org.i2g.ira.uibuilder.HTMLElements;
 
-public class H1 extends ComponentBuilder {
+public class Header extends ComponentBuilder {
 
 	private String name;
 
-	public void add(String name) {
+	public void set(String name) {
 		this.name = name;
 	}
 

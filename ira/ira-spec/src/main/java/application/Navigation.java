@@ -11,10 +11,10 @@ public interface Navigation {
 
 	@Translation("Выбор товара")
 	@ActionDescription("Перейти на страницу выбора товара")
-	FoodPage jumpToFoodPage();
+	FoodPage goToFoodPage();
 
 	@Translation("Помощ")
 	@ActionDescription("Открыть помощ")
-	HelpPage jumpHelpPage();
+	HelpPage goToHelpPage();
 
 }
