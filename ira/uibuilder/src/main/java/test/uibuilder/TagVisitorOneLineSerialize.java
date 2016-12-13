@@ -4,18 +4,20 @@ import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.AttributeSerializer;
 import org.i2g.ira.uibuilder.TagVisitorBase;
 
-public class TagVisitorSerializer extends TagVisitorBase {
+import utils.Responsibility;
 
-	// XXX Протестировать protected
+@Responsibility("Сериализует html дерево в одну строку")
+public class TagVisitorOneLineSerialize extends TagVisitorBase {
+
 	protected final StringBuilder sb;
 
 	private final AttributeSerializer as = new AttributeSerializer();
 
-	public TagVisitorSerializer(StringBuilder sb) {
+	public TagVisitorOneLineSerialize(StringBuilder sb) {
 		this.sb = sb;
 	}
 
-	public TagVisitorSerializer() {
+	public TagVisitorOneLineSerialize() {
 		this(new StringBuilder());
 	}
 

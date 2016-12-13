@@ -9,7 +9,7 @@ import org.i2g.ira.uibuilder.HTMLElements;
 import org.i2g.ira.uibuilder.UIBuilderFactory;
 
 import test.uibuilder.DefaultMethodTransformer;
-import test.uibuilder.TagVisitorSerializer;
+import test.uibuilder.TagVisitorOneLineSerialize;
 
 public class UIBuilderFactoryBuilder {
 
@@ -19,7 +19,7 @@ public class UIBuilderFactoryBuilder {
 
 	private HTMLElements html;
 
-	protected TagVisitorSerializer visitor;
+	protected TagVisitorOneLineSerialize visitor;
 
 	// TODO Переместить в тест
 	private Set<String> tagNames;

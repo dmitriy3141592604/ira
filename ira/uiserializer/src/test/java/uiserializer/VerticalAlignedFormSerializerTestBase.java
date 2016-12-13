@@ -9,7 +9,7 @@ import org.i2g.ira.uibuilder.UIBuilderFactory;
 import org.junit.Before;
 
 import test.uibuilder.DefaultMethodTransformer;
-import test.uibuilder.TagVisitorSerializer;
+import test.uibuilder.TagVisitorOneLineSerialize;
 import testutils.RandomizedTest;
 
 public abstract class VerticalAlignedFormSerializerTestBase implements RandomizedTest {
@@ -30,7 +30,7 @@ public abstract class VerticalAlignedFormSerializerTestBase implements Randomize
 		factory = new UIBuilderFactory(productRoot, new DefaultMethodTransformer());
 		elements = factory.create(HTMLElements.class);
 		serializer = new VerticalAlignedFormSerializer(elements);
-		visitor = new TagVisitorSerializer(sb);
+		visitor = new TagVisitorOneLineSerialize(sb);
 	}
 
 	protected void process() {

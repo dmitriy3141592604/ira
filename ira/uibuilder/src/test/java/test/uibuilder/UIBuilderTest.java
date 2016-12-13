@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class UIBuilderTest extends UIBuilderTestBase<Tag> implements Attributes {
 
-	private TagVisitorSerializer visitor;
+	private TagVisitorOneLineSerialize visitor;
 
 	interface I {
 		J a();
@@ -59,7 +59,7 @@ public class UIBuilderTest extends UIBuilderTestBase<Tag> implements Attributes 
 	/** TODO С этого места нужно форкать тест, и делать другой TestCase. **/
 	@Before
 	public void setUpUIBuilderTest() {
-		visitor = new TagVisitorSerializer(new StringBuilder());
+		visitor = new TagVisitorOneLineSerialize(new StringBuilder());
 	}
 
 	@Test

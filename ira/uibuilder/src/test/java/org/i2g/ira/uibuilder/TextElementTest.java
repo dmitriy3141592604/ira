@@ -6,7 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import test.uibuilder.TagVisitorSerializer;
+import test.uibuilder.TagVisitorOneLineSerialize;
 import testutils.RandomizedTest;
 
 public class TextElementTest implements RandomizedTest {
@@ -16,7 +16,7 @@ public class TextElementTest implements RandomizedTest {
 
 	@Test
 	public void test$start() {
-		final TagVisitorSerializer visitor = new TagVisitorSerializer();
+		final TagVisitorOneLineSerialize visitor = new TagVisitorOneLineSerialize();
 		final String randomString = randomString();
 		new TextElement(randomString).visit(visitor);
 		assertEquals(randomString, visitor.resultLog());

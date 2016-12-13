@@ -1,8 +1,8 @@
 package uiserializer;
 
-import test.uibuilder.TagVisitorSerializer;
+import test.uibuilder.TagVisitorOneLineSerialize;
 
-public class IndentTagVisitorSerializer extends TagVisitorSerializer {
+public class IndentTagVisitorSerializer extends TagVisitorOneLineSerialize {
 
 	IndentTagVisitorSerializer(StringBuilder sb) {
 		super(sb);
