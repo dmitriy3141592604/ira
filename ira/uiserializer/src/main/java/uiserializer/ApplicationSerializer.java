@@ -2,8 +2,10 @@ package uiserializer;
 
 import application.Application;
 import application.CashMashinePage;
+import application.CashMashinePage.CashForm;
 import application.FoodPage;
 import application.HelpPage;
+import application.HelpPage.HelpSearchForm;
 
 public class ApplicationSerializer {
 
@@ -17,12 +19,14 @@ public class ApplicationSerializer {
 		cb.with(new VerticalBlock(), vb -> {
 			vb.with(new Div(), d -> {
 				d.with(new H1(), h1 -> {
-					final CashMashinePage cashMashinePage = app.jumpToCashMashinePage();
-					h1.add(((Named) cashMashinePage).getName());
+					final CashMashinePage cashMashinePage = app.goToCashMashinePage();
+					h1.add(getName(cashMashinePage));
 
-					d.with(new Div(), page -> {
-						page.with(new Form(), form -> {
-							form.add(cashMashinePage.getCalculatedSumm());
+					d.with(new Div(), page_ -> {
+						final CashForm cashForm = cashMashinePage.getCashForm();
+						page_.with(Form.newForm(formSource(cashForm)), form -> {
+							form.add(cashForm.getCalculatedSumm());
+							form.add(cashForm.getPayment());
 						});
 					});
 				});
@@ -35,6 +39,14 @@ public class ApplicationSerializer {
 				d.with(new H1(), h1 -> {
 					final HelpPage helpPage = app.jumpHelpPage();
 					h1.add(((Named) helpPage).getName());
+					final HelpSearchForm helpSearchForm = helpPage.getHelpSearchForm();
+
+					d.with(new Div(), page_ -> {
+						page_.with(Form.newForm(formSource(helpSearchForm)), form -> {
+							form.add(helpSearchForm.searchString());
+							form.add(helpSearchForm.search());
+						});
+					});
 
 				});
 			});
@@ -44,6 +56,14 @@ public class ApplicationSerializer {
 
 		System.out.println(uiFactory.getSerializedContent());
 
+	}
+
+	private FormSource formSource(Object cashForm) {
+		return (FormSource) cashForm;
+	}
+
+	private String getName(Object object) {
+		return ((Named) object).getName();
 	}
 
 }

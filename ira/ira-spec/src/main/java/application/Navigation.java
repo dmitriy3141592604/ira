@@ -7,7 +7,7 @@ public interface Navigation {
 
 	@Translation("Касса")
 	@ActionDescription("Перейти на страницу оплаты товара")
-	CashMashinePage jumpToCashMashinePage();
+	CashMashinePage goToCashMashinePage();
 
 	@Translation("Выбор товара")
 	@ActionDescription("Перейти на страницу выбора товара")

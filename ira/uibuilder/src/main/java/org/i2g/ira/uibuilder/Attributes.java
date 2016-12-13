@@ -42,4 +42,12 @@ public interface Attributes {
 	default Attribute value(String value) {
 		return asAttribute(value);
 	}
+
+	default Attribute method(String value) {
+		return asAttribute(value);
+	}
+
+	default Attribute action(String value) {
+		return asAttribute(value);
+	}
 }

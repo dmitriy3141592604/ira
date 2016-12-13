@@ -11,7 +11,8 @@ public class InterfaceNavigationFactory {
 	}
 
 	public <T> T buildFrom(Class<T> applicationClass, HistoryItem historyItem) {
-		final Class<?>[] classes = new Class<?>[] { applicationClass, Cmp.class, Named.class };
+		final Class<?>[] classes = new Class<?>[] { applicationClass, Cmp.class, Named.class, /** **/
+				FormSource.class };
 		final ClassLoader classLoader = this.getClass().getClassLoader();
 		final HistoryItem newHistoryItem = new HistoryItem(applicationClass, historyItem);
 		final MethodProcessor methodProcessor = new MethodProcessor(applicationClass, this, newHistoryItem);
