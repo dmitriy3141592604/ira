@@ -5,13 +5,16 @@ import java.util.Optional;
 public class LogicOperatorNot implements LogicOperator {
 
 	@Override
-	//@NotTested
-	// TODO Test me
 	public boolean eval(Optional<StringBuilder> oLog, Condition... conditions) {
-		if (conditions == null || conditions.length != 1) {
-			throw new IllegalArgumentException("expected exactly one condition");
+
+		if (conditions.length != 1) {
+			throw new LogicOperatorNotException();
 		}
-		return !conditions[0].getValue();
+
+		oLog.ifPresent(log -> log.append(getName()).append("("));
+		final boolean result = !conditions[0].getValue(oLog);
+		oLog.ifPresent(log -> log.append(")"));
+		return result;
 	}
 
 	@Override

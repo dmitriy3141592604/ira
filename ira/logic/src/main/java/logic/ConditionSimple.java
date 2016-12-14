@@ -17,9 +17,7 @@ public class ConditionSimple extends ConditionBase {
 
 	@Override
 	public boolean getValue(Optional<StringBuilder> oLog) {
-		oLog.ifPresent(log -> {
-			log.append(name).append(":").append(value);
-		});
+		oLog.ifPresent(log -> log.append(name).append(":").append(value));
 		return value;
 	}
 
@@ -27,12 +25,10 @@ public class ConditionSimple extends ConditionBase {
 		this.value = value;
 	}
 
-	// TODO not tested
 	public void setOn() {
 		setValue(true);
 	}
 
-	// TODO not tested
 	public void setOff() {
 		setValue(false);
 	}

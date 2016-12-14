@@ -14,12 +14,14 @@ public abstract class ConditionCombinedTestBase implements RandomizedTest {
 
 	protected LogicOperatorAnd and;
 
+	protected String rs;
+
 	@Before
 	public final void setUpConditionCombinedTestBase() {
 		foo = new ConditionSimple("foo");
 		barCondition = new ConditionSimple("bar");
 		and = new LogicOperatorAnd();
-
+		rs = randomString();
 	}
 
 	protected ConditionCombined newCombinedCondition(String randomString, LogicOperator operator, Condition... conditions) {

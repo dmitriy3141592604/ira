@@ -21,6 +21,9 @@ public class ConditionCombined extends ConditionBase {
 			log.append("[");
 		});
 
+		// TODO Основной тест не проверяет, что обрабатываются все условия
+		// final boolean eval = operator.eval(oLog, conditions[0]); отлично
+		// проходит
 		final boolean eval = operator.eval(oLog, conditions);
 
 		oLog.ifPresent((log) -> {

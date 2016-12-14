@@ -10,24 +10,46 @@ public class ConditionSimpleTest extends ConditionSimpleTestBase {
 	@Test
 	public void test$value() {
 		final boolean randomValue = randomBoolean();
-		assertEquals(randomValue, newSimpleCondition(randomString(), randomValue).getValue(empty()));
+		assertEquals(randomValue, newCondition(randomString(), randomValue).getValue(empty()));
 	}
 
 	@Test
 	public void test$setValue() {
-		final ConditionSimple simpleCondition = new ConditionSimple(randomString(), randomBoolean());
+		final ConditionSimple condition = newCondition();
 
 		final boolean value = randomBoolean();
 
-		simpleCondition.setValue(value);
+		condition.setValue(value);
 
-		assertEquals(value, simpleCondition.getValue(empty()));
+		assertEquals(value, condition.getValue(empty()));
 	}
 
 	@Test
 	public void test$name() {
 		final String name = randomString();
 		assertEquals(name, newSimpleCondition(name).getName());
+	}
+
+	@Test
+	public void test$setOn() {
+		final ConditionSimple c = newCondition();
+		c.setValue(false);
+		final boolean previousValue = c.getValue();
+		c.setOn();
+		final boolean newValue = c.getValue();
+		assertEquals("false|true", previousValue + "|" + newValue);
+
+	}
+
+	@Test
+	public void test$setOff() {
+		final ConditionSimple c = newCondition();
+		c.setValue(true);
+		final boolean previousValue = c.getValue();
+		c.setOff();
+		final boolean newValue = c.getValue();
+		assertEquals("true|false", previousValue + "|" + newValue);
+
 	}
 
 }
