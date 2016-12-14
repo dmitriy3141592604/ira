@@ -1,19 +1,41 @@
 package uiserializer.components;
 
+import static utils.collections.Collector.newCollector;
+
+import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.HTMLElements;
 
-public class HtmlHeadComponent implements Attributes {
+import utils.Responsibility;
+import utils.collections.Collector;
 
-	public HtmlHeadComponent(HTMLElements html) {
+@Responsibility("Создает заголовок html страницы")
+public class HtmlHeadComponent implements Attributes, Component {
+
+	private final Attribute stylesheetAttribute = rel("stylesheet");
+
+	private final Attribute javaScript = type("text/javascript");
+
+	private final Collector<String> styles = newCollector();
+
+	private final Collector<String> scripts = newCollector();
+
+	public String addScript(String scriptName) {
+		return scripts.remember(scriptName);
+	}
+
+	public String addStyle(String styleName) {
+		return styles.remember(styleName);
+	}
+
+	@Override
+	public void render(HTMLElements html) {
 		final HTMLElements head = html.head();
+
 		head.meta(charset("utf-8"));
-		head.link(rel("stylesheet"), href("reset.css"));
-		head.link(rel("stylesheet"), href("styles.css"));
-		head.script(type("text/javascript"), src("../jquery-3.1.1.js"));
-		head.script(type("text/javascript"), src("../scripts.js"));
-		// TODO Хак, нужно убрать из реализации HeadComponent
-		head.script(type("text/javascript"), src("../tabbedPane.js"));
+
+		styles.forEach(style -> head.link(stylesheetAttribute, href(style)));
+		scripts.forEach(script -> head.script(javaScript, src(script)));
 	}
 
 }

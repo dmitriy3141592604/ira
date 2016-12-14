@@ -2,50 +2,40 @@ package uiserializer.components;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 
 public class HtmlHeadComponentTest extends HtmlHeadComponentTestBase {
 
-	@Before
-	public final void setUpHtmlHeadComponentTest() {
-	}
-
-	@Test
-	public void test$css() {
-		serializeContent();
-
-		expected.add("reset.css");
-		expected.add("styles.css");
-
-		assertEquals(expectedAttributesMessage(), true, attributesHasAll(expected));
-	}
-
 	@Test
 	public void test$utf8() {
-		serializeContent();
+		assertEquals("1", importedMetaCount("charset", "utf-8"));
+	}
 
-		expected.add("utf-8");
+	@Test
+	public void test$rest() {
+		assertEquals("0", importedStylesCount("reset.css"));
 
-		assertEquals(expectedAttributesMessage(), true, attributesHasAll(expected));
+		addStyle("reset.css");
+
+		assertEquals("1", importedStylesCount("reset.css"));
+	}
+
+	@Test
+	public void test$styles() {
+		assertEquals("0", importedStylesCount("styles.css"));
+
+		addStyle("styles.css");
+
+		assertEquals("1", importedStylesCount("styles.css"));
 	}
 
 	@Test
 	public void test$jquery() {
-		serializeContent();
+		assertEquals("0", importedScriptsCount("../jquery-3.1.1.js"));
 
-		expected.add("../jquery-3.1.1.js");
+		addScript("../jquery-3.1.1.js");
 
-		assertEquals(expectedAttributesMessage(), true, attributesHasAll(expected));
-	}
-
-	@Test
-	public void test$customScripts() {
-		serializeContent();
-
-		expected.add("../scripts.js");
-
-		assertEquals(expectedAttributesMessage(), true, attributesHasAll(expected));
+		assertEquals("1", importedScriptsCount("../jquery-3.1.1.js"));
 	}
 
 }

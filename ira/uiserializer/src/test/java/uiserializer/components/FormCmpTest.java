@@ -28,7 +28,7 @@ public class FormCmpTest {
 
 		form.render(b.getHtml());
 
-		assertNotNull("", b.getSerializedContent());
+		assertNotNull("", b.serializeContentToInternalBuffer());
 
 	}
 

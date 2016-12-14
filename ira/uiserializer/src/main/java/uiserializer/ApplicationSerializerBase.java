@@ -55,7 +55,7 @@ public abstract class ApplicationSerializerBase {
 
 		cb.render(uiFactory.getHtml());
 
-		final String sc = uiFactory.getSerializedContent();
+		final String sc = uiFactory.serializeContentToInternalBuffer();
 		out.println(sc);
 		System.out.println(sc);
 

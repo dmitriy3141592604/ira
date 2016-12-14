@@ -8,15 +8,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 
-import uiserializer.UIBuilderFactoryBuilder;
-import utils.io.OnFileWriter;
-
+// FIXME Восстанови меня !
 public abstract class ComponentTestBase {
 
 	@Rule
 	public TestName name = new TestName();
 
-	protected UIBuilderFactoryBuilder builder;
+	// protected UIBuilderFactoryBuilder builder;
 
 	protected Set<String> attributeValues;
 
@@ -24,10 +22,10 @@ public abstract class ComponentTestBase {
 
 	@Before
 	public final void setUpComponentTestBase() {
-		builder = new UIBuilderFactoryBuilder();
-		builder.build();
-		attributeValues = builder.getAttributeValues();
-		tagNames = builder.getTagNames();
+		// builder = new UIBuilderFactoryBuilder();
+		// builder.build();
+		// attributeValues = builder.getAttributeValues();
+		// tagNames = builder.getTagNames();
 	}
 
 	@After
@@ -35,15 +33,16 @@ public abstract class ComponentTestBase {
 		final String simpleOutputFileName = this.getClass() + "$" + name.getMethodName();
 		final File outputFileName = new File("html/" + simpleOutputFileName + ".html");
 
-		new OnFileWriter(outputFileName).accept((out) -> out.print(builder.getSb()));
+		// new OnFileWriter(outputFileName).accept((out) ->
+		// out.print(builder.getSb()));
 	}
 
-	protected String serializeContent(boolean b) {
-		final String retVal = builder.getSerializedContent();
-		if (b) {
-			System.out.println(retVal);
-		}
-		return retVal;
-	}
+	// protected String serializeContentToInternalBuffer(boolean b) {
+	// final String retVal = builder.serializeContentToInternalBuffer();
+	// if (b) {
+	// System.out.println(retVal);
+	// }
+	// return retVal;
+	// }
 
 }

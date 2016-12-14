@@ -61,7 +61,7 @@ public class UIBuilderFactoryBuilder {
 		return html;
 	}
 
-	public String getSerializedContent() {
+	public String serializeContentToInternalBuffer() {
 		root.visit(visitor);
 		return sb.toString();
 	}
