@@ -32,9 +32,10 @@ public class OnFileWriter {
 		this.writer = safe(() -> new FileWriter(exchangePoint));
 	}
 
-	public void accept(ExceptionConsumer<PrintWriter> f) {
+	// beforeAccept 
+	public final void accept(ExceptionConsumer<PrintWriter> f) {
 		try (final PrintWriter out = wrap()) {
-			f.save(out);
+			f.safe(out);
 		}
 	}
 

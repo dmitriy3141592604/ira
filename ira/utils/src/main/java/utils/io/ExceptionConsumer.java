@@ -7,7 +7,7 @@ public interface ExceptionConsumer<T> {
 
 	void accept(T t) throws Exception;
 
-	default void save(T t) {
+	default void safe(T t) {
 		try {
 			accept(t);
 		} catch (final Exception e) {
