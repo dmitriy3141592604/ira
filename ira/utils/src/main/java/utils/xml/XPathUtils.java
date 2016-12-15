@@ -8,7 +8,7 @@ import javax.xml.xpath.XPathFactory;
 public class XPathUtils {
 
 	public static String evalXPath(String content, String expression) {
-		return safe(() -> newXPath().evaluate(expression, new StringReaderInputSource(content)));
+		return safe(() -> newXPath().evaluate(expression, new StringInputSource(content)));
 	}
 
 	private static XPath newXPath() {

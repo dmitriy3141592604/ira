@@ -4,9 +4,9 @@ import java.io.StringReader;
 
 import org.xml.sax.InputSource;
 
-public class StringReaderInputSource extends InputSource {
+public class StringInputSource extends InputSource {
 
-	public StringReaderInputSource(String content) {
+	public StringInputSource(String content) {
 		super(new StringReader(content));
 	}
 
