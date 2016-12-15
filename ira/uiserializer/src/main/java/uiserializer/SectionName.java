@@ -2,8 +2,8 @@ package uiserializer;
 
 import org.i2g.ira.uibuilder.HTMLElements;
 
-// TODO Переименовать.
-public class Header extends ComponentBuilderBase {
+// TODO Протестировать
+public class SectionName extends ComponentBuilderBase {
 
 	private String name;
 

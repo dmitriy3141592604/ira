@@ -12,8 +12,8 @@ public abstract class ApplicationSerializerBase {
 		return new Empty();
 	}
 
-	protected Header newHeader() {
-		return new Header();
+	protected SectionName newHeader() {
+		return new SectionName();
 	}
 
 	protected PagesList newPagesList() {
