@@ -9,6 +9,8 @@ public interface ExceptionSupplier<T> {
 		try {
 			return get();
 		} catch (final Exception exception) {
+			// TODO Добавить текс сообщения, что причину нужно искть в
+			// оригинальном стактрейсе
 			throw new RuntimeException(exception);
 		}
 	}
