@@ -67,7 +67,7 @@ public class OldApplicationSerializer extends UIBuilderFactoryBuilder implements
 			}
 		}
 
-		root.visit(visitor);
+		// root.visit(visitor);
 
 		applictionHtml.accept(out -> out.write(getSb().toString()));
 

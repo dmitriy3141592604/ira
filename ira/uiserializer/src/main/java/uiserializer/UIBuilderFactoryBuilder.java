@@ -1,60 +1,36 @@
 package uiserializer;
 
-import java.util.Set;
-import java.util.TreeSet;
-
-import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
+import org.i2g.ira.uibuilder.TagVisitor;
 import org.i2g.ira.uibuilder.UIBuilderFactory;
 
 import test.uibuilder.DefaultMethodTransformer;
-import test.uibuilder.TagVisitorOneLineSerialize;
 
 public class UIBuilderFactoryBuilder {
 
 	private StringBuilder sb;
 
-	protected Element root;
+	private Element root;
 
 	private HTMLElements html;
 
-	protected TagVisitorOneLineSerialize visitor;
-
-	// TODO Переместить в тест
-	private Set<String> tagNames;
-
-	// TODO Переместить в тест
-	private Set<String> attributeValues;
+	private TagVisitor visitor;
 
 	public final UIBuilderFactoryBuilder build() {
-		final Class<HTMLElements> interfaceClass = HTMLElements.class;
-		this.tagNames = new TreeSet<String>();
-		this.attributeValues = new TreeSet<String>();
 		this.sb = new StringBuilder();
-		this.root = new Element("html");
 
+		final Element element = new Element("html");
+		this.root = element;
 		final DefaultMethodTransformer valueTransformer = new DefaultMethodTransformer();
+		final UIBuilderFactory factory = new UIBuilderFactory(element, valueTransformer);
 
-		final UIBuilderFactory factory = new UIBuilderFactory(root, valueTransformer);
+		final Class<HTMLElements> interfaceClass = HTMLElements.class;
 		this.html = factory.create(interfaceClass);
 
-		visitor = new IndentTagVisitorSerializer(sb) {
-
-			@Override
-			public void onStartElement(String name) {
-				super.onStartElement(name);
-				getTagNames().add(name);
-			}
-
-			@Override
-			public void onElementAttributes(Iterable<Attribute> attributes) {
-				super.onElementAttributes(attributes);
-				attributes.forEach(a -> getAttributeValues().add(a.getValue()));
-			}
-
-		};
+		visitor = new IndentTagVisitorSerializer(sb);
 		return this;
+
 	}
 
 	public HTMLElements getHtml() {
@@ -68,14 +44,6 @@ public class UIBuilderFactoryBuilder {
 
 	public StringBuilder getSb() {
 		return sb;
-	}
-
-	public Set<String> getTagNames() {
-		return tagNames;
-	}
-
-	public Set<String> getAttributeValues() {
-		return attributeValues;
 	}
 
 }
