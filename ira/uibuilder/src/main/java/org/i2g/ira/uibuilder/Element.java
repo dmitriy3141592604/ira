@@ -2,14 +2,19 @@ package org.i2g.ira.uibuilder;
 
 import static utils.collections.Collector.newCollector;
 
+import utils.Responsibility;
 import utils.collections.Collector;
 
+@Responsibility("Предоставляет интерфейс HTML тега")
 public class Element implements Tag {
 
+	@Responsibility("Хранит имя элемента")
 	private final String name;
 
+	@Responsibility("Хранит атрибуты элемента")
 	private final Collector<Attribute> attributes = newCollector();
 
+	@Responsibility("Хранит дочерние теги элемента")
 	private final Collector<Tag> childred = newCollector();
 
 	public Element(String name) {
