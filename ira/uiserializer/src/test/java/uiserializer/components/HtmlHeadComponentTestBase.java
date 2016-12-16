@@ -6,9 +6,12 @@ import static utils.xml.XPathUtils.evalXPath;
 import java.util.Collection;
 import java.util.TreeSet;
 
+import org.i2g.ira.uibuilder.Element;
+import org.i2g.ira.uibuilder.HTMLElements;
 import org.junit.Before;
 
-import uiserializer.UIBuilderFactoryBuilder;
+import uiserializer.UIBuilder;
+import uiserializer.UIBuilderBuilder;
 import utils.collections.Collector;
 
 public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
@@ -48,9 +51,16 @@ public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
 	}
 
 	private String newSeralizedContent() {
-		final UIBuilderFactoryBuilder builder = new UIBuilderFactoryBuilder().build();
+		final StringBuilder serializationTarget = new StringBuilder();
+		Element element = new Element("html");
+		UIBuilderBuilder r = new UIBuilderBuilder();
+		r.setInterface(HTMLElements.class);
+		r.setElement(element);
+		r.setElement(element);
+		final UIBuilder builder = r.build();
 		component.render(builder.getHtml());
-		return builder.serializeContentToInternalBuffer();
+		builder.serializeContent(serializationTarget);
+		return serializationTarget.toString();
 	}
 
 	protected String addStyle(String styleName) {

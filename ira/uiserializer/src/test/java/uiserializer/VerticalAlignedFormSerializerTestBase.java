@@ -1,5 +1,6 @@
 package uiserializer;
 
+import static org.i2g.ira.uibuilder.UIBuilderFactory.newUIBuilderFactory;
 import static org.junit.Assert.assertEquals;
 
 import org.i2g.ira.uibuilder.Element;
@@ -27,7 +28,7 @@ public abstract class VerticalAlignedFormSerializerTestBase implements Randomize
 		sb = new StringBuilder();
 		rs = randomString();
 		productRoot = new Element("html");
-		factory = new UIBuilderFactory(productRoot, new DefaultMethodTransformer());
+		factory = newUIBuilderFactory(productRoot, new DefaultMethodTransformer());
 		elements = factory.create(HTMLElements.class);
 		serializer = new VerticalAlignedFormSerializer(elements);
 		visitor = new TagVisitorOneLineSerialize(sb);

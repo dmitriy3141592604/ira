@@ -2,9 +2,12 @@ package uiserializer.components;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.i2g.ira.uibuilder.Element;
+import org.i2g.ira.uibuilder.HTMLElements;
 import org.junit.Test;
 
-import uiserializer.UIBuilderFactoryBuilder;
+import uiserializer.UIBuilder;
+import uiserializer.UIBuilderBuilder;
 
 public class FormCmpTest {
 
@@ -24,11 +27,18 @@ public class FormCmpTest {
 			});
 		});
 
-		final UIBuilderFactoryBuilder b = new UIBuilderFactoryBuilder().build();
+		final StringBuilder serializationTarget = new StringBuilder();
+		final Element element = new Element("html");
+		final UIBuilderBuilder r = new UIBuilderBuilder();
+		r.setInterface(HTMLElements.class);
+		r.setElement(element);
+		final UIBuilder b = r.build();
 
 		form.render(b.getHtml());
+		b.serializeContent(serializationTarget);
 
-		assertNotNull("", b.serializeContentToInternalBuffer());
+		final String serializeContentToInternalBuffer = serializationTarget.toString();
+		assertNotNull("", serializeContentToInternalBuffer);
 
 	}
 

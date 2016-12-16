@@ -1,5 +1,7 @@
 package test.uibuilder;
 
+import static org.i2g.ira.uibuilder.UIBuilderFactory.newUIBuilderFactory;
+
 import java.lang.reflect.Method;
 
 import org.i2g.ira.uibuilder.Tag;
@@ -17,7 +19,7 @@ public abstract class UIBuilderTestBase<ValueType extends Tag> extends Assert {
 	@Before
 	public void setUIBuilderFactoryBase() {
 		productRoot = newRootValueType();
-		factory = new UIBuilderFactory(productRoot, newMethodTransformer());
+		factory = newUIBuilderFactory(productRoot, newMethodTransformer());
 	}
 
 	protected abstract Transformer<Method, Tag> newMethodTransformer();

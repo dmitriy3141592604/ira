@@ -3,6 +3,9 @@ package uiserializer;
 import java.io.File;
 import java.io.PrintWriter;
 
+import org.i2g.ira.uibuilder.Element;
+import org.i2g.ira.uibuilder.HTMLElements;
+
 import application.Application;
 import utils.io.OnFileWriter;
 
@@ -28,8 +31,13 @@ public abstract class ApplicationSerializerBase {
 		return new BodyBuilder();
 	}
 
-	protected UIBuilderFactoryBuilder newUIBuilderFactory() {
-		return new UIBuilderFactoryBuilder().build();
+	protected UIBuilder newUIBuilderFactory(StringBuilder stringBuilder) {
+		Element element = new Element("html");
+		UIBuilderBuilder r = new UIBuilderBuilder();
+		r.setInterface(HTMLElements.class);
+		r.setElement(element);
+		r.setElement(element);
+		return r.build();
 	}
 
 	protected Application newApplication(Class<Application> applicationClass) {
@@ -47,15 +55,17 @@ public abstract class ApplicationSerializerBase {
 	protected abstract void build(final Application app, final ComponentBuilder cb);
 
 	public void process(PrintWriter out, Class<Application> applicationClass) {
-		final UIBuilderFactoryBuilder uiFactory = newUIBuilderFactory();
+		final StringBuilder stringBuilder = new StringBuilder();
+		final UIBuilder uiFactory = newUIBuilderFactory(stringBuilder);
 		final Application app = newApplication(applicationClass);
 		final ComponentBuilder cb = newBodyBuilder();
 
 		build(app, cb);
 
 		cb.render(uiFactory.getHtml());
+		uiFactory.serializeContent(stringBuilder);
 
-		final String sc = uiFactory.serializeContentToInternalBuffer();
+		final String sc = stringBuilder.toString();
 		out.println(sc);
 		System.out.println(sc);
 

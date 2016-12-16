@@ -7,13 +7,17 @@ import java.lang.reflect.Method;
 
 public class UIBuilderFactory {
 
+	public static UIBuilderFactory newUIBuilderFactory(Tag root, Transformer<Method, Tag> valueTransformer) {
+		return new UIBuilderFactory(root, valueTransformer);
+	}
+
 	private ClassLoader classLoader = this.getClass().getClassLoader();
 
 	private final Tag root;
 
 	private final Transformer<Method, Tag> valueTransformer;
 
-	public UIBuilderFactory(Tag root, Transformer<Method, Tag> valueTransformer) {
+	private UIBuilderFactory(Tag root, Transformer<Method, Tag> valueTransformer) {
 		this.root = root;
 		this.valueTransformer = valueTransformer;
 	}
