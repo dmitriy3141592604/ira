@@ -52,12 +52,13 @@ public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
 
 	private String newSeralizedContent() {
 		final StringBuilder serializationTarget = new StringBuilder();
-		Element element = new Element("html");
-		UIBuilderBuilder r = new UIBuilderBuilder();
-		r.setInterface(HTMLElements.class);
-		r.setElement(element);
-		r.setElement(element);
-		final UIBuilder builder = r.build();
+		final Element element = new Element("html");
+
+		final UIBuilderBuilder uiBuilderBuilder = new UIBuilderBuilder();
+		uiBuilderBuilder.setInterface(HTMLElements.class);
+		uiBuilderBuilder.setElement(element);
+
+		final UIBuilder builder = uiBuilderBuilder.build();
 		component.render(builder.getHtml());
 		builder.serializeContent(serializationTarget);
 		return serializationTarget.toString();

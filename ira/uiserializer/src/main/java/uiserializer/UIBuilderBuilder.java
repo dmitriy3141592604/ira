@@ -4,6 +4,7 @@ import static org.i2g.ira.uibuilder.UIBuilderFactory.newUIBuilderFactory;
 
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
+import org.i2g.ira.uibuilder.UIBuilderFactory;
 
 import test.uibuilder.DefaultMethodTransformer;
 
@@ -16,19 +17,24 @@ public class UIBuilderBuilder {
 	private Element element;
 
 	public UIBuilder build() {
-		return new UIBuilder(element, newUIBuilderFactory(element, valueTransformer).create(interfaceClass));
+		final UIBuilderFactory uiBuilderFactory = newUIBuilderFactory(element, valueTransformer);
+		final HTMLElements create = uiBuilderFactory.create(interfaceClass);
+		return new UIBuilder(element, create);
 	}
 
-	public void setElement(Element element) {
+	public UIBuilderBuilder setElement(Element element) {
 		this.element = element;
+		return this;
 	}
 
-	public void setInterface(Class<HTMLElements> interfaceClass) {
+	public UIBuilderBuilder setInterface(Class<HTMLElements> interfaceClass) {
 		this.interfaceClass = interfaceClass;
+		return this;
 	}
 
-	public void setValueTransformer(DefaultMethodTransformer valueTransformer) {
+	public UIBuilderBuilder setValueTransformer(DefaultMethodTransformer valueTransformer) {
 		this.valueTransformer = valueTransformer;
+		return this;
 	}
 
 }

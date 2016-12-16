@@ -3,6 +3,8 @@ package uiserializer;
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
 
+import test.uibuilder.TagVisitorOneLineSerialize;
+
 public class UIBuilder {
 
 	private final Element root;
@@ -14,15 +16,11 @@ public class UIBuilder {
 		this.html = htmlSource;
 	}
 
-	public Element getRoot() {
-		return root;
-	}
-
 	public HTMLElements getHtml() {
 		return html;
 	}
 
 	public void serializeContent(StringBuilder serializationTarget) {
-		root.visit(new IndentTagVisitorSerializer(serializationTarget));
+		root.visit(new TagVisitorOneLineSerialize(serializationTarget));
 	}
 }
