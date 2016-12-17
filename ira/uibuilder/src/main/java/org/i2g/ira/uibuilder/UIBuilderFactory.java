@@ -11,7 +11,7 @@ public class UIBuilderFactory {
 		return new UIBuilderFactory(root, valueTransformer);
 	}
 
-	private ClassLoader classLoader = this.getClass().getClassLoader();
+	private ClassLoader classLoader = getClass().getClassLoader();
 
 	private final Tag root;
 

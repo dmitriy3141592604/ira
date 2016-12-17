@@ -30,10 +30,6 @@ public abstract class ApplicationSerializerBase<T> {
 		return new BodyBuilder();
 	}
 
-	protected UIBuilder newUIBuilderFactory() {
-		return new UIBuilderBuilder().setInterface(HTMLElements.class).setElement(new Element("html")).build();
-	}
-
 	protected T newApplication(Class<T> applicationClass) {
 		return new InterfaceNavigationFactory().buildFrom(applicationClass);
 	}
@@ -50,20 +46,23 @@ public abstract class ApplicationSerializerBase<T> {
 
 	public void process(PrintWriter out, Class<T> applicationClass) {
 		final StringBuilder stringBuilder = new StringBuilder();
-
-		final UIBuilder uiFactory = newUIBuilderFactory();
+		final UIBuilderBuilder uiBuilderBuilder = new UIBuilderBuilder();
+		final Class<HTMLElements> interfaceClass = HTMLElements.class;
+		final Element element = new Element("html");
+		final UIBuilder uiBuilder = uiBuilderBuilder.setInterface(interfaceClass).setElement(element).build();
 		final T app = newApplication(applicationClass);
 		final ComponentBuilder cb = newBodyBuilder();
 
 		build(app, cb);
 
-		cb.render(uiFactory.getHtml());
-		uiFactory.serializeContent(stringBuilder);
+		cb.render(uiBuilder.getHtml());
+		uiBuilder.serializeContent(stringBuilder);
 
 		final String sc = stringBuilder.toString();
 		out.println(sc);
 
-		new OnFileWriter(new File(getClass().getSimpleName() + ".html")).accept(f -> f.println(sc));
+		File exchangePoint = new File(getClass().getSimpleName() + ".html");
+		new OnFileWriter(exchangePoint).accept(f -> f.println(sc));
 
 	}
 

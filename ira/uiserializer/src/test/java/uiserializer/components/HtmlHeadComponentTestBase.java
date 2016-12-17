@@ -52,10 +52,11 @@ public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
 
 	private String newSeralizedContent() {
 		final StringBuilder serializationTarget = new StringBuilder();
-		final Element element = new Element("html");
 
 		final UIBuilderBuilder uiBuilderBuilder = new UIBuilderBuilder();
 		uiBuilderBuilder.setInterface(HTMLElements.class);
+
+		final Element element = new Element("html");
 		uiBuilderBuilder.setElement(element);
 
 		final UIBuilder builder = uiBuilderBuilder.build();
