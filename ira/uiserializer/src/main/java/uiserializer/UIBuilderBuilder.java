@@ -1,6 +1,7 @@
 package uiserializer;
 
 import static org.i2g.ira.uibuilder.UIBuilderFactory.newUIBuilderFactory;
+import static uiserializer.SideEffect.withEffect;
 
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
@@ -8,7 +9,7 @@ import org.i2g.ira.uibuilder.UIBuilderFactory;
 
 import test.uibuilder.DefaultMethodTransformer;
 
-public class UIBuilderBuilder {
+public class UIBuilderBuilder implements SelfAware<UIBuilderBuilder> {
 
 	private DefaultMethodTransformer valueTransformer = new DefaultMethodTransformer();
 
@@ -22,19 +23,16 @@ public class UIBuilderBuilder {
 		return new UIBuilder(element, create);
 	}
 
-	public UIBuilderBuilder setElement(Element element) {
-		this.element = element;
-		return this;
+	public UIBuilderBuilder setElement(final Element element) {
+		return withEffect(this, () -> self().element = element);
 	}
 
 	public UIBuilderBuilder setInterface(Class<HTMLElements> interfaceClass) {
-		this.interfaceClass = interfaceClass;
-		return this;
+		return withEffect(this, () -> self().interfaceClass = interfaceClass);
 	}
 
 	public UIBuilderBuilder setValueTransformer(DefaultMethodTransformer valueTransformer) {
-		this.valueTransformer = valueTransformer;
-		return this;
+		return withEffect(this, () -> self().valueTransformer = valueTransformer);
 	}
 
 }

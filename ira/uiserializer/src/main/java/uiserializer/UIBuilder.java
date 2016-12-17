@@ -12,6 +12,12 @@ public class UIBuilder {
 	private final HTMLElements html;
 
 	public UIBuilder(Element root, HTMLElements htmlSource) {
+		if (root == null) {
+			throw new IllegalArgumentException("root argument can't be null");
+		}
+		if (htmlSource == null) {
+			throw new IllegalArgumentException("htmlSource can't be null");
+		}
 		this.root = root;
 		this.html = htmlSource;
 	}
