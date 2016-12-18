@@ -4,7 +4,14 @@ import static java.util.Optional.of;
 
 import java.util.Optional;
 
+import utils.Responsibility;
+
+@Responsibility("Фиксирует интерфейс условия")
 public interface Condition {
+
+	default String getName() {
+		throw new UnsupportedOperationException();
+	}
 
 	boolean getValue(Optional<StringBuilder> obs);
 
@@ -12,8 +19,7 @@ public interface Condition {
 		return getValue(of(new StringBuilder()));
 	}
 
-	String getName();
-
+	// TODO Нужно вызывать getValue(Optional obs)
 	default void run(Runnable runnable) {
 		if (getValue()) {
 			runnable.run();

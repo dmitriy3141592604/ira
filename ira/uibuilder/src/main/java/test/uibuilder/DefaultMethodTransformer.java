@@ -1,7 +1,5 @@
 package test.uibuilder;
 
-import static utils.Value.newValue;
-
 import java.lang.reflect.Method;
 
 import org.i2g.ira.uibuilder.Attribute;
@@ -27,12 +25,12 @@ public class DefaultMethodTransformer implements Transformer<Method, Tag>, Logic
 	 */
 	@Override
 	public Tag applay(Method from, Object[] args) {
-		final Value<Tag> element = newValue(new Element(from.getName()));
+		final Value<Tag> element = Value.newValue(new Element(from.getName()));
 
 		final ConditionSimple stringFound = new ConditionSimple("stringFound");
 		final ConditionSimple attributeFound = new ConditionSimple("attributeFound");
 
-		final ConditionSimple hasArgs = new ConditionSimple("hasArgs", args != null);
+		final Condition hasArgs = new ConditionSimple("hasArgs", args != null);
 		final ConditionSimple isString = new ConditionSimple("isString");
 		final ConditionSimple isAttribute = new ConditionSimple("isAttribute");
 
@@ -72,6 +70,7 @@ public class DefaultMethodTransformer implements Transformer<Method, Tag>, Logic
 		final StringBuilder message = new StringBuilder();
 		String separator = "";
 		for (final Object str : s) {
+			// TOTO test me
 			message.append(separator);
 			message.append(str);
 			separator = " ";

@@ -2,51 +2,38 @@ package org.i2g.ira.uibuilder;
 
 import static org.i2g.ira.uibuilder.AttributeHelper.newAttribute;
 import static org.junit.Assert.assertEquals;
-import static utils.Safer.safe;
-
-import java.lang.reflect.Method;
 
 import org.junit.Test;
 
-import testutils.RandomizedTest;
-
-public class DefaultMethodTransformerTest extends DefaultMethodTransformerTestBase implements RandomizedTest {
-
-	private final Method toStringMethod = safe(() -> String.class.getMethod("toString"));
+public class DefaultMethodTransformerTest extends DefaultMethodTransformerTestBase {
 
 	@Test
-	public void test$StringArgument() throws Exception {
-
-		final Tag tag = transform(toStringMethod, rs);
-
-		assertEquals(rs, ((TextElement) tag).getText());
+	public void test$stringArgument() {
+		assertEquals(rs, asTextElement(transform(toStringMethod, rs)).getText());
 	}
 
 	@Test
-	public void test$unsupportedArgumet() throws Exception {
-
+	public void test$unsupportedArgumet() {
 		exception.expect(IllegalArgumentException.class);
 
 		transform(toStringMethod, runnable);
-
 	}
 
 	@Test
 	public void test$argsIsNull() {
-		final Tag transform = transform(toStringMethod);
-		assertEquals("toString", ((Element) transform).getName());
+		assertEquals("toString", asElement(transform(toStringMethod)).getName());
 	}
 
 	@Test
 	public void test$twoArgument() {
-		final Tag transform = transform(toStringMethod, newAttribute("one"), newAttribute("two"));
-		assertEquals("toString", ((Element) transform).getName());
+		assertEquals("toString", asElement(transform(toStringMethod, newAttribute("one"), newAttribute("two"))).getName());
 	}
 
-	//	@Test
-	//	public void test$varargsSupport() {
-	//		final Tag transform = transform(toStringMethod, new Object[] { new Object[] { newAttribute(rs) } });
-	//		assertEquals(rs, ((Element) transform).getAttributes().get(0).getName());
-	//	}
+	// @Test
+	// public void test$varargsSupport() {
+	// final Tag transform = transform(toStringMethod, new Object[] { new
+	// Object[] { newAttribute(rs) } });
+	// assertEquals(rs, ((Element) transform).getAttributes().get(0).getName());
+	// }
 
 }

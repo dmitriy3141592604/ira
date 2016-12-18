@@ -3,20 +3,9 @@ package utils;
 import static org.junit.Assert.assertEquals;
 import static utils.JoinUtils.join;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import testutils.RandomizedTest;
-import utils.collections.Collector;
-
-public class JoinUtilsTest implements RandomizedTest {
-
-	private Collector<String> items;
-
-	@Before
-	public final void setUpJoinUtilsTest() {
-		items = Collector.newCollector();
-	}
+public class JoinUtilsTest extends JoinUtilsTestBase {
 
 	@Test
 	public void test$joinEmptyCollection() {

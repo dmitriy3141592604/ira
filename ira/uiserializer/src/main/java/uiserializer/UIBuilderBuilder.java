@@ -1,7 +1,7 @@
 package uiserializer;
 
 import static org.i2g.ira.uibuilder.UIBuilderFactory.newUIBuilderFactory;
-import static uiserializer.SideEffect.withEffect;
+import static utils.SideEffect.withEffect;
 
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;

@@ -1,12 +1,21 @@
 package utils;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+
 import java.util.Iterator;
 
 public class JoinUtils {
 
 	public static String join(String separator, Iterable<?> items) {
-		final StringBuilder result = new StringBuilder();
+		return join(separator, items, new StringBuilder()).toString();
+	}
+
+	@SafeVarargs
+	public static <T> String join(String separator, T... values) {
+		return join(separator, asList(values));
+	}
+
+	private static StringBuilder join(String separator, Iterable<?> items, StringBuilder result) {
 		final Iterator<?> iterator = items.iterator();
 
 		if (iterator.hasNext()) {
@@ -17,11 +26,7 @@ public class JoinUtils {
 			result.append(separator).append(iterator.next());
 		}
 
-		return result.toString();
-	}
-
-	public static <T> String join(String separator, T[] values) {
-		return join(separator, Arrays.asList(values));
+		return result;
 	}
 
 }
