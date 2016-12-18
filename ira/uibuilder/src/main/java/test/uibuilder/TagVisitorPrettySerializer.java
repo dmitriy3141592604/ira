@@ -1,15 +1,10 @@
 package test.uibuilder;
 
-final class TagVisitorPrettySerializer extends TagVisitorOneLineSerialize {
-	private final TagVisitorPrettySerializerTest TagVisitorPrettySerializer;
+public class TagVisitorPrettySerializer extends TagVisitorOneLineSerialize {
 
-	TagVisitorPrettySerializer(TagVisitorPrettySerializerTest tagVisitorPrettySerializerTest) {
-		TagVisitorPrettySerializer = tagVisitorPrettySerializerTest;
-	}
+	private int indent = 0;
 
-	int indent = 0;
-
-	String prefix() {
+	private String prefix() {
 		final StringBuilder retVal = new StringBuilder();
 		for (int i = 0; i < indent; ++i) {
 			retVal.append(" ");

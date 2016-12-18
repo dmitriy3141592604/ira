@@ -9,7 +9,7 @@ public class TagVisitorPrettySerializerTest extends TagVisitorOneLineSerializeTe
 
 	@Test
 	public void test$indentSerialization() {
-		final TagVisitorOneLineSerialize v = new TagVisitorPrettySerializer(this);
+		final TagVisitorOneLineSerialize v = new TagVisitorPrettySerializer();
 
 		final String expected = new IndentResultConstructorHelper() {
 			{
