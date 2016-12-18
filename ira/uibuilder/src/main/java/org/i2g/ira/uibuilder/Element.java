@@ -37,14 +37,14 @@ public class Element implements Tag {
 
 	@Override
 	public void visit(TagVisitor visitor) {
-		visitor.beforeElement();
+		visitor.onBeforeElement();
 		visitor.onStartElement(name);
 		visitor.onElementAttributes(attributes);
 		visitor.onAfterStartElement();
 		childred.forEach(t -> t.visit(visitor));
-		visitor.beforeEndElement();
+		visitor.onBeforeEndElement();
 		visitor.onEndElement(name);
-		visitor.afterendElement();
+		visitor.onAfterendElement();
 	}
 
 }

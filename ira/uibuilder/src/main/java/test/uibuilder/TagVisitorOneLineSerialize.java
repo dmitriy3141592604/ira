@@ -22,7 +22,7 @@ public class TagVisitorOneLineSerialize extends TagVisitorBase {
 	}
 
 	@Override
-	public void beforeElement() {
+	public void onBeforeElement() {
 		sb.append("<");
 	}
 
@@ -42,7 +42,7 @@ public class TagVisitorOneLineSerialize extends TagVisitorBase {
 	}
 
 	@Override
-	public void beforeEndElement() {
+	public void onBeforeEndElement() {
 		sb.append("</");
 	}
 
@@ -52,7 +52,7 @@ public class TagVisitorOneLineSerialize extends TagVisitorBase {
 	}
 
 	@Override
-	public void afterendElement() {
+	public void onAfterendElement() {
 		sb.append(">");
 	}
 

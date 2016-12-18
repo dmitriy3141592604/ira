@@ -23,7 +23,7 @@ public class UIBuilderBuilder implements SelfAware<UIBuilderBuilder> {
 		return new UIBuilder(element, create);
 	}
 
-	public UIBuilderBuilder setElement(final Element element) {
+	public UIBuilderBuilder setElement(Element element) {
 		return withEffect(this, () -> self().element = element);
 	}
 

@@ -5,7 +5,7 @@ import utils.Responsibility;
 @Responsibility("Предоставляет интерфейс для обхода html дерева")
 public interface TagVisitor {
 
-	void beforeElement();
+	void onBeforeElement();
 
 	void onStartElement(String name);
 
@@ -13,11 +13,11 @@ public interface TagVisitor {
 
 	void onAfterStartElement();
 
-	void beforeEndElement();
+	void onBeforeEndElement();
 
 	void onEndElement(String name);
 
-	void afterendElement();
+	void onAfterendElement();
 
 	void onText(String text);
 

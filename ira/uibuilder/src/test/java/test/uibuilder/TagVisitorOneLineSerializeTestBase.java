@@ -1,21 +1,25 @@
 package test.uibuilder;
 
+import org.i2g.ira.uibuilder.Attributes;
 import org.junit.Before;
 
-public abstract class TagVisitorOneLineSerializeTestBase {
+import testutils.RandomizedTest;
+
+public abstract class TagVisitorOneLineSerializeTestBase implements RandomizedTest, Attributes {
 
 	protected TagVisitorOneLineSerialize visitor;
 
-	protected StringBuilder sb;
+	protected String rs;
 
 	@Before
 	public final void setUpTagVisitorOneLineSerializeTestBase() {
-		sb = new StringBuilder();
-		visitor = new TagVisitorOneLineSerialize(sb);
+		visitor = new TagVisitorOneLineSerialize(new StringBuilder());
+		rs = randomString();
+
 	}
 
 	protected String result() {
-		return sb.toString();
+		return visitor.resultLog();
 	}
 
 }

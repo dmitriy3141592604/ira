@@ -6,7 +6,7 @@ import utils.Responsibility;
 public class TagVisitorBase implements TagVisitor {
 
 	@Override
-	public void beforeElement() {
+	public void onBeforeElement() {
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class TagVisitorBase implements TagVisitor {
 	}
 
 	@Override
-	public void beforeEndElement() {
+	public void onBeforeEndElement() {
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class TagVisitorBase implements TagVisitor {
 	}
 
 	@Override
-	public void afterendElement() {
+	public void onAfterendElement() {
 	}
 
 	@Override

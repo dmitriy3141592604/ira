@@ -4,13 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Collections;
 
-import org.i2g.ira.uibuilder.Attributes;
 import org.junit.Before;
 import org.junit.Test;
 
-import testutils.RandomizedTest;
-
-public class TagVisitorOneLineSerializeTest extends TagVisitorOneLineSerializeTestBase implements RandomizedTest, Attributes {
+public class TagVisitorOneLineSerializeTest extends TagVisitorOneLineSerializeTestBase {
 
 	@Before
 	public final void setUpTagVisitorOneLIneSerializeTest() {
@@ -24,13 +21,12 @@ public class TagVisitorOneLineSerializeTest extends TagVisitorOneLineSerializeTe
 
 	@Test
 	public void test$beforeElement() {
-		visitor.beforeElement();
+		visitor.onBeforeElement();
 		assertEquals("<", result());
 	}
 
 	@Test
 	public void test$onStartElement() {
-		final String rs = randomString();
 		visitor.onStartElement(rs);
 		assertEquals(rs, result());
 	}
@@ -49,28 +45,26 @@ public class TagVisitorOneLineSerializeTest extends TagVisitorOneLineSerializeTe
 
 	@Test
 	public void test$onBeforeEndElement() {
-		visitor.beforeEndElement();
+		visitor.onBeforeEndElement();
 		assertEquals("</", result());
 	}
 
 	@Test
 	public void test$onEndElement() {
-		final String randomString = randomString();
-		visitor.onEndElement(randomString);
-		assertEquals(randomString, result());
+		visitor.onEndElement(rs);
+		assertEquals(rs, result());
 	}
 
 	@Test
 	public void test$afterEndElement() {
-		visitor.afterendElement();
+		visitor.onAfterendElement();
 		assertEquals(">", result());
 	}
 
 	@Test
 	public void test$onText() {
-		final String randomString = randomString();
-		visitor.onText(randomString);
-		assertEquals(randomString, result());
+		visitor.onText(rs);
+		assertEquals(rs, result());
 	}
 
 }

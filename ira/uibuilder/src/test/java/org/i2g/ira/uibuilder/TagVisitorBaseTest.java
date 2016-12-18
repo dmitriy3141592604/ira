@@ -9,15 +9,14 @@ public class TagVisitorBaseTest implements RandomizedTest {
 	@Test
 	public void test() {
 		final TagVisitorBase visitor = new TagVisitorBase();
-		visitor.beforeElement();
+		visitor.onBeforeElement();
 		visitor.onStartElement(randomString());
 		visitor.onElementAttributes(null);
 		visitor.onAfterStartElement();
-		visitor.beforeEndElement();
+		visitor.onBeforeEndElement();
 		visitor.onEndElement(randomString());
-		visitor.afterendElement();
+		visitor.onAfterendElement();
 		visitor.onText(randomString());
-
 	}
 
 }
