@@ -50,4 +50,8 @@ public interface Attributes {
 	default Attribute action(String value) {
 		return asAttribute(value);
 	}
+
+	default Attribute lang(String lang) {
+		return asAttribute(lang);
+	}
 }
