@@ -1,15 +1,29 @@
 package test.uibuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TagVisitorPrettySerializer extends TagVisitorOneLineSerialize {
+
+	private static final int MAX_INDENT_LEVEL = 50;
+
+	private static final List<String> prefixes = new ArrayList<String>();
+
+	static {
+		for (int level = 0; level < MAX_INDENT_LEVEL; ++level) {
+			final StringBuilder indent = new StringBuilder();
+			for (int i = 0; i < level; ++i) {
+				indent.append(" ");
+			}
+			prefixes.add(indent.toString());
+		}
+	}
 
 	private int indent = 0;
 
 	private String prefix() {
-		final StringBuilder retVal = new StringBuilder();
-		for (int i = 0; i < indent; ++i) {
-			retVal.append(" ");
-		}
-		return retVal.toString();
+		// TODO Тут когда-то появится NPE
+		return prefixes.get(indent);
 	}
 
 	@Override
