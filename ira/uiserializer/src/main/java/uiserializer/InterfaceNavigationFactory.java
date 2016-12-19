@@ -2,7 +2,7 @@ package uiserializer;
 
 import static java.lang.reflect.Proxy.newProxyInstance;
 
-import application.FormController;
+import application.support.FormController;
 import uiserializer.components.Component;
 
 public class InterfaceNavigationFactory {

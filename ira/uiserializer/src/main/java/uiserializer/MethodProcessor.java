@@ -3,8 +3,8 @@ package uiserializer;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import application.Name;
-import application.NamedField;
+import application.support.Name;
+import application.support.NamedField;
 
 public class MethodProcessor implements InvocationHandler {
 

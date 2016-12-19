@@ -1,5 +1,6 @@
 package application;
 
+import application.support.Name;
 import utils.Translation;
 
 @Name("Витрина")

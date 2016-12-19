@@ -1,5 +1,10 @@
 package application;
 
+import application.support.FormController;
+import application.support.FormControllerName;
+import application.support.Name;
+import application.support.NamedField;
+
 @Name("Помощь")
 public interface HelpPage extends Navigation {
 

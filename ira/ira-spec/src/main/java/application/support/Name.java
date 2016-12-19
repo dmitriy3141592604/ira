@@ -1,4 +1,4 @@
-package application;
+package application.support;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -11,8 +11,9 @@ import utils.Responsibility;
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Responsibility("Предоставляет интерфейс связывания формы и контроллера")
-public @interface FormControllerName {
+@Responsibility("Отвечает за именование сущьности")
+public @interface Name {
 
-	Class<?> value();
+	String value();
+
 }

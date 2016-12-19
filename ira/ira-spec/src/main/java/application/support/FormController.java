@@ -1,4 +1,4 @@
-package application;
+package application.support;
 
 import utils.Responsibility;
 

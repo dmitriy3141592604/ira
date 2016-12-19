@@ -6,9 +6,9 @@ import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.HTMLElements;
 
-import application.FormAction;
-import application.FormController;
-import application.NamedField;
+import application.support.FormAction;
+import application.support.FormController;
+import application.support.NamedField;
 import uiserializer.components.Component;
 import utils.collections.Collector;
 
