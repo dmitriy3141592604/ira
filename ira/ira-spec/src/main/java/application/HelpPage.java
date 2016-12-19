@@ -3,7 +3,8 @@ package application;
 @Name("Помощь")
 public interface HelpPage extends Navigation {
 
-	public interface HelpSearchForm {
+	@FormControllerName(HelpSearchFormController.class)
+	public interface HelpSearchForm extends FormController {
 
 		@Name("Строка поиска")
 		NamedField searchString();
@@ -13,6 +14,7 @@ public interface HelpPage extends Navigation {
 
 	}
 
+	@Name("Получение доступа до формы поиска помощи")
 	HelpSearchForm getHelpSearchForm();
 
 }

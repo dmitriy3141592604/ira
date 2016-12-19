@@ -12,15 +12,21 @@ import utils.Translation;
 @Name("Касса")
 public interface CashMashinePage extends Navigation {
 
-	public static interface CashForm {
+	@FormControllerName(CashFormController.class)
+	public static interface CashForm extends FormController {
+
 		@ActionDescription("Запросить сумму товара")
 		@Translation("Сумма товара")
-		void submintSummCalculation();
+		@Name("Отправить запрос на вычислении суммы товара")
+		FormAction submintSummCalculation();
 
 		@ActionDescription("Посмотреть предварительную сумму для оплаты")
 		@Translation("Вычесленная сумма")
 		@Name("Вычисленная сумма")
 		NamedField getCalculatedSumm();
+	}
+
+	public static interface PaymentForm {
 
 		@ActionDescription("Внести оплату")
 		@Translation("Оплата")
@@ -32,7 +38,10 @@ public interface CashMashinePage extends Navigation {
 		void pay();
 	}
 
+	@Name("Выбор CashForm")
 	CashForm getCashForm();
+
+	PaymentForm getPaymentForm();
 
 	ReadOnlyValue getTitle();
 

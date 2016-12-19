@@ -54,4 +54,8 @@ public interface Attributes {
 	default Attribute lang(String lang) {
 		return asAttribute(lang);
 	}
+
+	default Attribute colspan(int columnsCount) {
+		return asAttribute(columnsCount);
+	}
 }

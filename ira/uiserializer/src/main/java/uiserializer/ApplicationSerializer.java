@@ -12,19 +12,21 @@ import application.HelpPage.HelpSearchForm;
 public class ApplicationSerializer extends ApplicationSerializerBase<Application> {
 
 	@Override
-	protected void build(final Application app, final ComponentBuilder cb) {
+	protected void build(Application app, ComponentBuilder cb) {
 
 		cb.with(newPagesList(), pages -> {
 
 			pages.with(newPageLayout(), pageLayout -> {
 				final CashMashinePage cashMashinePage = app.goToCashMashinePage();
-				final CashForm cashForm = cashMashinePage.getCashForm();
+
 				pageLayout.setHeader(newHeader(), h -> {
 					h.set(getName(cashMashinePage));
 				});
-				pageLayout.setBody(newForm(formSource(cashForm)), form -> {
+
+				final CashForm cashForm = cashMashinePage.getCashForm();
+				pageLayout.setBody(newForm(cashForm), form -> {
 					form.add(cashForm.getCalculatedSumm());
-					form.add(cashForm.getPayment());
+					form.add(cashForm.submintSummCalculation());
 				});
 			});
 
@@ -43,7 +45,7 @@ public class ApplicationSerializer extends ApplicationSerializerBase<Application
 				pageLayout.setHeader(newHeader(), h -> {
 					h.set(getName(helpPage));
 				});
-				pageLayout.setBody(newForm((formSource(searchForm))), form -> {
+				pageLayout.setBody(newForm(searchForm), form -> {
 					form.add(searchForm.searchString());
 					form.add(searchForm.search());
 				});

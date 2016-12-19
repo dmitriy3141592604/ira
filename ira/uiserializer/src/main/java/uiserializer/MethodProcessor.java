@@ -41,7 +41,21 @@ public class MethodProcessor implements InvocationHandler {
 			if (name != null && name.value() != null) {
 				return name.value();
 			}
-			return historyItem.getRoot().getMethod().getAnnotation(Name.class).value();
+			{
+				final HistoryItem root = historyItem.getRoot();
+				final Method method2 = root.getMethod();
+				final Name annotation = method2.getAnnotation(Name.class);
+				if (annotation == null) {
+					final StringBuilder sb = new StringBuilder();
+					sb.append("Expected annotation ");
+					sb.append(Name.class);
+					sb.append(" in method ");
+					sb.append(method2);
+					throw new IllegalArgumentException(sb.toString());
+				}
+				final String value = annotation.value();
+				return value;
+			}
 		}
 
 		try {
