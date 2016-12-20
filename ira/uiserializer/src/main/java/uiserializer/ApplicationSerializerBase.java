@@ -34,14 +34,6 @@ public abstract class ApplicationSerializerBase<T> {
 		return new InterfaceNavigationFactory().buildFrom(applicationClass);
 	}
 
-	protected FormSource formSource(Object cashForm) {
-		return (FormSource) cashForm;
-	}
-
-	protected String getName(Object object) {
-		return ((Named) object).getName();
-	}
-
 	protected abstract void build(T app, ComponentBuilder cb);
 
 	public void process(PrintWriter out, Class<T> applicationClass) {
@@ -61,7 +53,7 @@ public abstract class ApplicationSerializerBase<T> {
 		final String sc = stringBuilder.toString();
 		out.println(sc);
 
-		File exchangePoint = new File(getClass().getSimpleName() + ".html");
+		final File exchangePoint = new File(getClass().getSimpleName() + ".html");
 		new OnFileWriter(exchangePoint).accept(f -> f.println(sc));
 
 	}

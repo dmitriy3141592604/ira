@@ -20,7 +20,7 @@ public class ApplicationSerializer extends ApplicationSerializerBase<Application
 				final CashMashinePage cashMashinePage = app.goToCashMashinePage();
 
 				pageLayout.setHeader(newHeader(), h -> {
-					h.set(getName(cashMashinePage));
+					h.set(cashMashinePage.getName());
 				});
 
 				final CashForm cashForm = cashMashinePage.getCashForm();
@@ -33,7 +33,7 @@ public class ApplicationSerializer extends ApplicationSerializerBase<Application
 			pages.with(newPageLayout(), pageLayout -> {
 				final FoodPage foodPage = app.goToFoodPage();
 				pageLayout.setHeader(newHeader(), h -> {
-					h.set(getName(foodPage));
+					h.set(foodPage.getName());
 				});
 				pageLayout.setBody(newEmpty(), e -> {
 				});
@@ -43,7 +43,7 @@ public class ApplicationSerializer extends ApplicationSerializerBase<Application
 				final HelpPage helpPage = app.goToHelpPage();
 				final HelpSearchForm searchForm = helpPage.getHelpSearchForm();
 				pageLayout.setHeader(newHeader(), h -> {
-					h.set(getName(helpPage));
+					h.set(helpPage.getName());
 				});
 				pageLayout.setBody(newForm(searchForm), form -> {
 					form.add(searchForm.searchString());

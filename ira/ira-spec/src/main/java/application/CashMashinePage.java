@@ -16,7 +16,7 @@ import utils.Translation;
  *
  */
 @Name("Касса")
-public interface CashMashinePage extends Navigation {
+public interface CashMashinePage extends Navigation, NameAware {
 
 	@FormControllerName(CashFormController.class)
 	public static interface CashForm extends FormController {

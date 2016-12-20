@@ -6,7 +6,7 @@ import application.support.Name;
 import application.support.NamedField;
 
 @Name("Помощь")
-public interface HelpPage extends Navigation {
+public interface HelpPage extends Navigation, NameAware {
 
 	@FormControllerName(HelpSearchFormController.class)
 	public interface HelpSearchForm extends FormController {
