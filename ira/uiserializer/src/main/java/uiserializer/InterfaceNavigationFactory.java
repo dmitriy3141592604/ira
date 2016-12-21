@@ -1,28 +1,51 @@
 package uiserializer;
 
+import static utils.Safer.safe;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import application.support.WithId;
 
 public class InterfaceNavigationFactory extends InterfaceNavigationFactoryBase {
 
-	@SuppressWarnings("unchecked")
 	public <T> T buildFrom(Class<T> executedMethodOwnerClass) {
+		return buildFrom(executedMethodOwnerClass, new HashMap<Method, Supplier<Object>>());
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T buildFrom(Class<T> executedMethodOwnerClass, Map<Method, Supplier<Object>> previousPredefinedMethods) {
 		final List<Class<?>> executedMethodReturntypeClassList = new ArrayList<Class<?>>();
+		final HashMap<Method, Supplier<Object>> predefinedMethods = new HashMap<Method, Supplier<Object>>();
 		executedMethodReturntypeClassList.add(executedMethodOwnerClass);
 
 		final InvocationHandler metodCallHandler = new InvocationHandler() {
 
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) {
-				final Class<?> invokeReturnObject = method.getReturnType();
-
-				if (method.getReturnType().equals(String.class)) {
-					return new String("fdv: random string: MOCK " + method.getName());
+				if (previousPredefinedMethods.containsKey(method)) {
+					return previousPredefinedMethods.get(method).get();
 				}
-				return buildFrom(invokeReturnObject);
+				final Class<?> invokMethodReturnClass = method.getReturnType();
+
+				if (invokMethodReturnClass.equals(String.class)) {
+					return new String("");
+				}
+				if ("void".equals(invokMethodReturnClass.getName())) {
+					return null;
+				}
+				if (WithId.class.isAssignableFrom(invokMethodReturnClass)) {
+					final Method idMethod = safe(() -> invokMethodReturnClass.getMethod("id"));
+
+					predefinedMethods.put(idMethod, () -> executedMethodOwnerClass.getSimpleName() + "." + method.getName());
+				}
+				return buildFrom(invokMethodReturnClass, predefinedMethods);
 			}
 		};
 
