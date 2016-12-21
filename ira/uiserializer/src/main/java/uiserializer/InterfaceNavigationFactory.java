@@ -11,9 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import application.support.WithId;
 
 public class InterfaceNavigationFactory extends InterfaceNavigationFactoryBase {
+
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	public <T> T buildFrom(Class<T> executedMethodOwnerClass) {
 		return buildFrom(executedMethodOwnerClass, new HashMap<Method, Supplier<Object>>());
@@ -21,6 +26,9 @@ public class InterfaceNavigationFactory extends InterfaceNavigationFactoryBase {
 
 	@SuppressWarnings("unchecked")
 	private <T> T buildFrom(Class<T> executedMethodOwnerClass, Map<Method, Supplier<Object>> previousPredefinedMethods) {
+
+		logger.trace("Start processing: {}", executedMethodOwnerClass);
+
 		final List<Class<?>> executedMethodReturntypeClassList = new ArrayList<Class<?>>();
 		final HashMap<Method, Supplier<Object>> predefinedMethods = new HashMap<Method, Supplier<Object>>();
 		executedMethodReturntypeClassList.add(executedMethodOwnerClass);
