@@ -3,4 +3,12 @@
 */bin/*
 **/.classpath
 **/.project
-
+**/*.class
+**/target/
+**/target/**
+**/*.swp
+**/*.swo
+**/*.swn
+**/*.settings
+ira/tasks
+ira/tasks/
