@@ -12,3 +12,8 @@
 **/*.settings
 ira/tasks
 ira/tasks/
+/repositories.xml.zip
+/tasks/.tasks.xml.zip
+/tasks/tasks.xml.zip
+/tasks/.repositories.xml.zip
+/tasks/repositories.xml.zip
