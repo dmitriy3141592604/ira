@@ -2,6 +2,10 @@ package utils.io;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -23,6 +27,10 @@ public class OnFileReaderTestBase implements RandomizedTest {
 	protected String fileName;
 
 	protected File exchangePoint;
+	
+	protected String ethalon = "1111";
+	
+	protected static List<String> tmpFiles = new ArrayList<>();
 
 	@Before
 	public final void setUpOnFileReaderTestBase() throws Exception {
@@ -37,6 +45,12 @@ public class OnFileReaderTestBase implements RandomizedTest {
 
 	protected File createExchangePoint() {
 		return exchangePoint = new File(fileName);
+	}
+	
+	protected File newFile() throws Exception {
+		File f = tmpFolder.newFile();
+		tmpFiles.add(f.getAbsolutePath());
+		return f;
 	}
 
 }
