@@ -6,8 +6,6 @@ import java.io.PrintWriter;
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
 
-import utils.io.OnFileWriter;
-
 public abstract class ApplicationSerializerBase<T> {
 
 	protected Empty newEmpty() {
@@ -54,7 +52,7 @@ public abstract class ApplicationSerializerBase<T> {
 		out.println(sc);
 
 		final File exchangePoint = new File(getClass().getSimpleName() + ".html");
-		new OnFileWriter(exchangePoint).accept(f -> f.println(sc));
+		// new OnFileWriter(exchangePoint).accept(f -> f.println(sc));
 
 	}
 
