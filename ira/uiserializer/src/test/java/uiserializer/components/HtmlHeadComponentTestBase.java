@@ -1,24 +1,12 @@
 package uiserializer.components;
 
 import static utils.collections.Collector.newCollector;
-import static utils.xml.XPathUtils.evalXPath;
 
-import java.util.Collection;
-import java.util.TreeSet;
-
-import org.i2g.ira.uibuilder.Element;
-import org.i2g.ira.uibuilder.HTMLElements;
 import org.junit.Before;
 
-import uiserializer.UIBuilder;
-import uiserializer.UIBuilderBuilder;
 import utils.collections.Collector;
 
-public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
-
-	protected HtmlHeadComponent component;
-
-	protected Collection<String> expected;
+public abstract class HtmlHeadComponentTestBase extends ComponentTestBase<HtmlHeadComponent> {
 
 	protected Collector<String> expectedStyle;
 
@@ -28,41 +16,27 @@ public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
 
 	@Before
 	public void setUpHtmlHeadTestBase() {
-		component = new HtmlHeadComponent();
-		expected = new TreeSet<String>();
+		newComponent();
 		expectedStyle = newCollector();
 		expectedMeta = newCollector();
 		expectedScript = newCollector();
 	}
 
-	protected String importedStylesCount(String ex) {
-		final String expression = expectedStyle.remember("/html/head/link[@rel='stylesheet' and @href='" + ex + "']");
-		return evalXPath(newSeralizedContent(), count(expression));
+	@Override
+	protected final HtmlHeadComponent newComponent() {
+		return component = new HtmlHeadComponent();
 	}
 
-	protected String importedScriptsCount(String ex) {
-		final String expression = expectedScript.remember("/html/head/script[@type='text/javascript' and @src='" + ex + "']");
-		return evalXPath(newSeralizedContent(), count(expression));
+	protected int importedStylesCount(String ex) {
+		return occurenceCount(expectedStyle.remember("/html/head/link[@rel='stylesheet' and @href='" + ex + "']"));
 	}
 
-	protected String importedMetaCount(String name, String value) {
-		final String expression = expectedScript.remember("/html/head/meta[@" + name + "='" + value + "']");
-		return evalXPath(newSeralizedContent(), count(expression));
+	protected int importedScriptsCount(String ex) {
+		return occurenceCount(expectedScript.remember("/html/head/script[@type='text/javascript' and @src='" + ex + "']"));
 	}
 
-	private String newSeralizedContent() {
-		final StringBuilder serializationTarget = new StringBuilder();
-
-		final UIBuilderBuilder uiBuilderBuilder = new UIBuilderBuilder();
-		uiBuilderBuilder.setInterface(HTMLElements.class);
-
-		final Element element = new Element("html");
-		uiBuilderBuilder.setElement(element);
-
-		final UIBuilder builder = uiBuilderBuilder.build();
-		component.render(builder.getHtml());
-		builder.serializeContent(serializationTarget);
-		return serializationTarget.toString();
+	protected int importedMetaCount(String name, String value) {
+		return occurenceCount(expectedMeta.remember("/html/head/meta[@" + name + "='" + value + "']"));
 	}
 
 	protected String addStyle(String styleName) {
@@ -71,9 +45,5 @@ public abstract class HtmlHeadComponentTestBase extends ComponentTestBase {
 
 	protected String addScript(String scriptName) {
 		return component.addScript(scriptName);
-	}
-
-	private String count(String expression) {
-		return "count(" + expression + ")";
 	}
 }

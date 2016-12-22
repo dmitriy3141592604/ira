@@ -26,7 +26,8 @@ public class UIBuilder {
 		return html;
 	}
 
-	public void serializeContent(StringBuilder serializationTarget) {
+	public StringBuilder serializeContent(StringBuilder serializationTarget) {
 		root.visit(new TagVisitorOneLineSerialize(serializationTarget));
+		return serializationTarget;
 	}
 }
