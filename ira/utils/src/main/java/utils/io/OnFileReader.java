@@ -18,7 +18,6 @@ public class OnFileReader {
 	public void accept(ExceptionConsumer<BufferedReader> f) {
 		try (BufferedReader out = reader) {
 			f.safe(out);
-			// TODO tdv: Почему нужен catch?
 		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
