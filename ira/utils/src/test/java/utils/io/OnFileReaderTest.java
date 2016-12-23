@@ -24,14 +24,19 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 	@Test
 	public void testFileReading() throws Exception {
 
-		File tmpFile = super.newFile();
+		/**
+		 * TODO REVIEW(fdv): super избыточно. Если в текущем классе переопределить newFile() (Для логгирования или дебага, то пользователя ждет
+		 * сюрприз
+		 **/
+		final File tmpFile = super.newFile();
 
 		try (FileWriter fileWriter = new FileWriter(tmpFile)) {
 			fileWriter.write(ethalon);
 		}
 		final Value<String> value = newValue();
 
-		OnFileReader fileReader = new OnFileReader(tmpFile);
+		final OnFileReader fileReader = new OnFileReader(tmpFile);
+		/** TODO REVIEW(fdv): Скобки вокруг t избыточны **/
 		fileReader.accept((t) -> value.setValue(t.readLine()));
 		assertEquals(ethalon, value.getValue());
 
@@ -45,14 +50,22 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 
 	@Test
 	public void testConstructorReturnValueIsNotNull() {
+		/**
+		 * TODO REVIEW(fdv): запутано. Если посмотреть комменты к createExchangePoint - то это место, где дизайн выходит боком. Объяснить сложно,
+		 * логика теста запутана. Нужно обсудить словами.
+		 **/
 		createExchangePoint();
-		OnFileReader fileReader = new OnFileReader(exchangePoint);
+		final OnFileReader fileReader = new OnFileReader(exchangePoint);
 		assertNotNull(fileReader);
 	}
 
 	@Test
 	public void testConstructorWithMissingFile() {
 		exception.expectCause(isA(FileNotFoundException.class));
+		/**
+		 * TODO REVIEW(fdv): В любой *nix системе есть корень с именем / При работе в linux исключение FileNotFound будет звучать очень странно.
+		 * Корневой каталог всегда существует. (По крайней мене, если запустилась java и maven
+		 **/
 		new OnFileReader(new File("/"));
 	}
 
@@ -60,6 +73,7 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 	public void testExceptionHandling() {
 		exception.expect(RuntimeException.class);
 		execute(x -> {
+			/** TODO REVIEW(fdv): RuntimveException будет только тогда, когда в сообщении будет 'Some exception'? **/
 			throw new IOException("Some exception");
 		});
 	}
@@ -67,13 +81,14 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 	@AfterClass
 	public static void testTmpFilesRemoval() {
 		Boolean exists = false;
-		for (String s : tmpFiles) {
-			Path path = Paths.get(s);
+		/** TODO REVIEW(fdv): Если закомментировать весь цикл (три следующих строки) то тест будет зеленым ) **/
+		for (final String s : tmpFiles) {
+			final Path path = Paths.get(s);
 			exists |= Files.exists(path);
 		}
 		assertFalse(exists);
 	}
-	
+
 	// TODO tdv: протестировать вызов метода close
 
 }
