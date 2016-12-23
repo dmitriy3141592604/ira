@@ -22,21 +22,11 @@ public class OnFileReaderTestBase implements RandomizedTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	// protected String marker;
-
-	protected String fileName;
-
 	protected File exchangePoint;
 	
 	protected String ethalon = "1111";
 	
 	protected static List<String> tmpFiles = new ArrayList<>();
-
-	@Before
-	public final void setUpOnFileReaderTestBase() throws Exception {
-		// marker = randomString();
-		fileName = "c:\\Temp\\temp-data.txt";
-	}
 
 	protected void execute(final ExceptionConsumer<BufferedReader> execute) {
 		createExchangePoint();
@@ -44,7 +34,12 @@ public class OnFileReaderTestBase implements RandomizedTest {
 	}
 
 	protected File createExchangePoint() {
-		return exchangePoint = new File(fileName);
+		try {
+			return exchangePoint = tmpFolder.newFile();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+			
+		}
 	}
 	
 	protected File newFile() throws Exception {
