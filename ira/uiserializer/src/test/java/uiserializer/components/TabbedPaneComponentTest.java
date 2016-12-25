@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class TabbedPaneCompnentTest extends ComponentTestBase<TabbedPaneComponent> {
+public class TabbedPaneComponentTest extends ComponentTestBase<TabbedPaneComponent> {
 
 	@Override
 	protected TabbedPaneComponent newComponent() {
