@@ -15,7 +15,7 @@ public class ButtonsTest extends BootstrapButtonsTestBase<BootstrapButtonCompone
 
 	@Test
 	public void test$ButtonTags() {
-		final File exchangePoint = new File("target\\buttonTest.html");
+		final File exchangePoint = new File("target\\" + name.getMethodName() + ".html");
 		final OnFileWriter onFileWriter = new OnFileWriter(exchangePoint);
 		onFileWriter.accept(out -> {
 			out.write(serializedContent());
