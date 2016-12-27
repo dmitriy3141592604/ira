@@ -17,6 +17,7 @@
 		<module>../ira-current</module>
 		<module>../sandbox</module>
 		<module>../uiserializer</module>
+		<module>../tools</module>
 	</modules>
 	<properties>
 		<ira.project.version>0.0.1-SHAPSHOT</ira.project.version>

@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>ira</groupId>
+		<artifactId>ira-all</artifactId>
+		<version>0.0.1-SHAPSHOT</version>
+		<relativePath>..\ira-all</relativePath>
+	</parent>
+
+	<artifactId>tools</artifactId>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>ira</groupId>
+			<artifactId>testutils</artifactId>
+			<version>${ira.project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ira</groupId>
+			<artifactId>utils</artifactId>
+			<version>${ira.project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ira</groupId>
+			<artifactId>logic</artifactId>
+			<version>${ira.project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+	</dependencies>
+
+</project>
