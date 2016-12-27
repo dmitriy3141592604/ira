@@ -9,4 +9,8 @@ public interface Mockitor {
 		return Mockito.mock(classToMock);
 	}
 
+	default <T> T verify(T mock) {
+		return Mockito.verify(mock);
+	}
+
 }
