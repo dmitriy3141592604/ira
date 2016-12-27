@@ -75,7 +75,9 @@ public class InterfaceNavigationFactoryTest extends InterfaceNavigationFactoryTe
 		exception.expect(IllegalStateException.class);
 		{
 			final StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append("No name present in method:");
+			stringBuilder.append("No ");
+			stringBuilder.append(Name.class);
+			stringBuilder.append(" present in method:");
 			stringBuilder.append(" getNamedWithoutNameAnnotation");
 			stringBuilder.append(" of class ");
 			stringBuilder.append(HelpInterface.class);

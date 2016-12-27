@@ -22,27 +22,44 @@ public class MethodProcessor extends MethodProcessorBase {
 			return null;
 		}
 
-		if (WithId.class.isAssignableFrom(invokMethodReturnClass)) {
-			final Method idMethod = invokMethodReturnClass.getMethod("id");
+		if (invocedMethodReturnClassAssignableTo(WithId.class)) {
+			final Method idMethod = invocedMethodReturnClassMethod("id");
 			final String id = executedMethodOwnerClass.getSimpleName() + "." + currentMethod.getName();
 			predefinedMethods.put(idMethod, () -> id);
 		}
 
-		if (WithName.class.isAssignableFrom(invokMethodReturnClass)) {
-			final Method nameMethod = invokMethodReturnClass.getMethod("name");
-			final Name annotation = currentMethod.getAnnotation(Name.class);
+		if (invocedMethodReturnClassAssignableTo(WithName.class)) {
+			final Method nameMethod = invocedMethodReturnClassMethod("name");
+			final Class<Name> nameAnnotation = Name.class;
+
+			final Name annotation = currentMethod.getAnnotation(nameAnnotation);
 			if (annotation == null) {
-				final StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append("No name present in method: ");
-				stringBuilder.append(currentMethod.getName());
-				stringBuilder.append(" of class ");
-				stringBuilder.append(executedMethodOwnerClass);
-				throw new IllegalStateException(stringBuilder.toString());
+				throw newNoNameAnnotationPresetException(nameAnnotation);
 			}
-			final String name = annotation.value();
+			final String value = annotation.value();
+			final String name = value;
 			predefinedMethods.put(nameMethod, () -> name);
 		}
 		return fromClassBuilder.buildFrom(invokMethodReturnClass, predefinedMethods);
+	}
+
+	private Method invocedMethodReturnClassMethod(String string) throws NoSuchMethodException {
+		return invokMethodReturnClass.getMethod(string);
+	}
+
+	private boolean invocedMethodReturnClassAssignableTo(Class<?> baseClass) {
+		return baseClass.isAssignableFrom(invokMethodReturnClass);
+	}
+
+	private IllegalStateException newNoNameAnnotationPresetException(Class<?> nameAnnotation) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("No ");
+		stringBuilder.append(nameAnnotation);
+		stringBuilder.append(" present in method: ");
+		stringBuilder.append(currentMethod.getName());
+		stringBuilder.append(" of class ");
+		stringBuilder.append(executedMethodOwnerClass);
+		return new IllegalStateException(stringBuilder.toString());
 	}
 
 }
