@@ -6,9 +6,6 @@
 		<version>0.0.1-SHAPSHOT</version>
 		<relativePath>..\ira-all</relativePath>
 	</parent>
-	<properties>
-		<jettyVersion>9.3.9.v20160517</jettyVersion>
-	</properties>
 
 	<artifactId>uiserializer</artifactId>
 
