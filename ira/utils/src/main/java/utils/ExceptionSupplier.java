@@ -11,6 +11,9 @@ public interface ExceptionSupplier<T> {
 		} catch (final Exception exception) {
 			// TODO Добавить текс сообщения, что причину нужно искть в
 			// оригинальном стактрейсе
+			if (exception instanceof RuntimeException) {
+				throw (RuntimeException) exception;
+			}
 			throw new RuntimeException(exception);
 		}
 	}

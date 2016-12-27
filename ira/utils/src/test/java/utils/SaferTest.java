@@ -39,4 +39,12 @@ public class SaferTest implements RandomizedTest {
 		assertNotNull(new Safer());
 	}
 
+	@Test
+	public void test$noWrapRuntimeException() {
+		exception.expect(IllegalStateException.class);
+		safe(() -> {
+			throw new IllegalStateException();
+		});
+	}
+
 }

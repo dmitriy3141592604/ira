@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import application.support.Name;
 import application.support.WithId;
+import application.support.WithName;
 
 public class InterfaceNavigationFactoryTest extends InterfaceNavigationFactoryTestBase {
 
@@ -31,6 +33,11 @@ public class InterfaceNavigationFactoryTest extends InterfaceNavigationFactoryTe
 
 		WithIdDerivedInterfaceRedefinition getDerivedIdFieldRedefinition();
 
+		@Name("nAmE")
+		WithName getNamed();
+
+		WithName getNamedWithoutNameAnnotation();
+
 	}
 
 	@Test
@@ -56,6 +63,25 @@ public class InterfaceNavigationFactoryTest extends InterfaceNavigationFactoryTe
 	@Test
 	public void test$WithId$DerivedInterfaceRedefinition() {
 		assertEquals("HelpInterface.getDerivedIdFieldRedefinition", buildFrom.getDerivedIdFieldRedefinition().id());
+	}
+
+	@Test
+	public void test$withName() {
+		assertEquals("nAmE", buildFrom.getNamed().name());
+	}
+
+	@Test
+	public void test$withNameWithoutAnnotation() {
+		exception.expect(IllegalStateException.class);
+		{
+			final StringBuilder stringBuilder = new StringBuilder();
+			stringBuilder.append("No name present in method:");
+			stringBuilder.append(" getNamedWithoutNameAnnotation");
+			stringBuilder.append(" of class ");
+			stringBuilder.append(HelpInterface.class);
+			exception.expectMessage(stringBuilder.toString());
+		}
+		buildFrom.getNamedWithoutNameAnnotation();
 	}
 
 }

@@ -20,7 +20,7 @@ public abstract class ComponentTestBase<ComponentType extends Component> {
 		component = newComponent();
 	}
 
-	private String serializedContent() {
+	protected String serializedContent() {
 		final UIBuilderBuilder uiBuilderBuilder = new UIBuilderBuilder();
 
 		uiBuilderBuilder.setInterface(HTMLElements.class);
