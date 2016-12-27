@@ -5,10 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Request;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import uiserializer.Mockitor;
 
+@RunWith(MockitoJUnitRunner.class)
 public abstract class HttpCommandTestBase implements Mockitor {
 
 	@Mock

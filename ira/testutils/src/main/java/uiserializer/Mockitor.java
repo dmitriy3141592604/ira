@@ -2,7 +2,7 @@ package uiserializer;
 
 import org.mockito.Mockito;
 
-// TODO move to test utils
+/** "Упрощает использование статических методов Mockito" **/
 public interface Mockitor {
 
 	default <T> T mock(Class<T> classToMock) {

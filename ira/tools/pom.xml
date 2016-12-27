@@ -21,13 +21,11 @@
 			<groupId>ira</groupId>
 			<artifactId>utils</artifactId>
 			<version>${ira.project.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>ira</groupId>
 			<artifactId>logic</artifactId>
 			<version>${ira.project.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
