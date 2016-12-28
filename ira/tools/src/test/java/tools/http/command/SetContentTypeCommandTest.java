@@ -5,13 +5,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-public class HtmlContentCommandTest extends HttpCommandTestBase {
+public class SetContentTypeCommandTest extends HttpCommandTestBase {
 
-	private HtmlContentCommand cmd;
+	private SetContentTypeCommand cmd;
 
 	@Before
 	public final void setUpHtmlContentCommandTest() {
-		cmd = new HtmlContentCommand();
+		cmd = new SetContentTypeCommand();
 	}
 
 	@Test

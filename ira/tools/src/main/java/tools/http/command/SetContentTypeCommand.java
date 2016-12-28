@@ -1,6 +1,6 @@
 package tools.http.command;
 
-public class HtmlContentCommand extends HttpCommandBase {
+public class SetContentTypeCommand extends HttpCommandBase {
 
 	@Override
 	public void applayImpl(HttpCommandContext context) {
