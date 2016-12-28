@@ -20,6 +20,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+
 public class StartServerTest {
 
 	private static final int SERVER_PORT = 3333 + new Random().nextInt(10);
@@ -60,6 +63,14 @@ public class StartServerTest {
 		final String content = IOUtils.toString((openStream), "utf-8");
 
 		assertEquals("СоДерЖимООЕ", content);
+	}
+
+	@Test
+	public void htmlUnitAccessTest() throws Exception {
+		final WebClient wc = new WebClient();
+		final HtmlPage page = wc.getPage(newURL());
+		assertEquals("СоДерЖимООЕ", page.asText());
+
 	}
 
 	private URL newURL() throws MalformedURLException {
