@@ -7,6 +7,9 @@ public class SetContentCommand extends HttpCommandBase {
 	private final Supplier<String> contentFactory;
 
 	public SetContentCommand(Supplier<String> contentFactory) {
+		if (null == contentFactory) {
+			throw new NullPointerException("content factory is null. Not allowed.");
+		}
 		this.contentFactory = contentFactory;
 	}
 

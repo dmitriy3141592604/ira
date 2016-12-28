@@ -1,5 +1,7 @@
 package tools.http.command;
 
+import java.util.function.Supplier;
+
 import org.junit.Test;
 
 public class SetContentCommandTest extends HttpCommandTestBase {
@@ -9,6 +11,11 @@ public class SetContentCommandTest extends HttpCommandTestBase {
 		final SetContentCommand setContentCommand = new SetContentCommand(() -> randomString);
 		setContentCommand.apply(context);
 		verify(responseWriter).print(randomString);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void test$notNullContentSupplier() {
+		new SetContentCommand((Supplier<String>) null);
 	}
 
 }
