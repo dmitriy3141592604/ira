@@ -17,6 +17,9 @@ public abstract class HttpCommandTestBase implements Mockitor {
 	@Mock
 	protected HttpServletResponse response;
 
+	@Mock
+	protected Request request;
+
 	protected HttpCommandContext context;
 
 	@Before
@@ -40,7 +43,7 @@ public abstract class HttpCommandTestBase implements Mockitor {
 
 			@Override
 			public Request baseRequest() {
-				throw new UnsupportedOperationException();
+				return request;
 			}
 		};
 	}
