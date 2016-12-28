@@ -1,5 +1,7 @@
 package tools.http.command;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,10 +11,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import testutils.RandomizedTest;
 import uiserializer.Mockitor;
 
 @RunWith(MockitoJUnitRunner.class)
-public abstract class HttpCommandTestBase implements Mockitor {
+public abstract class HttpCommandTestBase implements Mockitor, RandomizedTest {
 
 	@Mock
 	protected HttpServletResponse response;
@@ -20,32 +23,43 @@ public abstract class HttpCommandTestBase implements Mockitor {
 	@Mock
 	protected Request request;
 
+	@Mock
+	protected PrintWriter responseWriter;
+
+	protected String randomString;
+
 	protected HttpCommandContext context;
 
 	@Before
 	public final void setUpHttpCommandTestBase() {
-		context = new HttpCommandContext() {
+		randomString = randomString();
+		try {
+			when(response.getWriter()).thenReturn(responseWriter);
+			context = new HttpCommandContext() {
 
-			@Override
-			public String target() {
-				throw new UnsupportedOperationException();
-			}
+				@Override
+				public String target() {
+					throw new UnsupportedOperationException();
+				}
 
-			@Override
-			public HttpServletResponse servletResponse() {
-				return response;
-			}
+				@Override
+				public HttpServletResponse servletResponse() {
+					return response;
+				}
 
-			@Override
-			public HttpServletRequest servletRequest() {
-				throw new UnsupportedOperationException();
-			}
+				@Override
+				public HttpServletRequest servletRequest() {
+					throw new UnsupportedOperationException();
+				}
 
-			@Override
-			public Request baseRequest() {
-				return request;
-			}
-		};
+				@Override
+				public Request baseRequest() {
+					return request;
+				}
+			};
+		} catch (final Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 }
