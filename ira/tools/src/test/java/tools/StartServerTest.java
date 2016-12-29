@@ -67,9 +67,10 @@ public class StartServerTest {
 
 	@Test
 	public void htmlUnitAccessTest() throws Exception {
-		final WebClient wc = new WebClient();
-		final HtmlPage page = wc.getPage(newURL());
-		assertEquals("СоДерЖимООЕ", page.asText());
+		try (final WebClient wc = new WebClient();) {
+			final HtmlPage page = wc.getPage(newURL());
+			assertEquals("СоДерЖимООЕ", page.asText());
+		}
 
 	}
 
