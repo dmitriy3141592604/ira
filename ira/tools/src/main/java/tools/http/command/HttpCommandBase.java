@@ -1,13 +1,11 @@
 package tools.http.command;
 
+import static utils.Quietly.quietly;
+
 public abstract class HttpCommandBase {
 
 	public final void apply(HttpCommandContext context) {
-		try {
-			applayImpl(context);
-		} catch (final Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		quietly(() -> applayImpl(context));
 	}
 
 	protected abstract void applayImpl(HttpCommandContext context) throws Exception;
