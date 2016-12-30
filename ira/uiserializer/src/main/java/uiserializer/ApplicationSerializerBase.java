@@ -1,6 +1,5 @@
 package uiserializer;
 
-import java.io.File;
 import java.io.PrintWriter;
 
 import org.i2g.ira.uibuilder.Element;
@@ -51,7 +50,7 @@ public abstract class ApplicationSerializerBase<T> {
 		final String sc = stringBuilder.toString();
 		out.println(sc);
 
-		final File exchangePoint = new File(getClass().getSimpleName() + ".html");
+		// final File exchangePoint = new File(getClass().getSimpleName() + ".html");
 		// new OnFileWriter(exchangePoint).accept(f -> f.println(sc));
 
 	}

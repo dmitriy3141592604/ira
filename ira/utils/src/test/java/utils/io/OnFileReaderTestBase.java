@@ -1,7 +1,5 @@
 package utils.io;
 
-import static utils.Safer.safe;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +12,6 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import testutils.RandomizedTest;
-import utils.ExceptionSupplier;
-import utils.Safer;
 
 public class OnFileReaderTestBase implements RandomizedTest {
 
@@ -29,14 +25,13 @@ public class OnFileReaderTestBase implements RandomizedTest {
 
 	// TODO REVIEW(fdv): Переменная не используется в классе, в котрором объявлена
 	// XXX REVIEW(fdv): Под рукой уже есть RandomizedTest#randomString. Вопрос: OnFileReader должен работать только с 1111?
-	// tdv: Согласен. Переделал на использование RandomizedTest#randomString 
+	// tdv: Согласен. Переделал на использование RandomizedTest#randomString
 	protected String ethalon;
-	
+
 	@Before
 	public final void setUpOnFilereaderTestBase() throws Exception {
 		ethalon = randomString();
 	}
-
 
 	// TODO REVIEW(fdv): Для инициализации переменных уровня класса, есть аннотация @BeforeClass
 	/** TODO REVIEW(fdv): В проекте есть класс Collector. Он как раз для случаев, когда нужна только операция add для коллекций **/
@@ -48,11 +43,11 @@ public class OnFileReaderTestBase implements RandomizedTest {
 	}
 
 	protected File createExchangePoint() {
-//		tdv: Не компилируется
-//		Safer.safe(() -> {
-//			exchangePoint = tmpFolder.newFile();
-//		});
-		
+		// tdv: Не компилируется
+		// Safer.safe(() -> {
+		// exchangePoint = tmpFolder.newFile();
+		// });
+
 		try {
 			/**
 			 * TODO REVIEW(fdv): Я сам так делаю, но это плохая практика. Смешиваются две операции: присваивание и возврат результата. После поиска,
@@ -77,8 +72,7 @@ public class OnFileReaderTestBase implements RandomizedTest {
 	protected File newFile() throws Exception {
 		System.out.println("OnFileReaderTestBase#newFile");
 		/**
-		 * TODO REVIEW(fdv): имя переменной f - не информативоно. Во многих случаях считается, что это функция. Для Java - замыкание.
-		 * tdv: Согласен
+		 * TODO REVIEW(fdv): имя переменной f - не информативоно. Во многих случаях считается, что это функция. Для Java - замыкание. tdv: Согласен
 		 **/
 		final File file = tmpFolder.newFile();
 		tmpFiles.add(file.getAbsolutePath());
