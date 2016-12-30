@@ -9,7 +9,7 @@ public class SetContentCommandTest extends HttpCommandTestBase {
 	@Test
 	public void setContent() {
 		final SetContentCommand setContentCommand = new SetContentCommand(() -> randomString);
-		setContentCommand.apply(context);
+		setContentCommand.accept(context);
 		verify(responseWriter).print(randomString);
 	}
 

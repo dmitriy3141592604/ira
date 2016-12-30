@@ -8,7 +8,7 @@ import utils.Responsibility;
 public class OkCommand extends HttpCommandBase {
 
 	@Override
-	public void applayImpl(HttpCommandContext context) {
+	public void impl(HCContext context) {
 		context.servletResponse().setStatus(SC_OK);
 	}
 

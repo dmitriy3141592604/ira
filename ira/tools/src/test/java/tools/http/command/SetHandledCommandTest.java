@@ -7,7 +7,7 @@ public class SetHandledCommandTest extends HttpCommandTestBase {
 	@Test
 	public void test$setHandled() {
 
-		new SetHandledCommand().apply(context);
+		new SetHandledCommand().accept(context);
 
 		verify(request).setHandled(true);
 	}

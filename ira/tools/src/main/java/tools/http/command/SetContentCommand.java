@@ -14,7 +14,7 @@ public class SetContentCommand extends HttpCommandBase {
 	}
 
 	@Override
-	public void applayImpl(HttpCommandContext context) throws Exception {
+	public void impl(HCContext context) throws Exception {
 		context.servletResponse().getWriter().print(contentFactory.get());
 	}
 

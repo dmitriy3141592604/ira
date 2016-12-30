@@ -18,7 +18,7 @@ public class SetContentTypeCommandTest extends HttpCommandTestBase {
 	public void test$HtmlContentCommand() {
 		assertEquals(null, response.getContentType());
 
-		cmd.apply(context);
+		cmd.accept(context);
 
 		verify(response).setContentType("text/html; charset=utf-8");
 	}

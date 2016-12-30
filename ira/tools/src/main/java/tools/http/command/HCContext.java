@@ -8,7 +8,7 @@ import org.eclipse.jetty.server.Request;
 import utils.Responsibility;
 
 @Responsibility("Предоставляет интерфейс доступа к контексту обработки HTTP-запроса для Jetty")
-public interface HttpCommandContext {
+public interface HCContext {
 
 	String target();
 

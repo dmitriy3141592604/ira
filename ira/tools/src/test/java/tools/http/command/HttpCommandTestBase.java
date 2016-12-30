@@ -28,14 +28,14 @@ public abstract class HttpCommandTestBase implements Mockitor, RandomizedTest {
 
 	protected String randomString;
 
-	protected HttpCommandContext context;
+	protected HCContext context;
 
 	@Before
 	public final void setUpHttpCommandTestBase() {
 		randomString = randomString();
 		try {
 			when(response.getWriter()).thenReturn(responseWriter);
-			context = new HttpCommandContext() {
+			context = new HCContext() {
 
 				@Override
 				public String target() {

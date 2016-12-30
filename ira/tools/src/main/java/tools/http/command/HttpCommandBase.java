@@ -2,12 +2,13 @@ package tools.http.command;
 
 import static utils.Quietly.quietly;
 
-public abstract class HttpCommandBase {
+public abstract class HttpCommandBase implements HC {
 
-	public final void apply(HttpCommandContext context) {
-		quietly(() -> applayImpl(context));
+	protected abstract void impl(HCContext context) throws Exception;
+
+	@Override
+	public final void accept(HCContext context) {
+		quietly(() -> impl(context));
 	}
-
-	protected abstract void applayImpl(HttpCommandContext context) throws Exception;
 
 }

@@ -19,7 +19,7 @@ public class OkCommandTest extends HttpCommandTestBase {
 	public void test$okCommand() {
 		assertEquals(0, response.getStatus());
 
-		cmd.apply(context);
+		cmd.accept(context);
 
 		verify(response).setStatus(SC_OK);
 	}
