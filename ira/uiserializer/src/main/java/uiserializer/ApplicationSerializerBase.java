@@ -1,6 +1,5 @@
 package uiserializer;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -20,8 +19,7 @@ public abstract class ApplicationSerializerBase<T> implements WithSimpleClassNam
 		public ApplicationSerializerConfiguration(WithName namedClass) {
 			// TODO Добавить getDefaultFileSystem#getPath
 			final Path path = FileSystems.getDefault().getPath("target", namedClass.name() + ".html");
-			final File file = path.toFile();
-			this.fileWriter = new OnFileWriter(file);
+			this.fileWriter = new OnFileWriter(path);
 		}
 
 		public OnFileWriter getWriter() {
