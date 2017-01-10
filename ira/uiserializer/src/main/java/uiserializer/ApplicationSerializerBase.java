@@ -1,32 +1,11 @@
 package uiserializer;
 
 import java.io.PrintWriter;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
 
-import application.support.WithName;
-import utils.io.OnFileWriter;
-
 public abstract class ApplicationSerializerBase<T> implements WithSimpleClassName {
-
-	public static class ApplicationSerializerConfiguration {
-
-		private final OnFileWriter fileWriter;
-
-		public ApplicationSerializerConfiguration(WithName namedClass) {
-			// TODO Добавить getDefaultFileSystem#getPath
-			final Path path = FileSystems.getDefault().getPath("target", namedClass.name() + ".html");
-			this.fileWriter = new OnFileWriter(path);
-		}
-
-		public OnFileWriter getWriter() {
-			return fileWriter;
-		}
-
-	}
 
 	private final ApplicationSerializerConfiguration configuration = new ApplicationSerializerConfiguration(this);
 
