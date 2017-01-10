@@ -18,7 +18,9 @@ public class UIBuilderFactory {
 	private final Transformer<Method, Tag> valueTransformer;
 
 	private UIBuilderFactory(Tag root, Transformer<Method, Tag> valueTransformer) {
+		// TODO AssertNotNul #root
 		this.root = root;
+		// TODO AssertNotNul #valueTransformer
 		this.valueTransformer = valueTransformer;
 	}
 

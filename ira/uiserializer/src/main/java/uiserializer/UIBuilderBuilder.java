@@ -19,7 +19,9 @@ public class UIBuilderBuilder implements SelfAware<UIBuilderBuilder> {
 
 	public UIBuilder build() {
 		final UIBuilderFactory uiBuilderFactory = newUIBuilderFactory(element, valueTransformer);
+		// TODO assertNotNull interfaceClass
 		final HTMLElements create = uiBuilderFactory.create(interfaceClass);
+		// TODO asertNotNull element
 		return new UIBuilder(element, create);
 	}
 
