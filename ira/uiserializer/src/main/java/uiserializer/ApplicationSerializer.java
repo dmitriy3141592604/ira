@@ -9,7 +9,7 @@ import application.FoodPage;
 import application.HelpPage;
 import application.HelpPage.HelpSearchForm;
 
-public class ApplicationSerializer extends ApplicationSerializerBase<Application> {
+public class ApplicationSerializer extends ApplicationSerializerBase<Application> implements WithSimpleClassName {
 
 	@Override
 	protected void build(Application app, ComponentBuilder cb) {
