@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
 
+import application.support.WithName;
 import utils.io.OnFileWriter;
 
 public abstract class ApplicationSerializerBase<T> implements WithSimpleClassName {
@@ -16,7 +17,7 @@ public abstract class ApplicationSerializerBase<T> implements WithSimpleClassNam
 
 		private final OnFileWriter fileWriter;
 
-		public ApplicationSerializerConfiguration(WithSimpleClassName namedClass) {
+		public ApplicationSerializerConfiguration(WithName namedClass) {
 			// TODO Добавить getDefaultFileSystem#getPath
 			final Path path = FileSystems.getDefault().getPath("target", namedClass.name() + ".html");
 			final File file = path.toFile();
