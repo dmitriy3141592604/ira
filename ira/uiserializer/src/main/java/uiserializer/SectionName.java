@@ -2,7 +2,7 @@ package uiserializer;
 
 import org.i2g.ira.uibuilder.HTMLElements;
 
-// TODO Протестировать
+// FIXME Протестировать
 public class SectionName extends ComponentBuilderBase {
 
 	private String name;
