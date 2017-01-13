@@ -8,7 +8,7 @@ import utils.Responsibility;
 
 @Responsibility("Фиксирует интерфейс условия")
 public interface Condition {
-
+	// TODO Исключение нужно убрать. Скорее всего, нужно заменить на полное имя класса
 	default String getName() {
 		throw new UnsupportedOperationException();
 	}

@@ -2,13 +2,19 @@ package logic;
 
 import java.util.Optional;
 
-// FIXME Протестировать 1. Должно быть корректное имя условия. 2. Результат должен зависить от аргумента конструктора
-class ConditionConst implements Condition {
+public class ConditionConst implements Condition {
 
 	private final boolean constValue;
+	private final String constName;
 
 	public ConditionConst(boolean constValue) {
 		this.constValue = constValue;
+		this.constName = "const(" + constValue + ")";
+	}
+
+	@Override
+	public String getName() {
+		return constName;
 	}
 
 	@Override
