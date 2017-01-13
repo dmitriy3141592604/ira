@@ -4,25 +4,16 @@ import static java.util.Optional.empty;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
+@RunWith(Theories.class)
 public class ConditionSimpleTest extends ConditionSimpleTestBase {
 
-	@Test
-	public void test$value() {
-		final boolean randomValue = randomBoolean();
-		assertEquals(randomValue, newCondition(randomString(), randomValue).getValue(empty()));
-	}
-
-	@Test
-	public void test$setValue() {
-		final ConditionSimple condition = newCondition();
-
-		final boolean value = randomBoolean();
-
-		condition.setValue(value);
-
-		assertEquals(value, condition.getValue(empty()));
-	}
+	@DataPoints
+	public static Boolean[] boleans = { Boolean.TRUE, Boolean.FALSE };
 
 	@Test
 	public void test$name() {
@@ -30,25 +21,37 @@ public class ConditionSimpleTest extends ConditionSimpleTestBase {
 		assertEquals(name, newSimpleCondition(name).getName());
 	}
 
-	@Test
-	public void test$setOn() {
-		final ConditionSimple c = newCondition();
-		c.setValue(false);
-		final boolean previousValue = c.getValue();
+	@Theory
+	public void test$value(Boolean value) {
+		assertEquals(value, newCondition(randomString(), value).getValue(empty()));
+	}
+
+	@Theory
+	public void test$setValue(Boolean value) {
+		final ConditionSimple condition = newCondition(false);
+
+		condition.setValue(value);
+
+		assertEquals(value, condition.getValue(empty()));
+	}
+
+	@Theory
+	public void test$setOn(Boolean value) {
+		final ConditionSimple c = newCondition(value);
+
 		c.setOn();
-		final boolean newValue = c.getValue();
-		assertEquals("false|true", previousValue + "|" + newValue);
+
+		assertEquals(true, c.getValue());
 
 	}
 
-	@Test
-	public void test$setOff() {
-		final ConditionSimple c = newCondition();
-		c.setValue(true);
-		final boolean previousValue = c.getValue();
+	@Theory
+	public void test$setOff(Boolean value) {
+		final ConditionSimple c = newCondition(value);
+
 		c.setOff();
-		final boolean newValue = c.getValue();
-		assertEquals("true|false", previousValue + "|" + newValue);
+
+		assertEquals(false, c.getValue());
 
 	}
 

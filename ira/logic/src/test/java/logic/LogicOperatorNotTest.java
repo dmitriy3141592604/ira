@@ -1,20 +1,11 @@
 package logic;
 
-import static java.util.Optional.of;
+import static java.util.Optional.empty;
 import static org.junit.Assert.assertEquals;
-import static org.junit.rules.ExpectedException.none;
 
-import java.lang.reflect.Method;
-import java.util.Optional;
-
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class LogicOperatorNotTest extends LogicOperatorNotTestBase {
-
-	@Rule
-	public ExpectedException exception = none();
 
 	@Test
 	public void test$true() {
@@ -29,31 +20,19 @@ public class LogicOperatorNotTest extends LogicOperatorNotTestBase {
 	@Test
 	public void test$emptyInputArgumentsList() {
 		exception.expect(LogicOperatorNotException.class);
-		not.eval(of(new StringBuilder()));
+		not.eval(empty());
 	}
 
 	@Test
 	public void test$moreThatOneArgument() {
 		exception.expect(LogicOperatorNotException.class);
-		not.eval(of(new StringBuilder()), randomCondition(), randomCondition());
+		not.eval(empty(), new ConditionTrue(), new ConditionTrue());
 	}
 
 	@Test
 	public void test$nullInputParameter() throws Exception {
 		exception.expect(IllegalArgumentException.class);
-		final Method declaredMethod = getEvalMethod();
-		declaredMethod.invoke(not, Optional.of(new StringBuilder()));
-	}
-
-	private Method getEvalMethod() throws NoSuchMethodException {
-
-		final Class<LogicOperatorNot> class1 = LogicOperatorNot.class;
-		for (final Method method : class1.getDeclaredMethods()) {
-			if ("eval".equals(method.getName())) {
-				return method;
-			}
-		}
-		throw new RuntimeException("methd not found");
+		getEvalMethod().invoke(not, empty());
 	}
 
 }
