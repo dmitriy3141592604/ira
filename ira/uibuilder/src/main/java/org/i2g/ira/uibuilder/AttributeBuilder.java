@@ -12,7 +12,9 @@ public class AttributeBuilder {
 
 	/**
 	 * Создает атрибут с именем вызывющего метода
-	 * @param value - значение аттрибута
+	 *
+	 * @param value
+	 *            - значение аттрибута
 	 * @return
 	 */
 	@SafeVarargs
@@ -26,8 +28,10 @@ public class AttributeBuilder {
 	}
 
 	@SafeVarargs
-	// FIXME Если задать только одно значение (пропустить аттрибут name) получается IndexOutOfBoundsException
 	public static <T> Attribute asNamedAttribute(String name, T... values) {
+		if (values.length == 0) {
+			return newAttribute(name);
+		}
 		return newAttribute(name, joinValues(values));
 	}
 

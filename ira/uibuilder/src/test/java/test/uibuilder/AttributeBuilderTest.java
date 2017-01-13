@@ -49,8 +49,14 @@ public class AttributeBuilderTest extends AttributeBuilderTestBase {
 
 	@Test
 	@Behavior("Можно использовать несколько значений. Они будут объеденены через пробел")
-	public void test$stringArraySerialization() {
+	public void test$stringArraySerialization$manuElements() {
 		assertEquals(" class=\"c1 c2 c3\"", transform(attrs.klass("c1", "c2", "c3")));
+	}
+
+	@Test
+	@Behavior("Можно использовать одно значение")
+	public void test$stringArraySerialization$oneElement() {
+		assertEquals(" class=\"c1\"", transform(attrs.klass("c1")));
 	}
 
 	@Test
