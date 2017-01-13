@@ -1,9 +1,9 @@
 package logic;
 
-// FIXME Протестировать 1. Имя.
+// FIXME Протестировать 1. Имя. 2. значение
 final class ConditionFalse extends ConditionConst {
 
 	public ConditionFalse() {
-		super(true);
+		super(false);
 	}
 }
