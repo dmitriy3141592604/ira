@@ -39,14 +39,14 @@ public class LoginFormLayout extends Model implements RuleSupport, fRuleSupport 
 		$(_______________, ___(submit), _____);
 	}
 
-	// XXX May be this 2?
+	// May be this 2?
 	public void sample$loginForm$v2() {
 		$(_____(loginLabel), ___(login));
 		$(__(passwordLabel), ___(password));
 		$(_______________, ___(submit));
 	}
 
-	// XXX May be this?
+	// May be this?
 	public void sample$loginForm$v2_1() {
 		$(_____(nameLabel), ___(name));
 		$(__(familyLabel), ___(family));

@@ -18,9 +18,13 @@ public class UIBuilderFactory {
 	private final Transformer<Method, Tag> valueTransformer;
 
 	private UIBuilderFactory(Tag root, Transformer<Method, Tag> valueTransformer) {
-		// TODO AssertNotNul #root
+		if (null == root) {
+			throw new IllegalArgumentException("Root can't be null");
+		}
 		this.root = root;
-		// TODO AssertNotNul #valueTransformer
+		if (null == valueTransformer) {
+			throw new IllegalArgumentException("Transformer can't be null");
+		}
 		this.valueTransformer = valueTransformer;
 	}
 
