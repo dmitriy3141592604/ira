@@ -1,5 +1,6 @@
 package logic;
 
+import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 import java.util.Optional;
@@ -13,16 +14,19 @@ public interface Condition {
 		throw new UnsupportedOperationException();
 	}
 
-	boolean getValue(Optional<StringBuilder> obs);
+	boolean getValue(Optional<StringBuilder> osb);
 
 	default boolean getValue() {
 		return getValue(of(new StringBuilder()));
 	}
 
-	// TODO Нужно вызывать getValue(Optional obs)
-	default void run(Runnable runnable) {
-		if (getValue()) {
+	default void run(Optional<StringBuilder> sb, Runnable runnable) {
+		if (getValue(sb)) {
 			runnable.run();
 		}
 	};
+
+	default void run(Runnable runnable) {
+		run(empty(), runnable);
+	}
 }
