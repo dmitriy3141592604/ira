@@ -4,7 +4,8 @@ import static utils.Safer.safe;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Path;
@@ -29,7 +30,8 @@ public class OnFileWriter {
 	}
 
 	public OnFileWriter(File exchangePoint) {
-		this.writer = safe(() -> new FileWriter(exchangePoint));
+		// FIXME Протестировать, что вывод идет в кодировке utf-8
+		this.writer = safe(() -> new OutputStreamWriter(new FileOutputStream(exchangePoint), "utf-8"));
 	}
 
 	// XXX Not tested
