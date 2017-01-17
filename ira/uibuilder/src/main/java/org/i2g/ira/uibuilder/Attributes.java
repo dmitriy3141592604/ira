@@ -19,6 +19,10 @@ public interface Attributes {
 		return asAttribute(value);
 	}
 
+	default Attribute align(String direction) {
+		return asAttribute(direction);
+	}
+
 	default Attribute charset(String charset) {
 		return asAttribute(charset);
 	}
