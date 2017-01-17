@@ -7,7 +7,12 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class MethodProcessorBase implements InvocationHandler {
+
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	protected Map<Method, Supplier<Object>> previousPredefinedMethods;
 

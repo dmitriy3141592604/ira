@@ -2,8 +2,10 @@ package uiserializer;
 
 import java.lang.reflect.Method;
 
+import application.support.Label;
 import application.support.Name;
 import application.support.WithId;
+import application.support.WithLabel;
 import application.support.WithName;
 
 public class MethodProcessor extends MethodProcessorBase {
@@ -28,6 +30,7 @@ public class MethodProcessor extends MethodProcessorBase {
 			predefinedMethods.put(idMethod, () -> id);
 		}
 
+		// TODO name и label одинаковы. Нужен рефакторинг
 		if (invocedMethodReturnClassAssignableTo(WithName.class)) {
 			final Method nameMethod = invocedMethodReturnClassMethod("name");
 			final Class<Name> nameAnnotation = Name.class;
@@ -36,10 +39,23 @@ public class MethodProcessor extends MethodProcessorBase {
 			if (annotation == null) {
 				throw newNoNameAnnotationPresetException(nameAnnotation);
 			}
-			final String value = annotation.value();
-			final String name = value;
+			final String name = annotation.value();
 			predefinedMethods.put(nameMethod, () -> name);
 		}
+
+		if (invocedMethodReturnClassAssignableTo(WithLabel.class)) {
+			final Method nameMethod = invocedMethodReturnClassMethod("label");
+			final Class<Label> labelAnnotation = Label.class;
+
+			final Label annotation = currentMethod.getAnnotation(labelAnnotation);
+			if (annotation == null) {
+				throw newNoNameAnnotationPresetException(labelAnnotation);
+			}
+			final String label = annotation.value();
+			logger.info("Получена метка: {}", label);
+			predefinedMethods.put(nameMethod, () -> label);
+		}
+
 		return fromClassBuilder.buildFrom(invokMethodReturnClass, predefinedMethods);
 	}
 

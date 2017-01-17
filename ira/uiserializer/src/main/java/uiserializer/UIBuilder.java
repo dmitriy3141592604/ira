@@ -3,7 +3,7 @@ package uiserializer;
 import org.i2g.ira.uibuilder.Element;
 import org.i2g.ira.uibuilder.HTMLElements;
 
-import test.uibuilder.TagVisitorOneLineSerialize;
+import test.uibuilder.TagVisitorPrettySerializer;
 
 public class UIBuilder {
 
@@ -27,7 +27,7 @@ public class UIBuilder {
 	}
 
 	public StringBuilder serializeContent(StringBuilder serializationTarget) {
-		root.visit(new TagVisitorOneLineSerialize(serializationTarget));
+		root.visit(new TagVisitorPrettySerializer(serializationTarget));
 		return serializationTarget;
 	}
 }

@@ -6,11 +6,12 @@ import org.i2g.ira.uibuilder.Attribute;
 import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.HTMLElements;
 
+import uiserializer.ComponentBuilderBase;
 import utils.Responsibility;
 import utils.collections.Collector;
 
 @Responsibility("Создает заголовок html страницы")
-public class HtmlHeadComponent implements Attributes, Component {
+public class HtmlHeadComponent extends ComponentBuilderBase implements Attributes {
 
 	private final Attribute stylesheetAttribute = rel("stylesheet");
 
@@ -34,7 +35,10 @@ public class HtmlHeadComponent implements Attributes, Component {
 
 		head.meta(charset("utf-8"));
 
-		styles.forEach(style -> head.link(stylesheetAttribute, href(style)));
+		styles.forEach(style -> {
+			logger.info("Добавляю стиль: {}", style);
+			head.link(stylesheetAttribute, href(style));
+		});
 		scripts.forEach(script -> head.script(javaScript, src(script)));
 	}
 

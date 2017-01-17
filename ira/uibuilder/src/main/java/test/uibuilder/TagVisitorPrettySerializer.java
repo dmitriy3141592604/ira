@@ -21,8 +21,16 @@ public class TagVisitorPrettySerializer extends TagVisitorOneLineSerialize {
 
 	private int indent = 0;
 
+	public TagVisitorPrettySerializer(StringBuilder sb) {
+		super(sb);
+	}
+
+	public TagVisitorPrettySerializer() {
+		super();
+	}
+
 	private String prefix() {
-		// TODO Тут когда-то появится NPE
+		// TODO Тут когда-то появится NPE. Нужна стратегия, которая будет формировать отступ. Желательно с кешированием
 		return prefixes.get(indent);
 	}
 

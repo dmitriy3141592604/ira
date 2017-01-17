@@ -3,6 +3,7 @@ package application;
 import application.support.FormAction;
 import application.support.FormController;
 import application.support.FormControllerName;
+import application.support.Label;
 import application.support.Name;
 import application.support.NamedField;
 import application.support.ReadOnlyValue;
@@ -21,15 +22,16 @@ public interface CashMashinePage extends Navigation, NameAware {
 	@FormControllerName(CashFormController.class)
 	public static interface CashForm extends FormController {
 
+		@ActionDescription("Посмотреть предварительную сумму для оплаты")
+		@Translation("Вычесленная сумма")
+		@Name("Вычисленная сумма")
+		@Label("Вычисленная сумма(метка)")
+		NamedField getCalculatedSumm();
+
 		@ActionDescription("Запросить сумму товара")
 		@Translation("Сумма товара")
 		@Name("Отправить запрос на вычислении суммы товара")
 		FormAction submintSummCalculation();
-
-		@ActionDescription("Посмотреть предварительную сумму для оплаты")
-		@Translation("Вычесленная сумма")
-		@Name("Вычисленная сумма")
-		NamedField getCalculatedSumm();
 	}
 
 	public static interface PaymentForm {

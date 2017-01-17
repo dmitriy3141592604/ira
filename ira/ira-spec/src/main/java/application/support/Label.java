@@ -11,8 +11,8 @@ import utils.Responsibility;
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Responsibility("Отвечает за именование сущности")
-public @interface Name {
+@Responsibility("Отвечает за маркировку сущности")
+public @interface Label {
 
 	String value();
 

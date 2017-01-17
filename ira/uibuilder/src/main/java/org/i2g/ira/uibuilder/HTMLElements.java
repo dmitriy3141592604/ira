@@ -7,6 +7,8 @@ public interface HTMLElements {
 
 	HTMLElements button(Attribute... attrs);
 
+	HTMLElements caption(Attribute... attrs);
+
 	HTMLElements div(Attribute... attrs);
 
 	HTMLElements form(Attribute... attrs);

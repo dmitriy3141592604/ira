@@ -12,6 +12,7 @@ import application.support.NamedField;
 import uiserializer.components.Component;
 import utils.collections.Collector;
 
+@Concrete
 public class Form extends ComponentBuilder implements Attributes {
 
 	private String method;
@@ -35,6 +36,7 @@ public class Form extends ComponentBuilder implements Attributes {
 	@Override
 	public void render(HTMLElements html) {
 		final HTMLElements form = html.form(formAttributes()).table();
+		form.caption().text("CaptIO_N");
 		items.forEach(item -> item.render(form));
 	}
 
@@ -50,15 +52,18 @@ public class Form extends ComponentBuilder implements Attributes {
 	}
 
 	public void add(FormAction action) {
-		items.remember(newUnaryRow());
+		// items.remember(newUnaryRow());
+		items.remember(new ComponentWithAttributes() {
+
+			@Override
+			public void render(HTMLElements html) {
+				html.tr().td(colspan(2), align("right")).input(type("submit"));
+			}
+		});
 	}
 
 	private Component newBinaryRow(String label, String id, String type) {
 		return new BinaryRow(label, id, type);
-	}
-
-	private Component newUnaryRow() {
-		return new UnaryRow();
 	}
 
 }
