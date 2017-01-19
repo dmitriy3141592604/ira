@@ -50,7 +50,7 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 	@Test
 	public void testConstructorWithNullArgument() {
 		exception.expect(NullPointerException.class);
-		new OnFileReader(null);
+		new OnFileReader((File) null);
 	}
 
 	@Test
