@@ -16,10 +16,9 @@ import utils.Responsibility;
 @Responsibility("Скрывает особенности жизненного цикла файлого потока на запись. В том числе исключительные ситуации")
 public class OnFileWriter {
 
-	// public static void onFileWriter(File file, ExceptionConsumer<PrintWriter>
-	// f) {
-	// new OnFileWriter(file).accept(f);
-	// }
+	public static void onFileWriter(File file, ExceptionConsumer<PrintWriter> f) {
+		new OnFileWriter(file).accept(f);
+	}
 
 	private ExceptionSupplier<Writer> writerSource;
 
