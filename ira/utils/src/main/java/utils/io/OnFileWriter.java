@@ -14,6 +14,7 @@ import utils.Responsibility;
  *
  */
 @Responsibility("Скрывает особенности жизненного цикла файлого потока на запись. В том числе исключительные ситуации")
+// FIXME Задать кодировку utf-8
 public class OnFileWriter {
 
 	public static void onFileWriter(File file, ExceptionConsumer<PrintWriter> f) {
