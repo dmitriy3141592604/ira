@@ -1,20 +1,13 @@
 package utils.io;
 
-import static org.hamcrest.CoreMatchers.isA;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static utils.Value.newValue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 
 import utils.Value;
@@ -49,7 +42,7 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 
 	@Test
 	public void testConstructorWithNullArgument() {
-		exception.expect(NullPointerException.class);
+		exception.expect(IllegalArgumentException.class);
 		new OnFileReader((File) null);
 	}
 
@@ -61,12 +54,6 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 	}
 
 	@Test
-	public void testConstructorWithMissingFile() {
-		exception.expectCause(isA(FileNotFoundException.class));
-		new OnFileReader(new File("/"));
-	}
-
-	@Test
 	public void testExceptionHandling() {
 		exception.expect(RuntimeException.class);
 		execute(x -> {
@@ -74,17 +61,6 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 		});
 	}
 
-	@AfterClass
-	public static void testTmpFilesRemoval() {
-		Boolean exists = false;
-		for (final String s : tmpFiles) {
-			final Path path = Paths.get(s);
-			exists |= Files.exists(path);
-		}
-
-		assertFalse(exists);
-	}
-
-	// FIXME tdv: протестировать вызов метода close
+	// TODO tdv: протестировать вызов метода close
 
 }
