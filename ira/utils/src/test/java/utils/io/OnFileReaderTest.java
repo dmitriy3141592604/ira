@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.AfterClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import utils.Value;
@@ -32,7 +33,7 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 		 * пользователь не сможет вызвать метод newFile, определённный в текущем
 		 * класса, то ему не нужно использовать "super"
 		 **/
-		final File tmpFile = super.newFile();
+		final File tmpFile = newFile();
 		newFile();
 
 		try (FileWriter fileWriter = new FileWriter(tmpFile)) {
@@ -49,18 +50,9 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 
 	}
 
-	/**
-	 * Проверка переопределения метода
-	 */
-	@Override
-	public File newFile() {
-		System.out.println("OnFileReaderTest#newFile");
-		return null;
-	}
-
 	@Test
 	public void testConstructorWithNullArgument() {
-		exception.expect(NullPointerException.class);
+		// exception.expect(NullPointerException.class);
 		File f = null;
 		new OnFileReader(f);
 	}
@@ -77,6 +69,7 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 		assertNotNull(fileReader);
 	}
 
+	@Ignore
 	@Test
 	public void testConstructorWithMissingFile() {
 		exception.expectCause(isA(FileNotFoundException.class));
@@ -124,10 +117,23 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 			exists |= Files.exists(path);
 		}
 
-		// Paths.get
 		assertFalse(exists);
 	}
 
 	// FIXME tdv: протестировать вызов метода close
+	@Test
+	public void testNotExistedFileAllowed() {
+		OnFileReader reader = new OnFileReader(new File("c:\\tmp\\somefile_.txt"));
+	}
+
+	@Test
+	public void testFileReadingWithStringBuilder() {
+		OnFileReader reader = new OnFileReader(new File("c:\\tmp\\somefile.txt"));
+		StringBuilder stringBuilder = new StringBuilder();
+		reader.accept(t -> {
+			stringBuilder.append(t.readLine());
+		});
+		assertEquals("1", stringBuilder.toString());
+	}
 
 }
