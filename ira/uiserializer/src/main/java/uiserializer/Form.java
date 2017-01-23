@@ -16,10 +16,17 @@ import utils.collections.Collector;
 public class Form extends ComponentBuilder implements Attributes {
 
 	private String method;
+
 	private String action;
 
+	private final FormController formController;
+
+	public Form(FormController formController) {
+		this.formController = formController;
+	}
+
 	public static Form newForm(FormController fs) {
-		final Form form = new Form();
+		final Form form = new Form(fs);
 		form.setMethod("POST");
 		form.setAction(fs.getAction());
 		return form;
@@ -36,7 +43,7 @@ public class Form extends ComponentBuilder implements Attributes {
 	@Override
 	public void render(HTMLElements html) {
 		final HTMLElements form = html.form(formAttributes()).table();
-		form.caption().text("CaptIO_N");
+		form.caption().text(formController.name());
 		items.forEach(item -> item.render(form));
 	}
 
@@ -52,7 +59,6 @@ public class Form extends ComponentBuilder implements Attributes {
 	}
 
 	public void add(FormAction action) {
-		// items.remember(newUnaryRow());
 		items.remember(new ComponentWithAttributes() {
 
 			@Override

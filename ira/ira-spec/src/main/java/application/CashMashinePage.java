@@ -20,6 +20,7 @@ import utils.Translation;
 public interface CashMashinePage extends Navigation, NameAware {
 
 	@FormControllerName(CashFormController.class)
+	@Name("Форма рассчета")
 	public static interface CashForm extends FormController {
 
 		@ActionDescription("Посмотреть предварительную сумму для оплаты")
