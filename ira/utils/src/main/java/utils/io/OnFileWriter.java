@@ -1,18 +1,16 @@
 package utils.io;
 
-import static utils.Safer.safe;
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.nio.file.Path;
 
+import utils.ExceptionSupplier;
 import utils.Responsibility;
 
 /**
- * Предоставляет интерфейс для возможности записи в файл или Writer без необходимости объявлять функцию с throws IOException или ловить IOException.
+ * Предоставляет интерфейс для возможности записи в файл или Writer без
+ * необходимости объявлять функцию с throws IOException или ловить IOException.
  *
  */
 @Responsibility("Скрывает особенности жизненного цикла файлого потока на запись. В том числе исключительные ситуации")
@@ -22,30 +20,30 @@ public class OnFileWriter {
 		new OnFileWriter(file).accept(f);
 	}
 
-	private final Writer writer;
+	private ExceptionSupplier<Writer> writerSource;
 
-	public OnFileWriter(Writer writer) {
-		this.writer = writer;
+	public OnFileWriter(ExceptionSupplier<Writer> writerSource) {
+		if (writerSource == null) {
+			throw new IllegalArgumentException("Writer source cannot be null");
+		}
+		this.writerSource = writerSource;
 	}
 
-	public OnFileWriter(File exchangePoint) {
-		this.writer = safe(() -> new FileWriter(exchangePoint));
-	}
+	public OnFileWriter(File file) {
+		this(new ExceptionSupplier<Writer>() {
 
-	// XXX Not tested
-	public OnFileWriter(Path path) {
-		this(path.toFile());
+			@Override
+			public Writer get() throws Exception {
+				return new FileWriter(file);
+			}
+		});
 	}
 
 	// beforeAccept
 	public final void accept(ExceptionConsumer<PrintWriter> f) {
-		try (final PrintWriter out = wrap()) {
+		try (final PrintWriter out = new PrintWriter(writerSource.safe())) {
 			f.safe(out);
 		}
-	}
-
-	private PrintWriter wrap() {
-		return new PrintWriter(new BufferedWriter(writer));
 	}
 
 }
