@@ -1,15 +1,12 @@
 package utils.io;
 
-import static utils.Safer.safe;
-
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.file.Path;
 
+import utils.ExceptionSupplier;
 import utils.Responsibility;
 
 /**
@@ -23,31 +20,40 @@ public class OnFileWriter {
 		new OnFileWriter(file).accept(f);
 	}
 
-	private final Writer writer;
+	private final ExceptionSupplier<Writer> writerSource;
 
-	public OnFileWriter(Writer writer) {
-		this.writer = writer;
+	public OnFileWriter(ExceptionSupplier<Writer> writerSource) {
+		if (writerSource == null) {
+			throw new IllegalArgumentException("Writer source cannot be null");
+		}
+		this.writerSource = writerSource;
 	}
 
-	public OnFileWriter(File exchangePoint) {
-		// FIXME Протестировать, что вывод идет в кодировке utf-8
-		this.writer = safe(() -> new OutputStreamWriter(new FileOutputStream(exchangePoint), "utf-8"));
+	public OnFileWriter(File file) {
+		this(new ExceptionSupplier<Writer>() {
+
+			@Override
+			public Writer get() throws Exception {
+				return new FileWriter(file);
+			}
+		});
 	}
 
-	// XXX Not tested
 	public OnFileWriter(Path path) {
-		this(path.toFile());
+		this(new ExceptionSupplier<Writer>() {
+
+			@Override
+			public Writer get() throws Exception {
+				return new FileWriter(path.toFile());
+			}
+		});
 	}
 
 	// beforeAccept
 	public final void accept(ExceptionConsumer<PrintWriter> f) {
-		try (final PrintWriter out = wrap()) {
+		try (final PrintWriter out = new PrintWriter(writerSource.safe())) {
 			f.safe(out);
 		}
-	}
-
-	private PrintWriter wrap() {
-		return new PrintWriter(new BufferedWriter(writer));
 	}
 
 }

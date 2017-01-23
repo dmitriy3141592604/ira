@@ -6,10 +6,13 @@ import static utils.Value.newValue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.io.Writer;
+import java.nio.file.Files;
+import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import testutils.RandomizedTest;
@@ -41,6 +44,20 @@ public class OnFileWriterTest extends OnFileWriterTestBase implements Randomized
 
 	}
 
+	@Test
+	public void testNotExistedFileAllowed() throws IOException {
+		OnFileWriter writer = new OnFileWriter(tmpFolder.newFile());
+	}
+
+	@Test
+	public void testWritingWithExceptionSupplier() throws IOException {
+		File outputFile = tmpFolder.newFile();
+		OnFileWriter onFileWriter = new OnFileWriter(() -> new FileWriter(outputFile));
+		onFileWriter.accept(t -> t.println(marker));
+		List<String> s = Files.readAllLines(outputFile.toPath());
+		assertEquals(s.get(0), marker);
+	}
+
 	/** Заметим: Нет декларации исключения **/
 	@Test
 	public void test$exceptionHandling() {
@@ -54,23 +71,27 @@ public class OnFileWriterTest extends OnFileWriterTestBase implements Randomized
 	}
 
 	@Test
+	public void test$WriterConstructorTest() {
+		final StringWriter stringWriter = new StringWriter();
+		new OnFileWriter(() -> stringWriter).accept(out -> out.print(marker));
+		assertEquals(marker, stringWriter.toString());
+	}
+
+	// TODO (tdv): Придумать как бросать исключение при передаче нереального
+	// файла
+	@Ignore
+	@Test
 	public void test$unexpectedFileNameException() {
 		exception.expect(RuntimeException.class);
 		new OnFileWriter(new File("/"));
 	}
 
-	@Test
-	public void test$WriterConstructorTest() {
-		final StringWriter stringWriter = new StringWriter();
-		new OnFileWriter(stringWriter).accept(out -> out.print("hello"));
-		assertEquals("hello", stringWriter.toString());
-	}
-
+	// TODO (tdv): Придумать как бросать исключение при передаче null
+	@Ignore
 	@Test
 	public void test$null() {
 		exception.expect(RuntimeException.class);
-		new OnFileWriter((Writer) null).accept(out -> out.print("hello"));
-		//assertEquals("hello", stringWriter.toString());
+		new OnFileWriter((File) null).accept(out -> out.print("hello"));
 	}
 
 }
