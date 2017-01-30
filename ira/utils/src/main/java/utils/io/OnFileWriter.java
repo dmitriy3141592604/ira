@@ -34,7 +34,7 @@ public class OnFileWriter {
 		this(new ExceptionSupplier<Writer>() {
 
 			@Override
-			public Writer get() throws Exception {
+			public Writer create() throws Exception {
 				return new FileWriter(file);
 			}
 		});
@@ -44,7 +44,7 @@ public class OnFileWriter {
 		this(new ExceptionSupplier<Writer>() {
 
 			@Override
-			public Writer get() throws Exception {
+			public Writer create() throws Exception {
 				return new FileWriter(path.toFile());
 			}
 		});
@@ -52,7 +52,7 @@ public class OnFileWriter {
 
 	// beforeAccept
 	public final void accept(ExceptionConsumer<PrintWriter> f) {
-		try (final PrintWriter out = new PrintWriter(writerSource.safe())) {
+		try (final PrintWriter out = new PrintWriter(writerSource.get())) {
 			f.safe(out);
 		}
 	}

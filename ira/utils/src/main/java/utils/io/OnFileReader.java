@@ -30,7 +30,7 @@ public class OnFileReader {
 	}
 
 	public void accept(ExceptionConsumer<BufferedReader> f) {
-		try (BufferedReader out = new BufferedReader(readerSource.safe())) {
+		try (BufferedReader out = new BufferedReader(readerSource.get())) {
 			f.safe(out);
 		} catch (final IOException e) {
 			throw new RuntimeException(e);

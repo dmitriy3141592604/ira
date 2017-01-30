@@ -1,13 +1,20 @@
 package utils;
 
+import java.util.function.Supplier;
+
 @Responsibility("Позволяет использовать в замыканиях функции, выбрасывающие контролируемые исключения без оборачивающего try catch")
-public interface ExceptionSupplier<T> {
+public interface ExceptionSupplier<T> extends Supplier<T> {
 
-	T get() throws Exception;
+	public static <T> Supplier<T> hideSupplierExceptions(ExceptionSupplier<T> se) {
+		return se;
+	}
 
-	default T safe() {
+	T create() throws Exception;
+
+	@Override
+	default T get() {
 		try {
-			return get();
+			return create();
 		} catch (final Exception exception) {
 			// TODO Добавить текс сообщения, что причину нужно искть в
 			// оригинальном стактрейсе
