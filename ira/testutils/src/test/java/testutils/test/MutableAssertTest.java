@@ -1,9 +1,11 @@
-package testutils;
+package testutils.test;
 
 import static org.junit.Assert.fail;
 import static testutils.MutableAssert.assertMutation;
 
 import org.junit.Test;
+
+import testutils.MutableAssertTestBase;
 
 public class MutableAssertTest extends MutableAssertTestBase {
 
