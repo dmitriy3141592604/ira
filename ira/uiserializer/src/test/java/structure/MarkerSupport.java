@@ -5,8 +5,14 @@ import java.util.TreeMap;
 
 import structure.MarkerException.PreviousMarkerHasDifferentTypeException;
 import structure.MarkerException.PreviousMarkerValueRewriteException;
+import utils.Responsibility;
 
-public class MetaSupport {
+/**
+ * Класс предоставляет методы работы с коллекцией маркеров и механизм ограничений для выполняемых операций.
+ */
+
+@Responsibility("Обеспечивает управление набором маркеров")
+public class MarkerSupport {
 
 	private static final Object DEFAULT_MARKER = Boolean.TRUE;
 
@@ -17,15 +23,15 @@ public class MetaSupport {
 	}
 
 	public void markWith(String marker, Object value) {
-		markWith(marker, value, 1);
+		markWithImpl(marker, value);
 	}
 
 	public void mark(String marker) {
-		markWith(marker, DEFAULT_MARKER, 1);
+		markWithImpl(marker, DEFAULT_MARKER);
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T getMarker(String marker, T defaultValue) {
+	public <T> T getMarkerValue(String marker, T defaultValue) {
 		final Object v = markers.get(marker);
 		if (null != v) {
 			if (v.getClass().equals(defaultValue.getClass())) {
@@ -36,7 +42,7 @@ public class MetaSupport {
 		return defaultValue;
 	}
 
-	protected void markWith(String marker, Object value, int correction) {
+	private void markWithImpl(String marker, Object value) {
 		final Object v = markers.get(marker);
 		if (v != null && !v.equals(value)) {
 			throw new PreviousMarkerValueRewriteException();

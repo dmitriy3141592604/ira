@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import utils.Behavior;
 
-public class MetaSupportTest extends MetaSupportTestBase {
+public class MarkerSupportTest extends MarkerSupportTestBase {
 
 	@Test
 	@Behavior("Всегда можно определить наличие маркера")
@@ -34,27 +34,27 @@ public class MetaSupportTest extends MetaSupportTestBase {
 	@Behavior("У маркера есть значение")
 	public void test$markerCanHaveValue() {
 		mt.markWith(marker, value);
-		assertEquals(value, mt.getMarker(marker, randomString()));
+		assertEquals(value, mt.getMarkerValue(marker, randomString()));
 	}
 
 	@Test
 	@Behavior("По умолчанию значением маркера является Boolean.TRUE")
 	public void test$markerValueExtractorUseDefaultValueIfMarkerNotSet() {
 		mt.mark(marker);
-		assertEquals(TRUE, mt.getMarker(marker, FALSE));
+		assertEquals(TRUE, mt.getMarkerValue(marker, FALSE));
 	}
 
 	@Test
 	@Behavior("Если маркер не установлен, то используется заданное значение по умолчанию")
 	public void test$ifMarkerNotSetMarkerValueExtractorUseDefaultValue() {
-		assertEquals(defaultValue, mt.getMarker(marker, defaultValue));
+		assertEquals(defaultValue, mt.getMarkerValue(marker, defaultValue));
 	}
 
 	@Test(expected = MarkerException.PreviousMarkerHasDifferentTypeException.class)
 	@Behavior("Если маркер был установлен, то значение по умолчанию должно быть такого же типа")
 	public void test$markerValueExtractorCheckPreviousMarkerClass() {
 		mt.markWith(marker, randomString());
-		mt.getMarker(marker, randomInteger());
+		mt.getMarkerValue(marker, randomInteger());
 	}
 
 	@Test

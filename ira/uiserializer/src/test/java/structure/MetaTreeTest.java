@@ -9,7 +9,7 @@ import java.util.TreeMap;
 import org.junit.Before;
 import org.junit.Test;
 
-class Node extends MetaSupport {
+class Node extends MarkerSupport {
 
 	private String name;
 

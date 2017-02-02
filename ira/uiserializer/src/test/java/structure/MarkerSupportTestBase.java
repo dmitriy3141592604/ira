@@ -6,7 +6,7 @@ import org.junit.rules.ExpectedException;
 
 import testutils.RandomizedTest;
 
-public abstract class MetaSupportTestBase implements RandomizedTest {
+public abstract class MarkerSupportTestBase implements RandomizedTest {
 
 	public static class AlwaysEqual {
 
@@ -28,7 +28,7 @@ public abstract class MetaSupportTestBase implements RandomizedTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	protected MetaSupport mt;
+	protected MarkerSupport mt;
 
 	protected String marker;
 
@@ -40,7 +40,7 @@ public abstract class MetaSupportTestBase implements RandomizedTest {
 
 	@Before
 	public final void setUpMetaSupportTestBase() {
-		mt = new MetaSupport();
+		mt = new MarkerSupport();
 		marker = randomString();
 		otherMarker = randomString();
 		value = randomString();
