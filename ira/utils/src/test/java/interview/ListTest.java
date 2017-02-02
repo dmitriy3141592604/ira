@@ -1,7 +1,9 @@
 package interview;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,12 +94,12 @@ public class ListTest {
 
 		assertEquals("bob.alisa.", content(l));
 
-		// final boolean hasNext = i2.hasNext();
-		// assertEquals(false, hasNext);
-
-		final Person maybeBob = i2.next();
-		assertEquals("bob", maybeBob.getName()); // Unreshable Code
-
+		try {
+			i2.next();
+		} catch (final ConcurrentModificationException e) {
+			return;
+		}
+		fail("Последняя операция next должна была бросить исключение");
 	}
 
 	private String content(List<Person> l) {
