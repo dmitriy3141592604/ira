@@ -39,6 +39,11 @@ public class ExpressionsTest {
 			return value;
 		}
 
+		public <U> U withValue(Expression<U> expression) {
+			// expression.addValueChangeListener(expression);
+			return expression.getValue();
+		}
+
 		public final void addValueChangeListener(ValueChangeListener<T> listener) {
 			listeners.remember(listener);
 		}
