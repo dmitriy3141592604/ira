@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ ElementType.ANNOTATION_TYPE, ElementType.METHOD })
+@Behavior("Содержит описание поведения тестового метода")
 public @interface Behavior {
 
 	String value();

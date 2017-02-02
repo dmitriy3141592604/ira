@@ -13,4 +13,9 @@ public interface RandomizedTest {
 	default Random random() {
 		return new Random();
 	}
+
+	// FIXME Протестировать
+	default Integer randomInteger() {
+		return new Integer(random().nextInt());
+	}
 }
