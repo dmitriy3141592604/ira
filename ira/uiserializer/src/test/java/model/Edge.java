@@ -1,4 +1,4 @@
-package structure;
+package model;
 
 /**
  * Класс представления ребра в графе модели

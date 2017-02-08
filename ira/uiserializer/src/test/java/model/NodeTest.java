@@ -1,7 +1,7 @@
-package structure;
+package model;
 
+import static model.Node.newNode;
 import static org.junit.Assert.assertNotNull;
-import static structure.Node.newNode;
 
 import org.junit.Test;
 
