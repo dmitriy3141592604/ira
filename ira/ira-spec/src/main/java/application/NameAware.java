@@ -1,8 +1,13 @@
 package application;
 
-// TODO Переименовать. Совместить с существующим Named
+import utils.Responsibility;
+
+@Responsibility("Предоставляет доступ к имени объекта")
 public interface NameAware {
 
-	String getName();
+	/**
+	 * Возвращает имя объекта
+	 */
+	String name();
 
 }

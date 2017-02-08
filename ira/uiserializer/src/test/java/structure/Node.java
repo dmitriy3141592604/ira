@@ -14,6 +14,16 @@ public class Node implements WithMarkersSupport {
 
 	private final MarkerSupport markers = new MarkerSupport();
 
+	/**
+	 * Создает узел с новым именем
+	 */
+	public static Node newNode(String name) {
+		return new Node(name);
+	}
+
+	/**
+	 * Создает узел с новым именем
+	 */
 	public Node(String name) {
 		this.name = name;
 	}

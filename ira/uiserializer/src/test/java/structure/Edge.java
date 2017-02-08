@@ -3,7 +3,7 @@ package structure;
 /**
  * Класс представления ребра в графе модели
  */
-public class Edge {
+public class Edge implements WithMarkersSupport {
 
 	/**
 	 * Имя связи между узлами
@@ -29,6 +29,9 @@ public class Edge {
 		return sourceNode.bindedWith(targetNode, edgeName);
 	}
 
+	/**
+	 * Создает новый переход соединяющий два узла
+	 */
 	public Edge(Node sourceNode, String name, Node targetNode) {
 		this.sourceNode = sourceNode;
 		this.name = name;
@@ -53,6 +56,7 @@ public class Edge {
 	}
 
 	/** Метаинформация о переходе **/
+	@Override
 	public MarkerSupport getMetaInfo() {
 		return markers;
 	}

@@ -9,25 +9,19 @@ import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
+import application.NameAware;
+import application.WithMutableName;
+
 public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 
 	private NameWithAgeAware named;
 
-	public interface NameWithAgeAware extends AgeAware, NameAware {
+	public interface NameWithAgeAware extends AgeAware, NameAware, WithMutableName {
 	}
 
 	@Before
 	public void setUpProcessContextFactoryTest() {
 		named = factory.create(NameWithAgeAware.class, new HashMap<String, Object>());
-	}
-
-	@Test
-	@Behavior("Полученному объекту можно присваивать значения")
-	public void testAssignFieldValue() {
-
-		named.setName(randomName);
-
-		assertEquals(randomName, named.getName());
 	}
 
 	@Test
@@ -37,13 +31,6 @@ public class ProcessContextFactoryTest extends ProcessContextFactoryTestBase {
 		exception.expect(IllegalArgumentException.class);
 
 		named.setName(null);
-	}
-
-	@Test
-	@Behavior("Если строковое поле не инициализировано, то возвращается пустая строка")
-	public void test$default$String() {
-
-		assertEquals("", named.getName());
 	}
 
 	@Test
