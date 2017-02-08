@@ -5,13 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,29 +18,32 @@ public class SelectTest extends ContextAwareBase {
 	@Test
 	public void test$00() throws Exception {
 
-		final String query = "select login from other_table as st";
+		class SqlParser {
+
+			public String getTableName(String sql) {
+				ArrayList<String> words = getWords(sql);
+				return words.get(words.indexOf("from") + 1);
+			}
+
+			public List<String> getColumnNames(String sql) {
+				ArrayList<String> words = getWords(sql);
+				int startIndex = words.indexOf("select") + 1;
+				int stopIndex = words.indexOf("from");
+				return words.subList(startIndex, stopIndex);
+			}
+
+			private ArrayList<String> getWords(String sql) {
+				String[] split = sql.toLowerCase().replace(',', ' ').split("\\s+");
+				return new ArrayList<>(Arrays.asList(split));
+			}
+
+		}
+
+		final String query = "select login, city, zip from other_table as st";
 		{
-			final String sql = query;
-			final String sp0 = "\\s*";
-			final String sp1 = "\\s+";
-			final String word = "\\w+";
-			final Pattern p = Pattern.compile(
-					"^" + sp0 + "select" + sp1 + "(" + word + ")" + sp1 + "from" + sp1 + "(" + word + ")" + sp1 + "as" + sp1 + "(" + word + ")");
-			final Matcher m = p.matcher(sql);
 
-			final boolean matches = m.matches();
-			// assertEquals(true, matches);
-
-			final String group1 = m.group(1);
-			final String group2 = m.group(2);
-			final String group3 = m.group(3);
-
-			// assertEquals("value", group1.toLowerCase());
-			// assertEquals("simple_table", group2);
-			// assertEquals("st", group3);
-
-			final String tableName = group2;
-			final String columnName = group1;
+			SqlParser parser = new SqlParser();
+			final String tableName = parser.getTableName(query);
 
 			final Comparator<List<String>> bodyComparator = new Comparator<List<String>>() {
 
@@ -101,7 +98,13 @@ public class SelectTest extends ContextAwareBase {
 
 				}
 
-				final int[] expectedColumns = new int[] { header.get(columnName) };
+				final List<String> columnNames = parser.getColumnNames(query);
+
+				final int[] expectedColumns = new int[columnNames.size()];
+				int index = 0;
+				for(String s: columnNames) {
+					expectedColumns[index++] = header.get(s);
+				}
 
 				// Execute query
 				final Set<List<String>> resultTable = new TreeSet<>(bodyComparator);
