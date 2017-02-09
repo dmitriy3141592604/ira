@@ -16,7 +16,7 @@ public class EdgeTest {
 	public void test$selectSetNameForNextNode() {
 		final Edge edge = bind(newNode("root"), "edge", newNode("target"));
 
-		assertEquals("edge", edge.getName());
+		assertEquals("edge", edge.name());
 	}
 
 	@Test
