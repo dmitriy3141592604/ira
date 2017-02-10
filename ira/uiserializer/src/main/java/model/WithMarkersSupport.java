@@ -16,4 +16,18 @@ public interface WithMarkersSupport<T extends WithMarkersSupport<T>> {
 		c.accept(getMetaInfo());
 		return (T) this;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Responsibility("Упрощает добавление булевого маркера")
+	default T mark(String marker) {
+		getMetaInfo().mark(marker);
+		return (T) this;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Responsibility("Упрощает установку маркеров со значением")
+	default T mark(String marker, Object value) {
+		getMetaInfo().markWith(marker, value);
+		return (T) this;
+	}
 }
