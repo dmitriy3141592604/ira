@@ -50,7 +50,6 @@ public class OnFileWriter {
 		});
 	}
 
-	// beforeAccept
 	public final void accept(ExceptionConsumer<PrintWriter> f) {
 		try (final PrintWriter out = new PrintWriter(writerSource.get())) {
 			f.safe(out);

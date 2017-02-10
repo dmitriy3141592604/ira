@@ -15,10 +15,9 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import testutils.RandomizedTest;
 import utils.Value;
 
-public class OnFileWriterTest extends OnFileWriterTestBase implements RandomizedTest {
+public class OnFileWriterTest extends OnFileWriterTestBase {
 
 	@Test
 	public void test$staticConstructor() {
@@ -46,15 +45,15 @@ public class OnFileWriterTest extends OnFileWriterTestBase implements Randomized
 
 	@Test
 	public void testNotExistedFileAllowed() throws IOException {
-		OnFileWriter writer = new OnFileWriter(tmpFolder.newFile());
+		final OnFileWriter writer = new OnFileWriter(tmpFolder.newFile());
 	}
 
 	@Test
 	public void testWritingWithExceptionSupplier() throws IOException {
-		File outputFile = tmpFolder.newFile();
-		OnFileWriter onFileWriter = new OnFileWriter(() -> new FileWriter(outputFile));
+		final File outputFile = tmpFolder.newFile();
+		final OnFileWriter onFileWriter = new OnFileWriter(() -> new FileWriter(outputFile));
 		onFileWriter.accept(t -> t.println(marker));
-		List<String> s = Files.readAllLines(outputFile.toPath());
+		final List<String> s = Files.readAllLines(outputFile.toPath());
 		assertEquals(s.get(0), marker);
 	}
 

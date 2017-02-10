@@ -1,7 +1,8 @@
 package utils.io;
 
+import static utils.Safer.safe;
+
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.junit.Before;
@@ -29,20 +30,15 @@ public class OnFileWriterTestBase implements RandomizedTest {
 	public final void setUpOnFileWriterTestBase() throws Exception {
 		marker = randomString();
 		fileName = randomString();
-
 	}
 
-	protected void execute(final ExceptionConsumer<PrintWriter> execute) {
+	protected void execute(ExceptionConsumer<PrintWriter> execute) {
 		createExchangePoint();
 		new OnFileWriter(exchangePoint).accept(execute);
 	}
 
 	protected File createExchangePoint() {
-		try {
-			return exchangePoint = tmpFolder.newFile(fileName);
-		} catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
+		return safe(() -> exchangePoint = tmpFolder.newFile(fileName));
 	}
 
 }
