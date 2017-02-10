@@ -1,9 +1,9 @@
-package structure;
+package model;
 
+import static model.Edge.bind;
+import static model.Node.newNode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static structure.Edge.bind;
-import static structure.Node.newNode;
 
 import org.junit.Test;
 
@@ -16,7 +16,7 @@ public class EdgeTest {
 	public void test$selectSetNameForNextNode() {
 		final Edge edge = bind(newNode("root"), "edge", newNode("target"));
 
-		assertEquals("edge", edge.getName());
+		assertEquals("edge", edge.name());
 	}
 
 	@Test

@@ -1,4 +1,4 @@
-package structure;
+package model;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;

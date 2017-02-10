@@ -1,4 +1,4 @@
-package structure;
+package model;
 
 /**
  * Узел модели, содержащий метаинформацию

@@ -1,4 +1,4 @@
-package structure;
+package model;
 
 import org.junit.Before;
 import org.junit.Rule;

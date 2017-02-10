@@ -1,10 +1,10 @@
-package structure;
+package model;
 
 import java.util.Map;
 import java.util.TreeMap;
 
-import structure.MarkerException.PreviousMarkerHasDifferentTypeException;
-import structure.MarkerException.PreviousMarkerValueRewriteException;
+import model.MarkerException.PreviousMarkerHasDifferentTypeException;
+import model.MarkerException.PreviousMarkerValueRewriteException;
 import utils.Responsibility;
 
 /**
