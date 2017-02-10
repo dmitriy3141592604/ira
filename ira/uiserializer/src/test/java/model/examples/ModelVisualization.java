@@ -1,4 +1,4 @@
-package model;
+package model.examples;
 
 import static java.lang.System.exit;
 import static model.DotContentSerializer.mainSerializeDotContent;
@@ -9,6 +9,8 @@ import static utils.collections.Collector.newCollector;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import model.Edge;
+import model.Node;
 import utils.collections.Collector;
 
 /**
