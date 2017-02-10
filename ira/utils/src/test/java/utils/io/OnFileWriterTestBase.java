@@ -2,7 +2,9 @@ package utils.io;
 
 import static utils.Safer.safe;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.PrintWriter;
 
 import org.junit.Before;
@@ -12,7 +14,7 @@ import org.junit.rules.TemporaryFolder;
 
 import testutils.RandomizedTest;
 
-public class OnFileWriterTestBase implements RandomizedTest {
+public abstract class OnFileWriterTestBase implements RandomizedTest {
 
 	@Rule
 	public TemporaryFolder tmpFolder = new TemporaryFolder();
@@ -26,19 +28,32 @@ public class OnFileWriterTestBase implements RandomizedTest {
 
 	protected File exchangePoint;
 
+	protected String exchangePointAbsolutePath;
+
 	@Before
-	public final void setUpOnFileWriterTestBase() throws Exception {
+	public final void setUpOnFileWriterTestBase() {
 		marker = randomString();
 		fileName = randomString();
 	}
 
 	protected void execute(ExceptionConsumer<PrintWriter> execute) {
-		createExchangePoint();
-		new OnFileWriter(exchangePoint).accept(execute);
+		new OnFileWriter(createExchangePoint()).accept(execute);
 	}
 
 	protected File createExchangePoint() {
-		return safe(() -> exchangePoint = tmpFolder.newFile(fileName));
+		return safe(() -> {
+			exchangePoint = tmpFolder.newFile(fileName);
+			exchangePointAbsolutePath = exchangePoint.getAbsolutePath();
+			return exchangePoint;
+		});
+	}
+
+	protected String readFirstLineFromExchangePoint() {
+		return safe(() -> {
+			try (final BufferedReader reader = new BufferedReader(new FileReader(exchangePoint))) {
+				return reader.readLine();
+			}
+		});
 	}
 
 }

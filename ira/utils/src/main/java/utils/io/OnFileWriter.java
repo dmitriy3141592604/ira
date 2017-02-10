@@ -14,7 +14,6 @@ import utils.Responsibility;
  *
  */
 @Responsibility("Скрывает особенности жизненного цикла файлого потока на запись. В том числе исключительные ситуации")
-// FIXME Задать кодировку utf-8
 public class OnFileWriter {
 
 	/**
@@ -25,12 +24,10 @@ public class OnFileWriter {
 	 * @param content
 	 *            Содержимое файла. Используется Object.toString для получения сериализованного представления
 	 */
-	// FIXME Протестировать
 	public static void dumpToFile(String fileName, Object content) {
 		onFileWriter(fileName, pw -> pw.println(content));
 	}
 
-	// FIXME Протестировать
 	public static void onFileWriter(String fileName, ExceptionConsumer<PrintWriter> f) {
 		onFileWriter(new File(fileName), f);
 	}
