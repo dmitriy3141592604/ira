@@ -1,9 +1,10 @@
 package model;
 
+import static java.lang.System.exit;
+import static model.DotContentSerializer.mainSerializeDotContent;
 import static model.Edge.bind;
 import static model.Node.newNode;
 import static utils.collections.Collector.newCollector;
-import static utils.io.OnFileWriter.dumpToFile;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -21,17 +22,18 @@ public class ModelVisualization {
 
 	public static void main(String... args) throws Exception {
 
-		final Collector<Edge> nodes = newCollector();
+		final Collector<Edge> edges = newCollector();
+		final Collector<Node> nodes = newCollector();
 		{
-			final Node foo = newNode("Foo");
-			final Node bar = newNode("Bar");
-			final Node baz = newNode("Baz");
-			final Node banana = newNode("Banana");
+			final Node foo = nodes.remember(newNode("Foo"));
+			final Node bar = nodes.remember(newNode("Bar"));
+			final Node baz = nodes.remember(newNode("Baz"));
+			final Node bat = nodes.remember(newNode("Bat"));
 
-			nodes.remember(bind(foo, bar));
-			nodes.remember(bind(bar, baz));
-			nodes.remember(bind(baz, banana));
-			nodes.remember(bind(banana, foo));
+			edges.remember(bind(foo, bar));
+			edges.remember(bind(bar, baz));
+			edges.remember(bind(baz, bat));
+			edges.remember(bind(bat, foo));
 		}
 
 		final StringWriter out = new StringWriter();
@@ -39,7 +41,10 @@ public class ModelVisualization {
 			final PrintWriter pw = new PrintWriter(out);
 			pw.println("digraph Example {");
 			{
-				nodes.forEach(edge -> {
+				nodes.forEach(node -> {
+					pw.append(INDENT).append(node.name()).append("[shape=box]").println(";");
+				});
+				edges.forEach(edge -> {
 					final String sourceNodeName = edge.getSourceNode().name();
 					final String targetNodeName = edge.getTargetNode().name();
 
@@ -59,23 +64,7 @@ public class ModelVisualization {
 			System.out.println(out);
 		}
 
-		final String dotFileName = "foobaz.dot";
-		{
-
-			dumpToFile(dotFileName, out);
-		}
-
-		final String htmlFileName = "foobaz.html";
-		final String imageFileName = "foobaz.png";
-		{
-			dumpToFile(htmlFileName, "<img src='" + imageFileName + "'>");
-		}
-
-		{
-			final String dotUtilPath = "c:\\wks\\prg\\Graphviz\\bin\\dot.exe";
-			final Process exec = Runtime.getRuntime().exec(dotUtilPath + " -Tpng -o" + imageFileName + "  " + dotFileName);
-			System.exit(exec.waitFor());
-		}
+		exit(mainSerializeDotContent("foobaz", out.toString()));
 
 	}
 
