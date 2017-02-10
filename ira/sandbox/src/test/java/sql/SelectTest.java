@@ -5,9 +5,14 @@ import static org.junit.Assert.assertNotNull;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -15,34 +20,34 @@ import ch.qos.logback.core.spi.ContextAwareBase;
 
 public class SelectTest extends ContextAwareBase {
 
+	public static class SqlParser {
+
+		public String getTableName(String sql) {
+			final ArrayList<String> words = getWords(sql);
+			return words.get(words.indexOf("from") + 1);
+		}
+
+		public List<String> getColumnNames(String sql) {
+			final ArrayList<String> words = getWords(sql);
+			final int startIndex = words.indexOf("select") + 1;
+			final int stopIndex = words.indexOf("from");
+			return words.subList(startIndex, stopIndex);
+		}
+
+		private ArrayList<String> getWords(String sql) {
+			final String[] split = sql.toLowerCase().replace(',', ' ').split("\\s+");
+			return new ArrayList<>(Arrays.asList(split));
+		}
+
+	}
+
 	@Test
 	public void test$00() throws Exception {
-
-		class SqlParser {
-
-			public String getTableName(String sql) {
-				ArrayList<String> words = getWords(sql);
-				return words.get(words.indexOf("from") + 1);
-			}
-
-			public List<String> getColumnNames(String sql) {
-				ArrayList<String> words = getWords(sql);
-				int startIndex = words.indexOf("select") + 1;
-				int stopIndex = words.indexOf("from");
-				return words.subList(startIndex, stopIndex);
-			}
-
-			private ArrayList<String> getWords(String sql) {
-				String[] split = sql.toLowerCase().replace(',', ' ').split("\\s+");
-				return new ArrayList<>(Arrays.asList(split));
-			}
-
-		}
 
 		final String query = "select login, city, zip from other_table as st";
 		{
 
-			SqlParser parser = new SqlParser();
+			final SqlParser parser = new SqlParser();
 			final String tableName = parser.getTableName(query);
 
 			final Comparator<List<String>> bodyComparator = new Comparator<List<String>>() {
@@ -102,7 +107,7 @@ public class SelectTest extends ContextAwareBase {
 
 				final int[] expectedColumns = new int[columnNames.size()];
 				int index = 0;
-				for(String s: columnNames) {
+				for (final String s : columnNames) {
 					expectedColumns[index++] = header.get(s);
 				}
 
