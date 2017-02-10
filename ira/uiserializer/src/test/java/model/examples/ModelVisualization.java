@@ -1,9 +1,9 @@
 package model.examples;
 
 import static java.lang.System.exit;
-import static model.DotContentSerializer.mainSerializeDotContent;
 import static model.Edge.bind;
 import static model.Node.newNode;
+import static model.examples.DotContentSerializer.mainSerializeDotContent;
 import static utils.collections.Collector.newCollector;
 
 import java.io.PrintWriter;
