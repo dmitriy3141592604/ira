@@ -3,7 +3,7 @@ package model;
 /**
  * Узел модели, содержащий метаинформацию
  */
-public class Node implements WithMarkersSupport {
+public class Node implements WithMarkersSupport<Node> {
 
 	/** Имя узла модели. **/
 	private final String name;

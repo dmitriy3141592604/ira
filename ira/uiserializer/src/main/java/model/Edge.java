@@ -1,7 +1,7 @@
 package model;
 
 /** Класс представления ребра в графе модели **/
-public class Edge implements WithMarkersSupport {
+public class Edge implements WithMarkersSupport<Edge> {
 
 	/** Имя связи между узлами **/
 	private final String name;
