@@ -6,6 +6,7 @@ import static model.Node.newNode;
 import static model.examples.DotContentSerializer.mainSerializeDotContent;
 import static utils.collections.Collector.newCollector;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -21,6 +22,18 @@ import utils.collections.Collector;
 public class ModelVisualization {
 
 	private static final String INDENT = "\t";
+
+	private static boolean createFileSystemArtifacts = false;
+
+	private static PrintStream output = System.out;
+
+	public static void setCreateFileSystemArtifacts(boolean createFileSystemArtifactsFlag) {
+		createFileSystemArtifacts = createFileSystemArtifactsFlag;
+	}
+
+	public static void setOutput(PrintStream outputStream) {
+		output = outputStream;
+	}
 
 	public static void main(String... args) throws Exception {
 
@@ -63,10 +76,13 @@ public class ModelVisualization {
 		}
 
 		{
-			System.out.println(out);
+
+			output.println(out);
 		}
 
-		exit(mainSerializeDotContent("foobaz", out.toString()));
+		if (createFileSystemArtifacts) {
+			exit(mainSerializeDotContent("foobaz", out.toString()));
+		}
 
 	}
 
