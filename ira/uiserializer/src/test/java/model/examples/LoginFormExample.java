@@ -1,12 +1,11 @@
 package model.examples;
 
 import static java.lang.System.exit;
+import static java.lang.reflect.Proxy.newProxyInstance;
+import static model.Node.newNode;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.function.Supplier;
 
 import model.Edge;
@@ -31,20 +30,18 @@ public class LoginFormExample implements Supplier<Integer> {
 
 	public static class MethodCallRecorder {
 
+		private final ClassLoader cl = getClass().getClassLoader();
+
 		public <T> T recordMethodCallFor(Class<T> t, Node node) {
 			return impl(t, node);
 		}
 
-		@SuppressWarnings("unchecked")
 		private <T> T impl(Class<T> t, Node node) {
-			return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class<?>[] { t }, new InvocationHandler() {
 
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-					node.bindedWith(new Node(null), method.getName());
-					return impl(method.getReturnType(), node);
-				}
-			});
+			return t.cast(newProxyInstance(cl, new Class<?>[] { t }, (proxy, method, args) -> {
+				node.bindedWith(newNode(null), method.getName());
+				return impl(method.getReturnType(), node);
+			}));
 		}
 
 	}
@@ -71,7 +68,7 @@ public class LoginFormExample implements Supplier<Integer> {
 		}
 		out.println("</form>");
 
-		System.out.println(sOut.toString());
+		System.out.println(sOut);
 
 		return 0;
 	}
