@@ -14,8 +14,23 @@ import utils.Responsibility;
  *
  */
 @Responsibility("Скрывает особенности жизненного цикла файлого потока на запись. В том числе исключительные ситуации")
-// FIXME Задать кодировку utf-8
 public class OnFileWriter {
+
+	/**
+	 * Выводит строковое представление <code>content</code> в файл с именем <code>fileName</code>
+	 *
+	 * @param fileName
+	 *            Имя файла, в который будет записано значение <code>content</code>
+	 * @param content
+	 *            Содержимое файла. Используется Object.toString для получения сериализованного представления
+	 */
+	public static void dumpToFile(String fileName, Object content) {
+		onFileWriter(fileName, pw -> pw.println(content));
+	}
+
+	public static void onFileWriter(String fileName, ExceptionConsumer<PrintWriter> f) {
+		onFileWriter(new File(fileName), f);
+	}
 
 	public static void onFileWriter(File file, ExceptionConsumer<PrintWriter> f) {
 		new OnFileWriter(file).accept(f);
@@ -50,7 +65,6 @@ public class OnFileWriter {
 		});
 	}
 
-	// beforeAccept
 	public final void accept(ExceptionConsumer<PrintWriter> f) {
 		try (final PrintWriter out = new PrintWriter(writerSource.get())) {
 			f.safe(out);

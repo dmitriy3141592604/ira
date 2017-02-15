@@ -1,4 +1,4 @@
-package structure;
+package model;
 
 /**
  * Класс представления ребра в графе модели
@@ -29,6 +29,10 @@ public class Edge implements WithMarkersSupport {
 		return sourceNode.bindedWith(targetNode, edgeName);
 	}
 
+	public static Edge bind(Node sourceNode, Node targetNode) {
+		return sourceNode.bindedWith(targetNode, null);
+	}
+
 	/**
 	 * Создает новый переход соединяющий два узла
 	 */
@@ -41,7 +45,7 @@ public class Edge implements WithMarkersSupport {
 	/**
 	 * Имя перехода между узлами
 	 */
-	public String getName() {
+	public String name() {
 		return name;
 	}
 

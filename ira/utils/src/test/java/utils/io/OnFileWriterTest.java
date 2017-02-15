@@ -1,11 +1,10 @@
 package utils.io;
 
 import static org.junit.Assert.assertEquals;
-import static utils.Value.newValue;
+import static utils.io.OnFileWriter.dumpToFile;
+import static utils.io.OnFileWriter.onFileWriter;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -15,47 +14,54 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import testutils.RandomizedTest;
-import utils.Value;
-
-public class OnFileWriterTest extends OnFileWriterTestBase implements RandomizedTest {
+public class OnFileWriterTest extends OnFileWriterTestBase {
 
 	@Test
 	public void test$staticConstructor() {
 		createExchangePoint();
-		OnFileWriter.onFileWriter(exchangePoint, pw -> {
-		});
+
+		onFileWriter(exchangePoint, pw -> pw.println(marker));
+
+		assertEquals(marker, readFirstLineFromExchangePoint());
 	}
 
 	@Test
-	public void testFileWriting() throws Exception {
+	public void test$dumpToFile() {
+		createExchangePoint();
 
-		execute(out -> {
-			out.println(marker);
-		});
+		dumpToFile(exchangePointAbsolutePath, marker);
 
-		final Value<String> value = newValue();
-
-		try (final BufferedReader reader = new BufferedReader(new FileReader(exchangePoint))) {
-			value.setValue(reader.readLine());
-		}
-
-		assertEquals(marker, value.getValue());
-
+		assertEquals(marker, readFirstLineFromExchangePoint());
 	}
 
 	@Test
-	public void testNotExistedFileAllowed() throws IOException {
-		OnFileWriter writer = new OnFileWriter(tmpFolder.newFile());
+	public void test$onFileWriter() {
+		createExchangePoint();
+
+		OnFileWriter.onFileWriter(exchangePointAbsolutePath, pw -> pw.println(marker));
+
+		assertEquals(marker, readFirstLineFromExchangePoint());
+	}
+
+	@Test
+	public void testFileWriting() {
+		execute(out -> out.println(marker));
+
+		assertEquals(marker, readFirstLineFromExchangePoint());
+	}
+
+	@Test
+	public void testNotExistedFileAllowed() throws Exception {
+		new OnFileWriter(tmpFolder.newFile());
 	}
 
 	@Test
 	public void testWritingWithExceptionSupplier() throws IOException {
-		File outputFile = tmpFolder.newFile();
-		OnFileWriter onFileWriter = new OnFileWriter(() -> new FileWriter(outputFile));
+		final File outputFile = tmpFolder.newFile();
+		final OnFileWriter onFileWriter = new OnFileWriter(() -> new FileWriter(outputFile));
 		onFileWriter.accept(t -> t.println(marker));
-		List<String> s = Files.readAllLines(outputFile.toPath());
-		assertEquals(s.get(0), marker);
+		final List<String> s = Files.readAllLines(outputFile.toPath());
+		assertEquals(marker, s.get(0));
 	}
 
 	/** Заметим: Нет декларации исключения **/
@@ -65,15 +71,18 @@ public class OnFileWriterTest extends OnFileWriterTestBase implements Randomized
 		exception.expect(RuntimeException.class);
 
 		execute(out -> {
-			throw new IOException("some error");
+			throw new IOException(marker);
 		});
 
 	}
 
 	@Test
 	public void test$WriterConstructorTest() {
+
 		final StringWriter stringWriter = new StringWriter();
+
 		new OnFileWriter(() -> stringWriter).accept(out -> out.print(marker));
+
 		assertEquals(marker, stringWriter.toString());
 	}
 
