@@ -1,8 +1,6 @@
-package model.examples;
+package model.examples.loginForm;
 
 import static java.lang.System.exit;
-import static java.lang.reflect.Proxy.newProxyInstance;
-import static model.Node.newNode;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -12,39 +10,6 @@ import model.Edge;
 import model.Node;
 
 public class LoginFormExample implements Supplier<Integer> {
-
-	public interface Empty {
-
-	}
-
-	public interface Form {
-
-		Empty login();
-
-		Empty password();
-
-		Empty submit();
-
-		Empty ts();
-	}
-
-	public static class MethodCallRecorder {
-
-		private final ClassLoader cl = getClass().getClassLoader();
-
-		public <T> T recordMethodCallFor(Class<T> t, Node node) {
-			return impl(t, node);
-		}
-
-		private <T> T impl(Class<T> t, Node node) {
-
-			return t.cast(newProxyInstance(cl, new Class<?>[] { t }, (proxy, method, args) -> {
-				node.bindedWith(newNode(null), method.getName());
-				return impl(method.getReturnType(), node);
-			}));
-		}
-
-	}
 
 	@Override
 	public Integer get() {
