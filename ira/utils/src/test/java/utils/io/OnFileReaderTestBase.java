@@ -47,7 +47,6 @@ public class OnFileReaderTestBase implements RandomizedTest {
 	}
 
 	protected File newFile() throws Exception {
-		System.out.println("OnFileReaderTestBase#newFile");
 		final File file = tmpFolder.newFile();
 		tmpFiles.add(file.getAbsolutePath());
 		return file;

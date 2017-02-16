@@ -1,6 +1,8 @@
 package sql;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static utils.Value.newValue;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -17,6 +19,7 @@ import java.util.TreeSet;
 import org.junit.Test;
 
 import ch.qos.logback.core.spi.ContextAwareBase;
+import utils.Value;
 
 public class SelectTest extends ContextAwareBase {
 
@@ -63,12 +66,11 @@ public class SelectTest extends ContextAwareBase {
 					return 0;
 				}
 			};
+
 			final Set<List<String>> body = new TreeSet<>(bodyComparator);
 			{
 				final InputStream stream = getClass().getClassLoader().getResourceAsStream("sql/" + tableName + ".tbl");
 				assertNotNull(stream);
-
-				// final String string = IOUtils.toString(stream);
 
 				final Map<String, Integer> header = new LinkedHashMap<>();
 
@@ -111,7 +113,6 @@ public class SelectTest extends ContextAwareBase {
 					expectedColumns[index++] = header.get(s);
 				}
 
-				// Execute query
 				final Set<List<String>> resultTable = new TreeSet<>(bodyComparator);
 				{
 					for (final List<String> row : body) {
@@ -123,19 +124,12 @@ public class SelectTest extends ContextAwareBase {
 					}
 				}
 
-				// assertEquals(1, expectedColumns[0]);
-				// assertEquals(new Integer(0), header.get("name"));
-				// assertEquals(new Integer(1), header.get("value"));
-				// assertEquals("[name, value, a]", header.keySet().toString());
-
+				final Value<String> value = newValue();
 				{
-					for (final List<String> row : resultTable) {
-
-						for (final String col : row) {
-							System.out.println(row + "\t");
-						}
-					}
+					resultTable.forEach(row -> row.forEach(c -> value.setValue(value.getValue() + "|" + row)));
 				}
+				final String expected = "null|[alisa, Msk, 456789]|[alisa, Msk, 456789]|[alisa, Msk, 456789]|[bob, Msk, 156789]|[bob, Msk, 156789]|[bob, Msk, 156789]";
+				assertEquals(expected, value.getValue());
 
 			}
 
