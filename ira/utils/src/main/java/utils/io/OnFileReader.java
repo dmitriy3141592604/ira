@@ -10,6 +10,7 @@ import java.io.Reader;
 
 import utils.ExceptionSupplier;
 
+//TODO (tdv): Придумать как бросать исключение при передаче null
 public class OnFileReader {
 
 	private final ExceptionSupplier<Reader> readerSource;

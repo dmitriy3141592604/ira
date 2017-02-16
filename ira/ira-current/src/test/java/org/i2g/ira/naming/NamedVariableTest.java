@@ -1,15 +1,9 @@
 package org.i2g.ira.naming;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.lang.reflect.Field;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import utils.IraTest;
 
@@ -123,24 +117,6 @@ public class NamedVariableTest extends IraTest {
 			return bean;
 		}
 
-	}
-
-	@Test
-	@Ignore
-	public void testyName() {
-		try (final AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(User.class,
-				SetVariableNameBeanPostProcessor.class)) {
-
-			final User user = ctx.getBean(User.class);
-			assertNotNull(user);
-
-			assertEquals("", GlobalValueHolder.value);
-			user.getUserName().setValue("new user name");
-			assertEquals("Value updated", GlobalValueHolder.value);
-
-			assertEquals("myNewUserNameField", user.getUserName().getVariableName());
-			assertEquals("myNewUserNameField = new user name additionalField = some value ", user.toString());
-		}
 	}
 
 }
