@@ -12,7 +12,7 @@ public class OneWayList<E> {
 	private Node firstNode;
 
 	class Node {
-		private E element;
+		private final E element;
 		private Node next;
 
 		public Node(E element, Node next) {
@@ -25,31 +25,33 @@ public class OneWayList<E> {
 		}
 	}
 
-	public class ListItr implements Iterator {
+	public class ListItr implements Iterator<E> {
 
 		protected Integer position = 0;
 
+		@Override
 		public boolean hasNext() {
 			return getNode(this.position) != null;
 		}
 
+		@Override
 		public E next() {
-			Node retNode = getNode(position);
+			final Node retNode = getNode(position);
 			this.position++;
 			return retNode.getData();
 		}
 
 		public void insert(E element) {
-			Node prevNode = getNode(position - 1);
+			final Node prevNode = getNode(position - 1);
 
 			if (prevNode == null) {
-				Node newNode = new Node(element, null);
+				final Node newNode = new Node(element, null);
 				firstNode = newNode;
 				lastNode = newNode;
 				this.position = 0;
 				return;
 			}
-			Node newNode = new Node(element, prevNode.next);
+			final Node newNode = new Node(element, prevNode.next);
 
 			prevNode.next = newNode;
 		}
@@ -66,7 +68,7 @@ public class OneWayList<E> {
 	 *            Добавляемый элемент
 	 */
 	public void add(E element) {
-		Node newNode = new Node(element, null);
+		final Node newNode = new Node(element, null);
 		if (this.firstNode == null) {
 			// Список пуст
 			this.firstNode = newNode;
@@ -95,13 +97,12 @@ public class OneWayList<E> {
 			prevNode = this.getNode(i);
 			i++;
 		}
-		Node newNode = new Node(element, prevNode.next);
+		final Node newNode = new Node(element, prevNode.next);
 		prevNode.next = newNode;
 	}
 
 	/**
-	 * Проверяет корректность позиции: значение позиции должно быть от 0 до
-	 * <длина списка> - 1
+	 * Проверяет корректность позиции: значение позиции должно быть от 0 до <длина списка> - 1
 	 *
 	 * @param position
 	 */
@@ -145,7 +146,7 @@ public class OneWayList<E> {
 
 	/**
 	 * Возвращает узел в заданной позиции
-	 * 
+	 *
 	 * @param position
 	 *            Позиция узла
 	 */

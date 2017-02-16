@@ -1,8 +1,6 @@
 package utils;
 
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
 
 import java.util.Iterator;
 
@@ -71,21 +69,21 @@ public class OneWayListTest {
 	@Test
 	public void testNext() {
 		list.add("1");
-		Iterator i = list.listIterator();
+		final Iterator<String> i = list.listIterator();
 		assertEquals("1", i.next());
 	}
 
 	@Test
 	public void testIteratorHasNext() {
 		list.add("1");
-		assertTrue(list.listIterator().hasNext());
+		assertEquals(true, list.listIterator().hasNext());
 	}
 
 	@Test
 	public void testIteratorIncreasePos() {
 		list.add("1");
 		list.add("2");
-		Iterator i = list.listIterator();
+		final Iterator<String> i = list.listIterator();
 		assertEquals("1", i.next());
 		assertEquals("2", i.next());
 	}
@@ -94,7 +92,7 @@ public class OneWayListTest {
 	public void testIteratorInsert() {
 		list.add("1");
 		list.add("2");
-		OneWayList.ListItr i = list.listIterator();
+		final OneWayList<String>.ListItr i = list.listIterator();
 		i.next();
 		i.insert("1.5");
 		assertEquals("1.5", i.next());
@@ -102,20 +100,20 @@ public class OneWayListTest {
 
 	@Test
 	public void testNoNextOnEmptyList() {
-		OneWayList.ListItr i = list.listIterator();
-		assertFalse(i.hasNext());
+		final OneWayList<String>.ListItr i = list.listIterator();
+		assertEquals(false, i.hasNext());
 	}
 
 	@Test
 	public void testHasNext() {
-		OneWayList.ListItr i = list.listIterator();
+		final OneWayList<String>.ListItr i = list.listIterator();
 		i.insert("1");
-		assertTrue(i.hasNext());
+		assertEquals(true, i.hasNext());
 	}
 
 	@Test
 	public void testIteratorInsertOnEmptyList() {
-		OneWayList.ListItr i = list.listIterator();
+		final OneWayList<String>.ListItr i = list.listIterator();
 		i.insert("1");
 		assertEquals("1", i.next());
 	}

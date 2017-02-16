@@ -76,14 +76,6 @@ public class ListTest {
 
 		final Iterator<Person> i2 = l.iterator();
 
-		/**
-		 * <code> <sample>
-		int t = 3;
-		final int v = 5;
-		"Hello, World".substring(t++, v);
-		</code>
-		 **/
-
 		final Person ip1 = i1.next();
 		assertEquals("alisa", ip1.getName());
 

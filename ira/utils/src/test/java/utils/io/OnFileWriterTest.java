@@ -11,7 +11,6 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class OnFileWriterTest extends OnFileWriterTestBase {
@@ -84,23 +83,6 @@ public class OnFileWriterTest extends OnFileWriterTestBase {
 		new OnFileWriter(() -> stringWriter).accept(out -> out.print(marker));
 
 		assertEquals(marker, stringWriter.toString());
-	}
-
-	// TODO (tdv): Придумать как бросать исключение при передаче нереального
-	// файла
-	@Ignore
-	@Test
-	public void test$unexpectedFileNameException() {
-		exception.expect(RuntimeException.class);
-		new OnFileWriter(new File("/"));
-	}
-
-	// TODO (tdv): Придумать как бросать исключение при передаче null
-	@Ignore
-	@Test
-	public void test$null() {
-		exception.expect(RuntimeException.class);
-		new OnFileWriter((File) null).accept(out -> out.print("hello"));
 	}
 
 }
