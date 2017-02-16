@@ -56,12 +56,6 @@ public class OnFileReaderTest extends OnFileReaderTestBase {
 		});
 	}
 
-	// FIXME tdv: протестировать вызов метода close
-	@Test
-	public void testNotExistedFileAllowed() {
-		final OnFileReader reader = new OnFileReader(new File("c:\\tmp\\somefile_.txt"));
-	}
-
 	@Test
 	@Ignore
 	public void testFileReadingWithStringBuilder() {
