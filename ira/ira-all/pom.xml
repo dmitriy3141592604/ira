@@ -33,6 +33,7 @@
 		<org.apacecommon.collections.version>3.2.2</org.apacecommon.collections.version>
 		<jettyVersion>9.3.9.v20160517</jettyVersion>
 		<htmlunit.version>2.23</htmlunit.version>
+		<common.codec.version>1.9</common.codec.version>
 	</properties>
 	<build>
 		<plugins>

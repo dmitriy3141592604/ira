@@ -1,18 +1,20 @@
 package model;
 
-import static model.Node.newNode;
-import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
 
-import org.junit.Test;
+public abstract class NodeTest extends NodeTestBase {
 
-import utils.Behavior;
+	/** Узел foo. Реальное имя не предсказуемо **/
+	protected String foo;
+	protected String bar;
+	protected String baz;
 
-public class NodeTest extends NodeTestBase {
-
-	@Test
-	@Behavior("Для узла всегда доступна метаинформация")
-	public void test$metaInformationAccessibleForNode() {
-		assertNotNull(newNode("root").getMetaInfo());
+	@Before
+	public final void setUpNodeTest() {
+		// TODO Вернуть random 2017.02.18
+		foo = "foo"; // randomString();
+		bar = "bar"; // randomString();
+		baz = "baz"; // randomString();
 	}
 
 }

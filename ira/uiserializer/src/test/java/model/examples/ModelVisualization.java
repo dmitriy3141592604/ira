@@ -1,14 +1,17 @@
-package model;
+package model.examples;
 
 import static java.lang.System.exit;
-import static model.DotContentSerializer.mainSerializeDotContent;
 import static model.Edge.bind;
 import static model.Node.newNode;
+import static model.examples.DotContentSerializer.mainSerializeDotContent;
 import static utils.collections.Collector.newCollector;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import model.Edge;
+import model.Node;
 import utils.collections.Collector;
 
 /**
@@ -19,6 +22,18 @@ import utils.collections.Collector;
 public class ModelVisualization {
 
 	private static final String INDENT = "\t";
+
+	private static boolean createFileSystemArtifacts = false;
+
+	private static PrintStream output = System.out;
+
+	public static void setCreateFileSystemArtifacts(boolean createFileSystemArtifactsFlag) {
+		createFileSystemArtifacts = createFileSystemArtifactsFlag;
+	}
+
+	public static void setOutput(PrintStream outputStream) {
+		output = outputStream;
+	}
 
 	public static void main(String... args) throws Exception {
 
@@ -61,10 +76,13 @@ public class ModelVisualization {
 		}
 
 		{
-			System.out.println(out);
+
+			output.println(out);
 		}
 
-		exit(mainSerializeDotContent("foobaz", out.toString()));
+		if (createFileSystemArtifacts) {
+			exit(mainSerializeDotContent("foobaz", out.toString()));
+		}
 
 	}
 

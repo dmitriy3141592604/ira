@@ -1,28 +1,18 @@
 package model;
 
-/**
- * Класс представления ребра в графе модели
- */
-public class Edge implements WithMarkersSupport {
+/** Класс представления ребра в графе модели **/
+public class Edge implements WithMarkersSupport<Edge> {
 
-	/**
-	 * Имя связи между узлами
-	 */
+	/** Имя связи между узлами **/
 	private final String name;
 
-	/**
-	 * Исходный узел перехода
-	 */
+	/** Исходный узел перехода **/
 	private final Node sourceNode;
 
-	/**
-	 * Результирующий узел перехода
-	 */
+	/** Результирующий узел перехода **/
 	private final Node targetNode;
 
-	/**
-	 * Мета информация связанная с переходом
-	 */
+	/** Мета информация связанная с переходом **/
 	private final MarkerSupport markers = new MarkerSupport();
 
 	public static Edge bind(Node sourceNode, String edgeName, Node targetNode) {
@@ -33,18 +23,19 @@ public class Edge implements WithMarkersSupport {
 		return sourceNode.bindedWith(targetNode, null);
 	}
 
-	/**
-	 * Создает новый переход соединяющий два узла
-	 */
+	/** Создает новый переход соединяющий для узла **/
+	public Edge(Node sourceNode, Node targetNode) {
+		this(sourceNode, null, targetNode);
+	}
+
+	/** Создает новый переход соединяющий для узла **/
 	public Edge(Node sourceNode, String name, Node targetNode) {
 		this.sourceNode = sourceNode;
 		this.name = name;
 		this.targetNode = targetNode;
 	}
 
-	/**
-	 * Имя перехода между узлами
-	 */
+	/** Имя перехода между узлами */
 	public String name() {
 		return name;
 	}
@@ -59,7 +50,6 @@ public class Edge implements WithMarkersSupport {
 		return sourceNode;
 	}
 
-	/** Метаинформация о переходе **/
 	@Override
 	public MarkerSupport getMetaInfo() {
 		return markers;

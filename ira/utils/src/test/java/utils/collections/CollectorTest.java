@@ -74,4 +74,12 @@ public class CollectorTest implements RandomizedTest {
 		assertEquals(ArrayList.class, c.getStorage().getClass());
 	}
 
+	@Test
+	public void test$toString() {
+		final Collector<Object> newCollector = newCollector();
+		newCollector.remember("a");
+		newCollector.remember("b");
+		assertEquals("[a, b]", newCollector.toString());
+	}
+
 }

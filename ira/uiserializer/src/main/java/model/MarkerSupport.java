@@ -7,10 +7,7 @@ import model.MarkerException.PreviousMarkerHasDifferentTypeException;
 import model.MarkerException.PreviousMarkerValueRewriteException;
 import utils.Responsibility;
 
-/**
- * Класс предоставляет методы работы с коллекцией маркеров и механизм ограничений для выполняемых операций.
- */
-
+/** Класс предоставляет методы работы с коллекцией маркеров и механизм ограничений для выполняемых операций. **/
 @Responsibility("Обеспечивает управление набором маркеров")
 public class MarkerSupport {
 

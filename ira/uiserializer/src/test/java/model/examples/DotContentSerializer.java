@@ -1,4 +1,4 @@
-package model;
+package model.examples;
 
 import static utils.Quietly.quietly;
 import static utils.io.OnFileWriter.dumpToFile;
