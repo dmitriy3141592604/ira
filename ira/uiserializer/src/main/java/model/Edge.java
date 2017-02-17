@@ -24,6 +24,11 @@ public class Edge implements WithMarkersSupport<Edge> {
 	}
 
 	/** Создает новый переход соединяющий для узла **/
+	public Edge(Node sourceNode, Node targetNode) {
+		this(sourceNode, null, targetNode);
+	}
+
+	/** Создает новый переход соединяющий для узла **/
 	public Edge(Node sourceNode, String name, Node targetNode) {
 		this.sourceNode = sourceNode;
 		this.name = name;
