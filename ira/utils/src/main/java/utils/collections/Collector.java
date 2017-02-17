@@ -39,4 +39,9 @@ public class Collector<T> implements Iterable<T> {
 		return storage.iterator();
 	}
 
+	@Override
+	public String toString() {
+		return storage.toString();
+	}
+
 }
