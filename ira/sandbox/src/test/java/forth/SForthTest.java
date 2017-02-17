@@ -9,30 +9,28 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import forth.functions.FSPrint;
+import forth.functions.FSSumm;
+
 public class SForthTest {
 
 	@SuppressWarnings("restriction")
 	private final String lineSeparator = java.security.AccessController.doPrivileged(new sun.security.action.GetPropertyAction("line.separator"));
 
 	private SForth sForth;
+
 	private PrintStream printStream;
+
 	private ByteArrayOutputStream out;
 
 	private PrintStream originalOutput;
 
-	private final FOperation printOperation = new FOperation(stack -> {
-		final FToken pop = stack.pop();
-		System.out.println(pop);
-	});
+	private final FOperation printOperation = new FSPrint();
 
-	private final FOperation summOperation = new FOperation(stack -> {
-		final FToken top = stack.pop(); // !
-		final FToken next = stack.pop();
-		stack.push(next.summ(top));
-	});
+	private final FOperation summOperation = new FSSumm();
 
 	@Before
-	public void setUpSForthTest() throws Exception {
+	public final void setUpSForthTest() throws Exception {
 		sForth = new SForth();
 		out = new ByteArrayOutputStream();
 		printStream = new PrintStream(out, true, "utf-8");
@@ -41,7 +39,7 @@ public class SForthTest {
 	}
 
 	@After
-	public void tearDownSForthTest() throws Exception {
+	public final void tearDownSForthTest() throws Exception {
 		System.setOut(originalOutput);
 	}
 
