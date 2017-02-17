@@ -7,7 +7,7 @@ import utils.collections.Collector;
 /**
  * Узел модели, содержащий метаинформацию
  */
-public class Node implements WithMarkersSupport<Node> {
+public class Node implements WithMarkersSupport<Node>, Comparable<Node> {
 
 	/** Имя узла модели. **/
 	private final String name;
@@ -45,6 +45,24 @@ public class Node implements WithMarkersSupport<Node> {
 
 	public Collector<Edge> edges() {
 		return edges;
+	}
+
+	@Override
+	public int compareTo(Node right) {
+		final Node left = this;
+		return left.name.compareTo(right.name);
+	}
+
+	@Override
+	public boolean equals(Object rightCandidate) {
+		final Node left = this;
+		final Node right = (Node) rightCandidate;
+		return left.name.equals(right.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
 	}
 
 }
