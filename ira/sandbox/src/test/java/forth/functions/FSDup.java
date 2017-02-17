@@ -6,11 +6,12 @@ import forth.FOperation;
 import forth.FToken;
 
 @Component
-public class FSPrint extends FOperation {
-	public FSPrint() {
+public class FSDup extends FOperation {
+	public FSDup() {
 		super(stack -> {
 			final FToken pop = stack.pop();
-			System.out.println(pop);
+			stack.push(pop);
+			stack.push(pop);
 		});
 	}
 }

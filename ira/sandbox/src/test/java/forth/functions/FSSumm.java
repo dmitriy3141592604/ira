@@ -1,8 +1,11 @@
 package forth.functions;
 
+import org.springframework.stereotype.Component;
+
 import forth.FOperation;
 import forth.FToken;
 
+@Component
 public class FSSumm extends FOperation {
 
 	public FSSumm() {
