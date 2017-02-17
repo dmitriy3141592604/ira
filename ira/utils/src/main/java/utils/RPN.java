@@ -26,9 +26,9 @@ public class RPN {
 
 	public static String make(String expression) {
 		checkExpression(expression);
-		Stack<Character> stack = new Stack<>();
-		StringBuilder result = new StringBuilder();
-		for (Character c : expression.toCharArray()) {
+		final Stack<Character> stack = new Stack<>();
+		final StringBuilder result = new StringBuilder();
+		for (final Character c : expression.toCharArray()) {
 			// Скобки
 			if (c == '(') {
 				stack.push(c);
@@ -36,7 +36,7 @@ public class RPN {
 			}
 			if (c == ')') {
 				while (stack.size() > 0) {
-					Character op = stack.pop();
+					final Character op = stack.pop();
 					if (op != '(') {
 						result.append(op);
 					}
@@ -62,8 +62,8 @@ public class RPN {
 	}
 
 	private static void checkRPNExpression(String expression) {
-		Pattern pattern = Pattern.compile("[0-9\\+\\-*/]+");
-		Matcher matcher = pattern.matcher(expression);
+		final Pattern pattern = Pattern.compile("[0-9\\+\\-*/]+");
+		final Matcher matcher = pattern.matcher(expression);
 		if (!matcher.matches()) {
 			throw new IllegalArgumentException("Неизвестный оператор в выражении " + expression);
 		}
@@ -84,14 +84,14 @@ public class RPN {
 	 */
 	public static Double calculate(String expression) {
 		checkRPNExpression(expression);
-		Stack<Double> stack = new Stack<>();
-		for (Character c : expression.toCharArray()) {
+		final Stack<Double> stack = new Stack<>();
+		for (final Character c : expression.toCharArray()) {
 			if (operators.get(c) == null) {
 				stack.push(new Double(Character.digit(c, 10)));
 			} else {
-				Double var2 = stack.pop();
-				Double var1 = stack.pop();
-				Double result = evaluate(var1, var2, c);
+				final Double var2 = stack.pop();
+				final Double var1 = stack.pop();
+				final Double result = evaluate(var1, var2, c);
 				stack.push(result);
 			}
 		}
@@ -100,13 +100,19 @@ public class RPN {
 
 	/**
 	 * Выполняет арифметическую операцию
-	 * 
+	 *
 	 * @param var1
 	 * @param var2
 	 * @param operator
 	 * @return
 	 */
 	private static Double evaluate(Double var1, Double var2, Character operator) {
+		final Double retVal = subSumm(var1, var2, operator);
+		// asd;flkjasdh;f
+		return retVal;
+	}
+
+	private static Double subSumm(Double var1, Double var2, Character operator) {
 		switch (operator) {
 		case '+':
 			return var1 + var2;
@@ -116,8 +122,7 @@ public class RPN {
 			return var1 * var2;
 		case '/':
 			return var1 / var2;
-		default:
-			throw new IllegalArgumentException("Неизвестный оператор: " + operator);
 		}
+		throw new IllegalArgumentException("Неизвестный оператор: " + operator);
 	}
 }

@@ -2,6 +2,7 @@ package forth;
 
 import java.util.function.Consumer;
 
+// TODO Rename to FSOperation
 public class FOperation extends FToken {
 
 	private final Consumer<FStack> impl;
