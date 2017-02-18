@@ -34,7 +34,9 @@
 		<jettyVersion>9.3.9.v20160517</jettyVersion>
 		<htmlunit.version>2.23</htmlunit.version>
 		<common.codec.version>1.9</common.codec.version>
+		<commons.codec.version>1.9</commons.codec.version>
 	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -51,6 +53,12 @@
 	</build>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>${commons.codec.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
