@@ -2,9 +2,7 @@ package model.examples.lexer;
 
 import static utils.collections.Collector.newCollector;
 
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.junit.Test;
@@ -13,6 +11,8 @@ import model.Node;
 import utils.collections.Collector;
 
 public class LexerModel implements Runnable {
+
+	private static final String TAB = "\t";
 
 	private static final boolean useStdout = Boolean.valueOf(System.getProperty("useStdOut"));
 
@@ -23,25 +23,35 @@ public class LexerModel implements Runnable {
 	@Test
 	public void executor() {
 		final LexerModel lexerModel = new LexerModel();
-		lexerModel.run();
-		try (final PrintWriter out = useStdout ? new PrintWriter(new OutputStreamWriter(System.out)) : new PrintWriter(new StringWriter());) {
-			out.println("digraph lexer {");
-			out.println("}");
-		}
 
+		lexerModel.run();
+
+		final Set<Node> nodes = lexerModel.startNode.transitiveAccess();
+
+		final Dot dot = new Dot();
+
+		dot.newGraph("lexer");
+
+		nodes.forEach(node -> dot.node(node).configured());
+
+		nodes.forEach(node -> node.edges().forEach(edge -> {
+			dot.transit(edge.getSourceNode(), edge.getTargetNode()).configured();
+		}));
+
+		dot.complete();
+
+		if (useStdout) {
+			System.out.println(dot.toString());
+		}
 	}
 
 	@Override
 	public void run() {
-		final Node start = startNode = node("Start");
-		final Node end = new Node("End");
-		buildModel(start, end);
-
+		buildModel(startNode = node("Start"), new Node("End"));
 	}
 
 	private void buildModel(Node start, Node end) {
 		start.bindedWith(end, "empty");
-
 		start.bindedWith(start, "space");
 	}
 
