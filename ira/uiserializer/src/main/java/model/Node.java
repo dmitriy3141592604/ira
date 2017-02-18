@@ -86,27 +86,40 @@ public class Node implements WithMarkersSupport<Node>, Comparable<Node> {
 		return visitedNodes;
 	}
 
+	/**
+	 * TODO Вынести в отдельный класс операций над узлом (this используется только для отладки)
+	 */
 	private void transitiveAccessImpl(Node node, final Set<Node> visitedNodes, int level) {
+		final boolean isDebugEnabled = Boolean.valueOf(System.getProperty("debugOutputEnabled"));
 		final int nextLevel = level + 1;
 		final String c = this.getClass() + " " + "(" + level + ")" + "|  ";
-		System.out.println(c + "Start for name: " + node.name + ". Visited: " + visitedNodes);
+		if (isDebugEnabled)
+			System.out.println(c + "Start for name: " + node.name + ". Visited: " + visitedNodes);
 		final boolean add = visitedNodes.add(node);
 		if (add) {
-			System.out.println(c + "Register node: " + node + ". Visited now: " + visitedNodes);
+			if (isDebugEnabled)
+				System.out.println(c + "Register node: " + node + ". Visited now: " + visitedNodes);
 			node.edges.forEach(edge -> {
 				final Node targetNode = edge.getTargetNode();
-				System.out.print(c + "Is visited nodes: " + visitedNodes + " contains: " + targetNode);
+				if (isDebugEnabled)
+					System.out.print(c + "Is visited nodes: " + visitedNodes + " contains: " + targetNode);
 				if (visitedNodes.contains(targetNode)) {
-					System.out.println(" yes");
-					System.out.println(c + "node " + targetNode + " visited in previous call");
+					if (isDebugEnabled)
+						System.out.println(" yes");
+					if (isDebugEnabled)
+						System.out.println(c + "node " + targetNode + " visited in previous call");
 				} else {
-					System.out.println(" no");
-					System.out.println(c + "node " + targetNode + " not visited before this call. Visit now");
+					if (isDebugEnabled)
+						System.out.println(" no");
+					if (isDebugEnabled)
+						System.out.println(c + "node " + targetNode + " not visited before this call. Visit now");
 					transitiveAccessImpl(targetNode, visitedNodes, nextLevel);
 				}
 			});
 		} else {
-			System.out.println(c + "Noting");
+			// TODO Судя по отладке, до сюда алгоритм не доходит. Как я понял, эта логика поглощается пустым списком узлов выше
+			if (isDebugEnabled)
+				System.out.println(c + "Noting");
 		}
 	}
 
