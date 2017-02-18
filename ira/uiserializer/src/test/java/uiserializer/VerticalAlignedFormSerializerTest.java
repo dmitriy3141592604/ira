@@ -4,6 +4,7 @@ import org.junit.Test;
 
 /**
  * {@linkplain VerticalAlignedFormSerializer}
+ * 
  * @author fdv.741
  *
  */

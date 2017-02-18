@@ -12,8 +12,7 @@ public interface Component {
 	 * Отрисовывает себя
 	 *
 	 * @param html
-	 *            корень html дерева, в который будет помещено содержимое
-	 *            компонента
+	 *            корень html дерева, в который будет помещено содержимое компонента
 	 */
 	void render(HTMLElements html);
 

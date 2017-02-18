@@ -35,7 +35,7 @@ public class ScrptsExecutor {
 
 	}
 
-	/*TODO Не обрабатывает символьные ссылки. Нужны дополнительные проверки! */
+	/* TODO Не обрабатывает символьные ссылки. Нужны дополнительные проверки! */
 	private static List<File> readRecursive(File root, List<File> acc) {
 		final File[] listFiles = root.listFiles((dir, name) -> name.endsWith(".js"));
 		for (final File file : listFiles) {
@@ -55,20 +55,20 @@ public class ScrptsExecutor {
 	@Before
 	public void setUp() throws Exception {
 		try (StringWriter libraries = new StringWriter()) {
-			//System.out.println("out opened");
+			// System.out.println("out opened");
 			try (BufferedReader preReader = new BufferedReader(new FileReader(left))) {
 				String line = null;
-				//System.out.println("before cycle");
+				// System.out.println("before cycle");
 				while (null != (line = preReader.readLine())) {
 					if (line.matches("\"bus[.]js\"")) {
-						//System.out.println("copied");
+						// System.out.println("copied");
 						final String s = "jslib/" + "bus.js";
-						//System.out.println("script intput " + s);
+						// System.out.println("script intput " + s);
 						js.eval((new FileReader(s)));
 					}
-					//if (line.matches("\"test[.].js\"")) {
+					// if (line.matches("\"test[.].js\"")) {
 					js.eval(new FileReader("jslib/" + "test.js"));
-					//}
+					// }
 				}
 			}
 		}
@@ -77,14 +77,14 @@ public class ScrptsExecutor {
 
 	@Test
 	public void test() throws Exception {
-		//js.eval("test('seed', function(){})");
-		//assertEquals("Ok", js.eval(source).toString());
+		// js.eval("test('seed', function(){})");
+		// assertEquals("Ok", js.eval(source).toString());
 
 		js.eval(source);
 
 		js.eval("name = 'Hello';");
-		//final Bindings engineBindings = js.getBindings(ScriptContext.ENGINE_SCOPE);
-		//final Bindings globalBindings = js.getBindings(ScriptContext.GLOBAL_SCOPE);
+		// final Bindings engineBindings = js.getBindings(ScriptContext.ENGINE_SCOPE);
+		// final Bindings globalBindings = js.getBindings(ScriptContext.GLOBAL_SCOPE);
 
 		if (!"0".equals(js.eval("errors.length").toString())) {
 			fail("errors: " + js.eval("'' + errors"));
@@ -92,23 +92,23 @@ public class ScrptsExecutor {
 		assertEquals("0", js.eval("failures.length").toString());
 		assertEquals("No success test found in " + left, "true", js.eval("success.length > 0").toString());
 
-		//dump("Engine", engineBindings);
-		//dump("Global", globalBindings);
+		// dump("Engine", engineBindings);
+		// dump("Global", globalBindings);
 	}
 
-	//	private void dump(String string, Bindings bs) {
-	//		print("----", string, "--------");
-	//		bs.forEach((key, value) -> print(key, "->", value.toString()));
-	//		print("----", "END", string, "--------");
-	//	}
+	// private void dump(String string, Bindings bs) {
+	// print("----", string, "--------");
+	// bs.forEach((key, value) -> print(key, "->", value.toString()));
+	// print("----", "END", string, "--------");
+	// }
 	//
-	//	private void print(String... strings) {
-	//		final PrintStream out = System.out;
-	//		for (final String s : strings) {
-	//			out.print(s);
-	//			out.print(" ");
-	//		}
-	//		out.println();
-	//	}
+	// private void print(String... strings) {
+	// final PrintStream out = System.out;
+	// for (final String s : strings) {
+	// out.print(s);
+	// out.print(" ");
+	// }
+	// out.println();
+	// }
 
 }

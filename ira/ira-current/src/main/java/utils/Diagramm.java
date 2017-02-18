@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * Пометка, что класс содержит модель диаграммы
+ * 
  * @author fdv.741
  *
  */

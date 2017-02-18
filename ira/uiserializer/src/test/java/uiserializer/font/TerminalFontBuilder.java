@@ -98,7 +98,7 @@ class FontBuilderHandler extends AbstractHandler {
 					final Integer x = Integer.valueOf(request.getParameter("x"));
 					final Integer y = Integer.valueOf(request.getParameter("y"));
 					final Map<String, List<String>> fontMap = readFontMap();
-					//response.getWriter().println("{ \"status\":\"" + fontMap.get(c).get(y).charAt(x) + "\"}");
+					// response.getWriter().println("{ \"status\":\"" + fontMap.get(c).get(y).charAt(x) + "\"}");
 					response.getWriter().println(fontMap.get(c).get(y).charAt(x));
 					baseRequest.setHandled(true);
 					return;

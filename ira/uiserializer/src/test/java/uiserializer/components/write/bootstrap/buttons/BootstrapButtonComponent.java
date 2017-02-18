@@ -3,8 +3,8 @@ package uiserializer.components.write.bootstrap.buttons;
 import org.i2g.ira.uibuilder.Attributes;
 import org.i2g.ira.uibuilder.HTMLElements;
 
-import uiserializer.components.HtmlHeadComponent;
 import uiserializer.components.Component;
+import uiserializer.components.HtmlHeadComponent;
 
 public class BootstrapButtonComponent implements Component, Attributes {
 

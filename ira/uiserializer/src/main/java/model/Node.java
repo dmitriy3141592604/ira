@@ -82,7 +82,6 @@ public class Node implements WithMarkersSupport<Node>, Comparable<Node> {
 	public Set<Node> transitiveAccess() {
 		final Set<Node> visitedNodes = new TreeSet<Node>();
 		transitiveAccessImpl(this, visitedNodes, 0);
-
 		return visitedNodes;
 	}
 

@@ -2,8 +2,6 @@ package utils;
 
 import java.util.Comparator;
 
-import utils.Triple;
-
 public class ByFstTripleComparator implements Comparator<Triple<Character, String, String>> {
 
 	private static ByFstTripleComparator instance = new ByFstTripleComparator();
