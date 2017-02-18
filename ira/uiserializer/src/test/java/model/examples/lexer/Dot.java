@@ -21,6 +21,12 @@ import utils.Responsibility;
 // FIXME !Not Tested
 public class Dot {
 
+	public static enum ShapeTypes {
+		BOX, ELLIPSE, CIRCLE, POINT, DIAMODE, PARALLELOGRAM;
+	}
+
+	private static final char DQUOTE = '"';
+
 	@Responsibility("Отвечает за хранение уровня вложенности")
 	private int indentLevel = 0;
 
@@ -93,6 +99,20 @@ public class Dot {
 			eol();
 			return Dot.this;
 		}
+
+		public NodeConfig shape(String string) {
+			pw.append("[").append("shape").append("=").append(string).append("]");
+			return this;
+		}
+
+		public NodeConfig shape(ShapeTypes type) {
+			return shape(type.toString().toLowerCase());
+		}
+
+		public NodeConfig color(String string) {
+			pw.append("[").append("color").append("=").append(string).append("]");
+			return this;
+		}
 	}
 
 	@Responsibility("Средство создание ребра графа. Возвращает средство конфигурирования. Минимальная конфигурация - сигнал окончания конфигурирования")
@@ -110,6 +130,11 @@ public class Dot {
 			// FIXME Нужна обработка факта, конфигурация будет закрыта
 			eol();
 			return Dot.this;
+		}
+
+		public EdgeConfig label(String name) {
+			pw.append("[").append("label=").append(DQUOTE).append(name).append(DQUOTE).append("]");
+			return this;
 		}
 
 	}
