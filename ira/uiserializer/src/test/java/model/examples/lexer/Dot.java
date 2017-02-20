@@ -22,7 +22,7 @@ import utils.Responsibility;
 public class Dot {
 
 	public static enum ShapeTypes {
-		BOX, ELLIPSE, CIRCLE, POINT, DIAMODE, PARALLELOGRAM;
+		BOX, ELLIPSE, CIRCLE, POINT, DIAMODE, PARALLELOGRAM, DOUBLECIRCLE;
 	}
 
 	private static final char DQUOTE = '"';
