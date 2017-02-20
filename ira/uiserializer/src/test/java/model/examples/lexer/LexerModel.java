@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import org.junit.Test;
 
+import model.Edge;
 import model.Node;
 import model.examples.lexer.Dot.ShapeTypes;
 import utils.collections.Collector;
@@ -21,22 +22,27 @@ public class LexerModel implements Runnable {
 
 	private final Collector<Node> nodes = newCollector(new TreeSet<Node>());
 
-	private void buildModel(Node start, Node end) {
-		start.mark("start");
-		end.mark("end");
-		final Node startToken = new Node("tokenStart");
-		final Node tokenRest = new Node("tokenRest");
+	private void buildModel() {
+		final Node start = node("Start").mark("start");
+		final Node end = node("End").mark("end");
 
-		start.bindedWith(end, "empty");
-		start.bindedWith(start, "space");
+		final Node tokenStart = node("TokenStart");
+		final Node tokenRest = node("TokenRest");
 
-		start.bindedWith(startToken, "token-start-symbol");
-		startToken.bindedWith(tokenRest, "token-rest-symbol");
-		tokenRest.bindedWith(tokenRest, "token-rest-sumbol");
-		tokenRest.bindedWith(end, "empty");
+		$(start, "isEof", end, "nothing");
+		$(start, "isSpace", start, "nothing");
 
-		tokenRest.bindedWith(start, "empty");
+		$(start, "isTokenStart", tokenStart, "push");
+		$(tokenStart, "isTokenRest", tokenRest, "push");
+		$(tokenRest, "isTokenRest", tokenRest, "push");
+		$(tokenRest, "isSpace", start, "pop");
+		$(tokenRest, "isEof", end, "pop");
 
+		startNode = start;
+	}
+
+	private Edge $(Node fromNode, String edgeName, Node toNode, String action) {
+		return fromNode.bindedWith(toNode, edgeName).mark("action", action);
 	}
 
 	@Test
@@ -50,10 +56,11 @@ public class LexerModel implements Runnable {
 				return Dot.ShapeTypes.CIRCLE;
 			}
 			if (node.getMetaInfo().hasMarker("end")) {
-				// return Dot.ShapeTypes.POINT;
+				return Dot.ShapeTypes.DOUBLECIRCLE;
 			}
 			return Dot.ShapeTypes.ELLIPSE;
 		};
+
 		final LexerModel lexerModel = new LexerModel();
 
 		lexerModel.run();
@@ -67,7 +74,10 @@ public class LexerModel implements Runnable {
 		nodes.forEach(node -> dot.node(node).shape(nodeShapeDetector.apply(node)).color(nodeColorDetector.apply(node)).configured());
 
 		nodes.forEach(node -> node.edges().forEach(edge -> {
-			dot.transit(edge.getSourceNode(), edge.getTargetNode()).label(edge.name()).configured();
+			final Node sourceNode = edge.getSourceNode();
+			final Node targetNode = edge.getTargetNode();
+			final String label = edge.name() + "\n" + edge.getMetaInfo().getMarkerValue("action", "nothing");
+			dot.transit(sourceNode, targetNode).label(label).configured();
 		}));
 
 		dot.complete();
@@ -80,7 +90,7 @@ public class LexerModel implements Runnable {
 
 	@Override
 	public void run() {
-		buildModel(startNode = node("Start"), new Node("End"));
+		buildModel();
 	}
 
 	private Node node(String string) {
