@@ -17,3 +17,5 @@ ira/tasks/
 /tasks/tasks.xml.zip
 /tasks/.repositories.xml.zip
 /tasks/repositories.xml.zip
+/uiserializer/*.dot
+/uiserializer/*.png
