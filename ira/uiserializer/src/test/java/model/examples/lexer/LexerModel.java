@@ -83,6 +83,7 @@ public class LexerModel implements Runnable {
 		dot.complete();
 
 		if (useStdout) {
+			System.out.println("Output from: " + getClass());
 			System.out.println(dot.toString());
 		}
 		OnFileWriter.dumpToFile(getClass().getName() + ".dot", dot.toString());
