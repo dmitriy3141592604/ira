@@ -1,0 +1,36 @@
+digraph Description {
+	dsl -> construct ;
+	processor -> construct ;
+	construct -> model ;
+	construct[label="+"] ;
+	
+	model -> generation ;
+	builder -> generation ;
+	generation -> product ;
+	generation[label="+"]
+	
+	dslDesc-> dsl[style=dotted, arrowhead=none];
+	dslDesc[shape=box,label="Статическое описание\nпредметной области"];
+	
+	processorDesc -> processor[style=dotted, arrowhead=none];
+	processorDesc[shape=box,label="Средство превращения\nязыка в метапрограмму"];
+	
+	modelDesc -> model [style=dotted, arrowhead=none];
+	modelDesc[shape=box,label="Описание реального объекта\nс заданной метаинформацией"];
+	
+	builderDesc -> builder [style=dotted, arrowhead=none];
+	builderDesc[shape=box;label="Средство построения конкретного\nпродукта по модели"];
+	
+	productDesc -> product [style=dotted, arrowhead=none];
+	productDesc[shape=box;label="Конечный продукт"];
+	
+	{ rank=same; dsl construct model generation product }
+	{ rank=same; dslDesc processorDesc modelDesc builderDesc productDesc }
+	
+	
+	edge[style=invis];
+	
+	dslDesc -> dsl;
+	productDesc -> product ;
+	
+}
