@@ -18,4 +18,8 @@ public class FStack {
 		return impl.isEmpty();
 	}
 
+	public FToken top() {
+		return impl.get(impl.size() - 1);
+	}
+
 }

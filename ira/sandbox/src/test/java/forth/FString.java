@@ -33,4 +33,9 @@ public class FString extends FToken {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String stringValue() {
+		return string;
+	}
+
 }

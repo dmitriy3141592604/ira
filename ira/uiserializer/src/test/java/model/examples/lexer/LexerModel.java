@@ -11,14 +11,15 @@ import org.junit.Test;
 import model.Edge;
 import model.Node;
 import model.examples.lexer.Dot.ShapeTypes;
+import utils.Value;
 import utils.collections.Collector;
 import utils.io.OnFileWriter;
 
 public class LexerModel implements Runnable {
 
-	private static final boolean useStdout = Boolean.valueOf(System.getProperty("useStdOut"));
+	private static String START_NAME = "start";
 
-	private Node startNode;
+	private static final boolean useStdout = Boolean.valueOf(System.getProperty("useStdOut"));
 
 	private final Collector<Node> nodes = newCollector(new TreeSet<Node>());
 
@@ -38,7 +39,6 @@ public class LexerModel implements Runnable {
 		$(tokenRest, "isSpace", start, "pop");
 		$(tokenRest, "isEof", end, "pop");
 
-		startNode = start;
 	}
 
 	private Edge $(Node fromNode, String edgeName, Node toNode, String action) {
@@ -52,7 +52,8 @@ public class LexerModel implements Runnable {
 			return "black";
 		};
 		final Function<Node, ShapeTypes> nodeShapeDetector = node -> {
-			if (node.getMetaInfo().hasMarker("start")) {
+
+			if (node.getMetaInfo().hasMarker(START_NAME)) {
 				return Dot.ShapeTypes.CIRCLE;
 			}
 			if (node.getMetaInfo().hasMarker("end")) {
@@ -65,15 +66,24 @@ public class LexerModel implements Runnable {
 
 		lexerModel.run();
 
-		final Set<Node> nodes = lexerModel.startNode.transitiveAccess();
+		final Value<Node> startNode = Value.newValue();
+
+		lexerModel.nodes.forEach(node -> {
+			if (node.getMetaInfo().hasMarker(START_NAME)) {
+				startNode.setValue(node);
+			}
+
+		});
+
+		final Set<Node> nodes_ = startNode.getValue().transitiveAccess();
 
 		final Dot dot = new Dot();
 
 		dot.newGraph("lexer");
 
-		nodes.forEach(node -> dot.node(node).shape(nodeShapeDetector.apply(node)).color(nodeColorDetector.apply(node)).configured());
+		nodes_.forEach(node -> dot.node(node).shape(nodeShapeDetector.apply(node)).color(nodeColorDetector.apply(node)).configured());
 
-		nodes.forEach(node -> node.edges().forEach(edge -> {
+		nodes_.forEach(node -> node.edges().forEach(edge -> {
 			final Node sourceNode = edge.getSourceNode();
 			final Node targetNode = edge.getTargetNode();
 			final String label = edge.name() + "\n" + edge.getMetaInfo().getMarkerValue("action", "nothing");

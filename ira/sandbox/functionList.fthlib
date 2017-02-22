@@ -1,3 +1,4 @@
 forth.functions.FSDup
 forth.functions.FSPrint
 forth.functions.FSSumm
+forth.functions.FSSwap
