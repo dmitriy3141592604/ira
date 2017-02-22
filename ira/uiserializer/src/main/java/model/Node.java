@@ -47,8 +47,8 @@ public class Node implements WithMarkersSupport<Node>, Comparable<Node> {
 	}
 
 	/** FIXME Протестировать **/
-	public Node bindedTo(Node nextNode) {
-		edges.remember(new Edge(this, nextNode));
+	public Node bindedTo(Node nextNode, String edgeName) {
+		edges.remember(new Edge(this, edgeName, nextNode));
 		return nextNode;
 	}
 

@@ -47,7 +47,7 @@ public class NodeTestTransitiveAccess extends NodeTest {
 	@Behavior("Если узел указывает на другой узел через промежуточное ребто, то тот достижим")
 	public void test$bindedNodeIsAccessibleThroughtAdditionalEdge() {
 		final Node fooNode = new Node(foo);
-		fooNode.bindedTo(new Node(bar)).bindedTo(new Node(baz));
+		fooNode.bindedTo(new Node(bar), "edgeName3").bindedTo(new Node(baz), "bar-baz");
 
 		final Set<Node> transitiveAccess = fooNode.transitiveAccess();
 		assertEquals(true, transitiveAccess.contains(new Node(baz)));
