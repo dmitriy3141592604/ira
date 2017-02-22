@@ -1,13 +1,40 @@
 package forth;
 
+import static utils.Quietly.quietly;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.LineIterator;
+
+import utils.io.OnFileReader;
+
 public class SForth {
+
+	public static void main(String... args) throws Exception {
+		final HashMap<String, List<FToken>> readMemory = SForth.readMemory("functionList.fthlib");
+		final SForth sForth = new SForth(readMemory);
+
+		final LineIterator lineIterator = IOUtils.lineIterator(System.in, "utf-8");
+		while (lineIterator.hasNext()) {
+			final String readLine = lineIterator.nextLine();
+			if (readLine.contains("\"")) {
+				sForth.applay(new FLexeme(readLine));
+			} else {
+				for (final String token : readLine.split("\\s+")) {
+					sForth.applay(new FLexeme(token));
+				}
+			}
+		}
+
+	}
 
 	private final FStack stack = new FStack();
 
@@ -76,6 +103,36 @@ public class SForth {
 			}
 		}
 		throw new IllegalArgumentException("Not allowed token: " + value);
+	}
+
+	public static HashMap<String, List<FToken>> readMemory(String memoryFileName) {
+		final HashMap<String, List<FToken>> memory = new HashMap<>();
+		{
+			new OnFileReader(new File(memoryFileName)).accept(br -> {
+				br.lines().forEach(originalString -> {
+					if (originalString.matches("^\\s*[#]")) {
+						return;
+					}
+					final String string = originalString.replaceAll("^.*[.]..", "");
+					final String functionName = Character.toLowerCase(string.charAt(0)) + string.substring(1);
+					quietly(() -> {
+						final Class<?> operationClassName = Class.forName(originalString);
+						final Object operationObject = operationClassName.newInstance();
+						final FToken cast = FToken.class.cast(operationObject);
+						final List<FToken> oldList = memory.get(functionName);
+						if (oldList == null) {
+							final ArrayList<FToken> value = new ArrayList<>();
+							value.add(cast);
+							memory.put(functionName, value);
+						} else {
+							oldList.clear();
+							oldList.add(cast);
+						}
+					});
+				});
+			});
+		}
+		return memory;
 	}
 
 }

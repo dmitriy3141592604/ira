@@ -1,12 +1,9 @@
 package forth;
 
 import static org.junit.Assert.assertEquals;
-import static utils.Quietly.quietly;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +15,6 @@ import org.junit.rules.TestName;
 
 import forth.functions.FSPrint;
 import forth.functions.FSSumm;
-import utils.io.OnFileReader;
 
 public class SForthTest {
 
@@ -42,7 +38,7 @@ public class SForthTest {
 
 	@Before
 	public final void setUpSForthTest() throws Exception {
-		final HashMap<String, List<FToken>> memory = readMemory();
+		final HashMap<String, List<FToken>> memory = readMemory("functionList.fthlib");
 		sForth = new SForth(memory);
 		out = new ByteArrayOutputStream();
 		printStream = new PrintStream(out, true, "utf-8");
@@ -50,35 +46,9 @@ public class SForthTest {
 		System.setOut(printStream);
 	}
 
-	private HashMap<String, List<FToken>> readMemory() {
-		final HashMap<String, List<FToken>> memory = new HashMap<>();
-		{
-			new OnFileReader(new File("functionList.fthlib")).accept(br -> {
-				br.lines().forEach(originalString -> {
-					if (originalString.matches("^\\s*[#]")) {
-						return;
-					}
-					final String string = originalString.replaceAll("^.*[.]..", "");
-					final String functionName = Character.toLowerCase(string.charAt(0)) + string.substring(1);
-					System.out.println(testName.getMethodName() + "-" + functionName);
-					quietly(() -> {
-						final Class<?> operationClassName = Class.forName(originalString);
-						final Object operationObject = operationClassName.newInstance();
-						final FToken cast = FToken.class.cast(operationObject);
-						final List<FToken> oldList = memory.get(functionName);
-						if (oldList == null) {
-							final ArrayList<FToken> value = new ArrayList<>();
-							value.add(cast);
-							memory.put(functionName, value);
-						} else {
-							oldList.clear();
-							oldList.add(cast);
-						}
-					});
-				});
-			});
-		}
-		return memory;
+	private HashMap<String, List<FToken>> readMemory(String memoryFileName) {
+
+		return SForth.readMemory(memoryFileName);
 	}
 
 	@After
