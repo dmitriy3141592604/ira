@@ -2,7 +2,9 @@ digraph Description {
 	dsl -> construct ;
 	processor -> construct ;
 	construct -> model ;
-	construct[label="+"] ;
+	construct[label="+", href="construct.html"] ;
+	
+	Замкнутый -> Круг -> Замкнутый;
 	
 	model -> generation ;
 	builder -> generation ;
@@ -19,18 +21,18 @@ digraph Description {
 	modelDesc[shape=box,label="Описание реального объекта\nс заданной метаинформацией"];
 	
 	builderDesc -> builder [style=dotted, arrowhead=none];
-	builderDesc[shape=box;label="Средство построения конкретного\nпродукта по модели"];
+	builderDesc[shape=box;label="Средство построения\nконкретного продукта\nпо модели"];
 	
 	productDesc -> product [style=dotted, arrowhead=none];
 	productDesc[shape=box;label="Конечный продукт"];
 	
-	{ rank=same; dsl construct model generation product }
-	{ rank=same; dslDesc processorDesc modelDesc builderDesc productDesc }
+	#{ rank=same; dsl construct model generation product }
+	#{ rank=same; dslDesc processorDesc modelDesc builderDesc productDesc }
 	
 	
-	edge[style=invis];
+	#edge[style=invis];
 	
-	dslDesc -> dsl;
-	productDesc -> product ;
+	#dslDesc -> dsl;
+	#productDesc -> product ;
 	
 }
