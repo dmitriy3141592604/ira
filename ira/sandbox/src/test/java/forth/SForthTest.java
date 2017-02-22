@@ -6,7 +6,9 @@ import static utils.Quietly.quietly;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,7 +42,7 @@ public class SForthTest {
 
 	@Before
 	public final void setUpSForthTest() throws Exception {
-		final HashMap<String, FToken> memory = readMemory();
+		final HashMap<String, List<FToken>> memory = readMemory();
 		sForth = new SForth(memory);
 		out = new ByteArrayOutputStream();
 		printStream = new PrintStream(out, true, "utf-8");
@@ -48,8 +50,8 @@ public class SForthTest {
 		System.setOut(printStream);
 	}
 
-	private HashMap<String, FToken> readMemory() {
-		final HashMap<String, FToken> memory = new HashMap<>();
+	private HashMap<String, List<FToken>> readMemory() {
+		final HashMap<String, List<FToken>> memory = new HashMap<>();
 		{
 			new OnFileReader(new File("functionList.fthlib")).accept(br -> {
 				br.lines().forEach(originalString -> {
@@ -63,8 +65,15 @@ public class SForthTest {
 						final Class<?> operationClassName = Class.forName(originalString);
 						final Object operationObject = operationClassName.newInstance();
 						final FToken cast = FToken.class.cast(operationObject);
-
-						memory.put(functionName, cast);
+						final List<FToken> oldList = memory.get(functionName);
+						if (oldList == null) {
+							final ArrayList<FToken> value = new ArrayList<>();
+							value.add(cast);
+							memory.put(functionName, value);
+						} else {
+							oldList.clear();
+							oldList.add(cast);
+						}
 					});
 				});
 			});
@@ -114,6 +123,25 @@ public class SForthTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void test$notExistsOperator() {
 		sForth.applay(new FLexeme("#unknown-operation#"));
+	}
+
+	/**
+	 * <code> Program: "newFunction" [ dup print print ] "Hello, From
+	 * Function!!! )" newFunction
+	 **/
+	@Test
+	public void test$functionDefinition() throws Exception {
+		sForth.applay(new FLexeme("\"newFunction\""));
+		sForth.applay(new FLexeme("["));
+		sForth.applay(new FLexeme("dup"));
+		sForth.applay(new FLexeme("print"));
+		sForth.applay(new FLexeme("print"));
+		sForth.applay(new FLexeme("]"));
+		sForth.applay(new FLexeme("\"Hello, From Function!!! )\""));
+		sForth.applay(new FLexeme("newFunction"));
+
+		final String expected = "Hello, From Function!!! )" + lineSeparator + "Hello, From Function!!! )" + lineSeparator;
+		assertEquals(expected, new String(out.toByteArray(), "utf-8"));
 	}
 
 }

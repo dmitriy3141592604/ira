@@ -31,4 +31,9 @@ public class FOperation extends FToken {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public String stringValue() {
+		throw new UnsupportedOperationException();
+	}
+
 }

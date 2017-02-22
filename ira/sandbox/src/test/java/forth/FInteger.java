@@ -33,4 +33,9 @@ public class FInteger extends FToken {
 		return impl.toString();
 	}
 
+	@Override
+	public String stringValue() {
+		throw new UnsupportedOperationException();
+	}
+
 }

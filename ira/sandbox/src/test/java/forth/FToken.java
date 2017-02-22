@@ -10,4 +10,7 @@ public abstract class FToken {
 
 	public abstract FToken summ(FString top);
 
+	// FIXME Remove this.
+	public abstract String stringValue();
+
 }
