@@ -16,8 +16,6 @@ public class LexerModel implements Runnable {
 
 	private static final boolean useStdout = Boolean.valueOf(System.getProperty("useStdOut"));
 
-	private Node startNode;
-
 	private final Collector<Node> nodes = newCollector(new TreeSet<Node>());
 
 	@Test
@@ -33,7 +31,7 @@ public class LexerModel implements Runnable {
 
 	@Override
 	public void run() {
-		final Node start = startNode = node("Start");
+		final Node start = node("Start");
 		final Node end = new Node("End");
 		buildModel(start, end);
 
