@@ -1,0 +1,19 @@
+digraph Struct {
+	r1[shape=record, label="<left> left|<middle> middle|<right> right"];
+	r2[shape=record, label="<left> left|<middle> middle|<right> right"];
+
+	st[shape=record, label="{{t1|t2|t3}|<middle>middle|{<left>left|<right>ritht}}"]
+
+	r1:right -> r2:left;
+	r2:left -> r1:right;
+
+	st:right -> r1:right;
+	st:right -> r2:right;
+
+	st:left -> r1:left ;
+	st:left -> r2:left ;
+
+	r2:middle -> st:middle;
+
+
+}
