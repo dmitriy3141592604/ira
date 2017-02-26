@@ -1,81 +1,104 @@
 package model.examples.lexer;
 
-import static utils.collections.Collector.newCollector;
+import static model.examples.lexer.Action.NOTHING;
+import static model.examples.lexer.Action.POP;
+import static model.examples.lexer.Action.PUSH;
+import static model.examples.lexer.State.END;
+import static model.examples.lexer.State.START;
+import static model.examples.lexer.State.TOKEN_REST;
+import static model.examples.lexer.State.TOKEN_START;
+import static model.examples.lexer.Transient.IS_EOF;
+import static model.examples.lexer.Transient.IS_SPACE;
+import static model.examples.lexer.Transient.IS_TOKEN_REST;
+import static model.examples.lexer.Transient.IS_TOKEN_START;
 
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import model.Edge;
 import model.Node;
 import model.examples.lexer.Dot.ShapeTypes;
-import utils.Value;
-import utils.collections.Collector;
+import model.processing.DeclaratorBase;
 import utils.io.OnFileWriter;
 
-public class LexerModel implements Runnable {
+public class LexerModel implements Supplier<Node> {
 
-	private static String START_NAME = "start";
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
+	/** TODO Declarator - общее имя. нужно подумать над его использованием **/
+	public static class Declarator extends DeclaratorBase<DSL> {
+
+		private final Logger logger = LoggerFactory.getLogger(getClass());
+
+		@Override
+		public void declare() {
+			$(START, IS_EOF, END, NOTHING);
+			$(START, IS_SPACE, START, NOTHING);
+
+			$(START, IS_TOKEN_START, TOKEN_START, PUSH);
+			$(TOKEN_START, IS_TOKEN_REST, TOKEN_REST, PUSH);
+			$(TOKEN_REST, IS_TOKEN_REST, TOKEN_REST, PUSH);
+			$(TOKEN_REST, IS_SPACE, START, POP);
+			$(TOKEN_REST, IS_EOF, END, POP);
+		}
+
+		private void $(State start, Transient goingTo, State end, Action action) {
+			logger.trace("Creating binding: " + start.name() + "(" + goingTo + ")" + end.name());
+			dsl.bind(start, goingTo, end, action);
+		}
+	}
 
 	private static final boolean useStdout = Boolean.valueOf(System.getProperty("useStdOut"));
 
-	private final Collector<Node> nodes = newCollector(new TreeSet<Node>());
+	private Node buildModel() {
+		final ClassLoader classLoader = getClass().getClassLoader();
+		final Declarator declarator = new Declarator();
+		final NodeFactory nodeFactory = new NodeFactory().newInstance();
+		final DSLWatcher dslWatcher = new DSLWatcher(nodeFactory, classLoader);
+		final DSL newInstance = dslWatcher.newInstance(DSL.class);
+		declarator.setDSL(newInstance);
 
-	private void buildModel() {
-		final Node start = node("Start").mark("start");
-		final Node end = node("End").mark("end");
+		declarator.declare();
 
-		final Node tokenStart = node("TokenStart");
-		final Node tokenRest = node("TokenRest");
+		return nodeFactory.getNode(START);
 
-		$(start, "isEof", end, "nothing");
-		$(start, "isSpace", start, "nothing");
-
-		$(start, "isTokenStart", tokenStart, "push");
-		$(tokenStart, "isTokenRest", tokenRest, "push");
-		$(tokenRest, "isTokenRest", tokenRest, "push");
-		$(tokenRest, "isSpace", start, "pop");
-		$(tokenRest, "isEof", end, "pop");
-
-	}
-
-	private Edge $(Node fromNode, String edgeName, Node toNode, String action) {
-		return fromNode.bindedWith(toNode, edgeName).mark("action", action);
 	}
 
 	@Test
 	public void executor() {
 
 		final Function<Node, String> nodeColorDetector = node -> {
-			return "black";
+			if (node.isName(START)) {
+				return Dot.Colors.GREEN.toString();
+			}
+			if (node.isName(END)) {
+				return Dot.Colors.BLACK.toString();
+			}
+			return Dot.Colors.BLUE.toString();
 		};
+
 		final Function<Node, ShapeTypes> nodeShapeDetector = node -> {
 
-			if (node.getMetaInfo().hasMarker(START_NAME)) {
+			if (node.isName(START)) {
 				return Dot.ShapeTypes.CIRCLE;
 			}
-			if (node.getMetaInfo().hasMarker("end")) {
+
+			if (node.isName(END)) {
 				return Dot.ShapeTypes.DOUBLECIRCLE;
 			}
+
 			return Dot.ShapeTypes.ELLIPSE;
 		};
 
 		final LexerModel lexerModel = new LexerModel();
 
-		lexerModel.run();
+		final Node startNode = lexerModel.get();
 
-		final Value<Node> startNode = Value.newValue();
-
-		lexerModel.nodes.forEach(node -> {
-			if (node.getMetaInfo().hasMarker(START_NAME)) {
-				startNode.setValue(node);
-			}
-
-		});
-
-		final Set<Node> nodes_ = startNode.getValue().transitiveAccess();
+		final Set<Node> nodes_ = startNode.transitiveAccess();
 
 		final Dot dot = new Dot();
 
@@ -86,26 +109,21 @@ public class LexerModel implements Runnable {
 		nodes_.forEach(node -> node.edges().forEach(edge -> {
 			final Node sourceNode = edge.getSourceNode();
 			final Node targetNode = edge.getTargetNode();
-			final String label = edge.name() + "\n" + edge.getMetaInfo().getMarkerValue("action", "nothing");
+			final String label = edge.name() + "/" + edge.getMetaInfo().getMarkerValue("action", "nothing");
 			dot.transit(sourceNode, targetNode).label(label).configured();
 		}));
 
 		dot.complete();
 
 		if (useStdout) {
-			System.out.println("Output from: " + getClass());
-			System.out.println(dot.toString());
+			logger.info(dot.toString());
 		}
 		OnFileWriter.dumpToFile(getClass().getName() + ".dot", dot.toString());
 	}
 
 	@Override
-	public void run() {
-		buildModel();
-	}
-
-	private Node node(String string) {
-		return nodes.remember(new Node(string));
+	public Node get() {
+		return buildModel();
 	}
 
 }

@@ -19,12 +19,27 @@ public class MarkerSupport {
 		return null != markers.get(string);
 	}
 
+	// FIXME Протестировать
+	public boolean hasMarker(Enum<?> enumMarker) {
+		return hasMarker(enumMarker.toString());
+	}
+
 	public void markWith(String marker, Object value) {
 		markWithImpl(marker, value);
 	}
 
+	// FIXME Протестировать
+	public void markWith(Enum<?> marker, Object value) {
+		markWith(marker.toString(), value);
+	}
+
 	public void mark(String marker) {
 		markWithImpl(marker, DEFAULT_MARKER);
+	}
+
+	// FIXME Протестировать
+	public void mark(Enum<?> marker) {
+		mark(marker.toString());
 	}
 
 	@SuppressWarnings("unchecked")

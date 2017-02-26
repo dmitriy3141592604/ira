@@ -7,14 +7,18 @@
 			<!-- %-4relative - Number of seconds -->
 			<!-- [%thread] - Thread -->
 			<!-- %-5level -->
-			<pattern>%logger:%n      %msg %n</pattern>
+			<pattern>%logger:%n %msg %n</pattern>
 		</encoder>
 	</appender>
 
 	<root level="TRACE">
 		<!-- appender referenced after it is defined -->
-		<!-- 
 		<appender-ref ref="STDOUT" />
-		 -->
 	</root>
+
+	<logger name="model.examples.lexer.NodeFactory_" level="INFO" />
+	<logger name="model.examples.lexer.LexerModel$Declarator" level="INFO" />
+	<logger name="model.examples.lexer.DSLWatcher" level="INFO" />
+	<logger name="model.examples.lexer.NodeFactory" level="INFO" />
+	<logger name="model.examples.lexer.LexerModel" level="INFO" />
 </configuration>

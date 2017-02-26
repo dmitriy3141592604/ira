@@ -127,4 +127,9 @@ public class Node implements WithMarkersSupport<Node>, Comparable<Node> {
 		return String.valueOf(name);
 	}
 
+	// FIXME Протетсировать
+	public boolean isName(Enum<?> start) {
+		return name.equals(start.toString());
+	}
+
 }

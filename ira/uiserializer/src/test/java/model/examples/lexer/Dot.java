@@ -25,6 +25,10 @@ public class Dot {
 		BOX, ELLIPSE, CIRCLE, POINT, DIAMODE, PARALLELOGRAM, DOUBLECIRCLE;
 	}
 
+	public static enum Colors {
+		BLACK, RED, GREEN, BLUE;
+	}
+
 	private static final char DQUOTE = '"';
 
 	@Responsibility("Отвечает за хранение уровня вложенности")
