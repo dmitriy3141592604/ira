@@ -1,6 +1,32 @@
 digraph DSL {
+	node[shape=box]
 	
-
-
+	#nodes
+	DSL;
+	Declarator;
+	ConcreteDeclarator;
+	ModelBuilder;
+	DSLWatcher;
 	
+	# bindings raw
+	edge[arrowhead=none];
+	
+	ConcreteDeclarator -> DSLWatcher [label="Оповещает о вызовах модели"]
+	
+	
+	#comments
+	edge[style=dotted,arrowhead=none];
+	
+	DSLDesc -> DSL;
+	DSLDesc[label="Задает язык описания\nпредметной модели"]
+	
+	DeclaratorDesc -> Declarator;
+	DeclaratorDesc[label="Программа на языке DSL"]
+	
+	ConcreteDeclaratorDesc -> ConcreteDeclarator;
+	ConcreteDeclaratorDesc[label="Программа на языке DSL"]
+
+	DSLWatcherDesc -> DSLWatcher; 
+	DSLWatcherDesc[label="Наблюдатель за событиями\nпостроения модели"]	
+	 
 }
