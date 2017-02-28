@@ -21,4 +21,5 @@
 	<logger name="model.examples.lexer.DSLWatcher" level="INFO" />
 	<logger name="model.examples.lexer.NodeFactory" level="INFO" />
 	<logger name="model.examples.lexer.LexerModel" level="INFO" />
+	<logger name="model.examples.lexer.CPUExecutorImplTest" level="INFO" />
 </configuration>

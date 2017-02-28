@@ -12,6 +12,8 @@ import static model.examples.lexer.Transient.IS_SPACE;
 import static model.examples.lexer.Transient.IS_TOKEN_REST;
 import static model.examples.lexer.Transient.IS_TOKEN_START;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -70,55 +72,91 @@ public class LexerModel implements Supplier<Node> {
 
 	@Test
 	public void executor() {
+		final Node startNode = createDotFile();
+		createMashine(startNode);
+	}
 
-		final Function<Node, String> nodeColorDetector = node -> {
-			if (node.isName(START)) {
-				return Dot.Colors.GREEN.toString();
-			}
-			if (node.isName(END)) {
-				return Dot.Colors.BLACK.toString();
-			}
-			return Dot.Colors.BLUE.toString();
-		};
+	public interface LexerAction {
+		public void push(Character ch);
 
-		final Function<Node, ShapeTypes> nodeShapeDetector = node -> {
+		public void pop();
+	}
 
-			if (node.isName(START)) {
-				return Dot.ShapeTypes.CIRCLE;
-			}
+	public static class Token {
+		private final String rawValue;
 
-			if (node.isName(END)) {
-				return Dot.ShapeTypes.DOUBLECIRCLE;
-			}
-
-			return Dot.ShapeTypes.ELLIPSE;
-		};
-
-		final LexerModel lexerModel = new LexerModel();
-
-		final Node startNode = lexerModel.get();
-
-		final Set<Node> nodes_ = startNode.transitiveAccess();
-
-		final Dot dot = new Dot();
-
-		dot.newGraph("lexer");
-
-		nodes_.forEach(node -> dot.node(node).shape(nodeShapeDetector.apply(node)).color(nodeColorDetector.apply(node)).configured());
-
-		nodes_.forEach(node -> node.edges().forEach(edge -> {
-			final Node sourceNode = edge.getSourceNode();
-			final Node targetNode = edge.getTargetNode();
-			final String label = edge.name() + "/" + edge.getMetaInfo().getMarkerValue("action", "nothing");
-			dot.transit(sourceNode, targetNode).label(label).configured();
-		}));
-
-		dot.complete();
-
-		if (useStdout) {
-			logger.info(dot.toString());
+		public Token(String tokenString) {
+			this.rawValue = tokenString;
 		}
-		OnFileWriter.dumpToFile(getClass().getName() + ".dot", dot.toString());
+
+		public String rawValue() {
+			return rawValue;
+		}
+
+	}
+
+	private void createMashine(Node startNode) {
+		// final Set<Node> nodes = startNode.transitiveAccess();
+
+		final List<String> tokens = new ArrayList<String>();
+		// final Lexer lexer = new Lexer(new BufferedReader(new StringReader("foo bar baz")));
+
+		logger.info("Tokens: " + tokens.toString());
+
+	}
+
+	private Node createDotFile() {
+		{
+			final Function<Node, String> nodeColorDetector = node -> {
+				if (node.isName(START)) {
+					return Dot.Colors.GREEN.toString();
+				}
+				if (node.isName(END)) {
+					return Dot.Colors.BLACK.toString();
+				}
+				return Dot.Colors.BLUE.toString();
+			};
+
+			final Function<Node, ShapeTypes> nodeShapeDetector = node -> {
+
+				if (node.isName(START)) {
+					return Dot.ShapeTypes.CIRCLE;
+				}
+
+				if (node.isName(END)) {
+					return Dot.ShapeTypes.DOUBLECIRCLE;
+				}
+
+				return Dot.ShapeTypes.ELLIPSE;
+			};
+
+			final LexerModel lexerModel = new LexerModel();
+
+			final Node startNode = lexerModel.get();
+
+			final Set<Node> accessibleNodes = startNode.transitiveAccess();
+
+			final Dot dot = new Dot();
+
+			dot.newGraph("lexer");
+
+			accessibleNodes.forEach(node -> dot.node(node).shape(nodeShapeDetector.apply(node)).color(nodeColorDetector.apply(node)).configured());
+
+			accessibleNodes.forEach(node -> node.edges().forEach(edge -> {
+				final Node sourceNode = edge.getSourceNode();
+				final Node targetNode = edge.getTargetNode();
+				final String label = edge.name() + "/" + edge.getMetaInfo().getMarkerValue("action", "nothing");
+				dot.transit(sourceNode, targetNode).label(label).configured();
+			}));
+
+			dot.complete();
+
+			if (useStdout) {
+				logger.info(dot.toString());
+			}
+			OnFileWriter.dumpToFile(getClass().getName() + ".dot", dot.toString());
+			return startNode;
+		}
 	}
 
 	@Override
