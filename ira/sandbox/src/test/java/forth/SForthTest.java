@@ -13,9 +13,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import forth.functions.FSPrint;
-import forth.functions.FSSumm;
-
 public class SForthTest {
 
 	@SuppressWarnings("restriction")
@@ -31,10 +28,6 @@ public class SForthTest {
 	private ByteArrayOutputStream out;
 
 	private PrintStream originalOutput;
-
-	private final FOperation printOperation = new FSPrint();
-
-	private final FOperation summOperation = new FSSumm();
 
 	@Before
 	public final void setUpSForthTest() throws Exception {
@@ -96,8 +89,7 @@ public class SForthTest {
 	}
 
 	/**
-	 * <code> Program: "newFunction" [ dup print print ] "Hello, From
-	 * Function!!! )" newFunction
+	 * <code> Program: "newFunction" [ dup print print ] "Hello, From Function!!! )" newFunction
 	 **/
 	@Test
 	public void test$functionDefinition() throws Exception {
